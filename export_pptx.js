@@ -3,22 +3,23 @@
 
 window.exportPPTX = function() {
   const btn = document.getElementById('exportPptxBtn');
-  const originalText = btn.innerHTML;
-  btn.innerHTML = `<span>Đang tạo PowerPoint cao cấp...</span>`;
-  btn.disabled = true;
+  const originalText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.innerHTML = `<span>Äang táº¡o PowerPoint 26 Slide cao cáº¥p...</span>`;
+    btn.disabled = true;
+  }
 
   try {
     const pptx = new PptxGenJS();
-    // Executive 16:9 widescreen layout (13.333 in x 7.5 in - standard PowerPoint 365)
     pptx.defineLayout({ name: 'WIDE169', width: 13.333, height: 7.5 });
     pptx.layout = 'WIDE169';
     pptx.author = 'English Masterclass Keynote';
     pptx.company = 'English Mastery';
-    pptx.title = 'English Pronouns Keynote Presentation';
+    pptx.title = 'English Pronouns Keynote Presentation - 26 Slides';
 
     const assets = window.SLIDE_ASSETS || {};
 
-    // Helper: Create slide with 100% full-bleed dark navy background (guarantees zero white borders)
+    // Helper: Create slide with 100% full-bleed dark navy background
     function createSlide() {
       const slide = pptx.addSlide();
       slide.background = { fill: '0F172A' };
@@ -32,27 +33,24 @@ window.exportPPTX = function() {
 
     // Helper: Add consistent executive header
     function addHeader(slide, category, title, subtitle) {
-      // Category pill
       slide.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 0.35, w: 2.8, h: 0.3,
+        x: 0.8, y: 0.35, w: 3.8, h: 0.3,
         fill: { color: '1E293B' },
         line: { color: '38BDF8', width: 1 },
         rectRadius: 0.1
       });
       slide.addText(category.toUpperCase(), {
-        x: 0.8, y: 0.35, w: 2.8, h: 0.3,
+        x: 0.8, y: 0.35, w: 3.8, h: 0.3,
         fontSize: 9, fontFace: 'Calibri', bold: true, color: '38BDF8',
         align: 'center', valign: 'middle'
       });
 
-      // Title
       slide.addText(title, {
         x: 0.8, y: 0.75, w: 11.7, h: 0.55,
         fontSize: 22, fontFace: 'Arial', bold: true, color: 'FFFFFF',
         valign: 'middle'
       });
 
-      // Subtitle
       slide.addText(subtitle, {
         x: 0.8, y: 1.3, w: 11.7, h: 0.3,
         fontSize: 11, fontFace: 'Calibri', color: '94A3B8',
@@ -62,7 +60,7 @@ window.exportPPTX = function() {
 
     // Helper: Add clean Vietnamese speaker notes
     function attachNotes(slide, rawNotes) {
-      const cleanNotes = rawNotes
+      const cleanNotes = (rawNotes || '')
         .replace(/<[^>]+>/g, ' ')
         .replace(/&quot;/g, '"')
         .replace(/&amp;/g, '&')
@@ -71,7 +69,7 @@ window.exportPPTX = function() {
       slide.addNotes(cleanNotes);
     }
 
-    // Helper: Generic Quiz Slide Builder
+    // Helper: Generic Quiz Slide Builder (2x2 Grid + Explanation Card)
     function buildQuizSlide(slideItem, qBadge, qText, optionsArr, correctOpt, explanation) {
       const slide = createSlide();
       addHeader(slide, slideItem.category, slideItem.title, slideItem.subtitle);
@@ -96,46 +94,46 @@ window.exportPPTX = function() {
       });
       slide.addText(qText, {
         x: 2.6, y: 1.85, w: 9.6, h: 0.8,
-        fontSize: 15, fontFace: 'Arial', bold: true, color: 'FFFFFF',
+        fontSize: 14, fontFace: 'Arial', bold: true, color: 'FFFFFF',
         valign: 'middle'
       });
 
-      // 4 Option Cards in a 2x2 Grid
-      const positions = [
-        { x: 0.8, y: 3.0 },
-        { x: 6.83, y: 3.0 },
-        { x: 0.8, y: 4.0 },
-        { x: 6.83, y: 4.0 }
+      // 4 Options Grid (2x2)
+      const optPositions = [
+        { x: 0.8, y: 3.0 }, { x: 6.83, y: 3.0 },
+        { x: 0.8, y: 4.1 }, { x: 6.83, y: 4.1 }
       ];
 
-      optionsArr.forEach((opt, i) => {
-        const isCorrect = (opt.charAt(0) === correctOpt);
-        const pos = positions[i];
-        
+      optionsArr.forEach((optStr, idx) => {
+        const isCorrect = optStr.startsWith(correctOpt + ".");
+        const pos = optPositions[idx];
+
         slide.addShape(pptx.ShapeType.roundRect, {
-          x: pos.x, y: pos.y, w: 5.7, h: 0.85,
+          x: pos.x, y: pos.y, w: 5.7, h: 0.9,
           fill: { color: isCorrect ? '064E3B' : '1E293B' },
           line: { color: isCorrect ? '10B981' : '334155', width: isCorrect ? 2 : 1 },
           rectRadius: 0.1
         });
 
-        // Letter badge
+        // Letter pill
+        const letter = optStr.substring(0, 1);
+        const textOnly = optStr.substring(3);
+
         slide.addShape(pptx.ShapeType.roundRect, {
-          x: pos.x + 0.25, y: pos.y + 0.18, w: 0.48, h: 0.48,
+          x: pos.x + 0.25, y: pos.y + 0.22, w: 0.45, h: 0.45,
           fill: { color: isCorrect ? '10B981' : '334155' },
-          line: { color: isCorrect ? '10B981' : '475569' },
-          rectRadius: 0.24
+          line: { color: isCorrect ? '10B981' : '334155' },
+          rectRadius: 0.08
         });
-        slide.addText(opt.charAt(0), {
-          x: pos.x + 0.25, y: pos.y + 0.18, w: 0.48, h: 0.48,
-          fontSize: 11, fontFace: 'Arial', bold: true, color: 'FFFFFF',
+        slide.addText(letter, {
+          x: pos.x + 0.25, y: pos.y + 0.22, w: 0.45, h: 0.45,
+          fontSize: 12, fontFace: 'Arial', bold: true, color: 'FFFFFF',
           align: 'center', valign: 'middle'
         });
 
-        // Option text
-        slide.addText(opt.substring(3) + (isCorrect ? '  ✓ (CORRECT)' : ''), {
-          x: pos.x + 0.9, y: pos.y, w: 4.6, h: 0.85,
-          fontSize: 13, fontFace: 'Arial', bold: isCorrect,
+        slide.addText(textOnly + (isCorrect ? "  âœ“ [CORRECT]" : ""), {
+          x: pos.x + 0.9, y: pos.y + 0.15, w: 4.6, h: 0.6,
+          fontSize: 13, fontFace: 'Calibri', bold: isCorrect,
           color: isCorrect ? '34D399' : 'E2E8F0',
           valign: 'middle'
         });
@@ -143,1262 +141,979 @@ window.exportPPTX = function() {
 
       // Explanation Box
       slide.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 5.05, w: 11.73, h: 1.7,
-        fill: { color: '0F2922' },
+        x: 0.8, y: 5.25, w: 11.73, h: 1.55,
+        fill: { color: '0F2338' },
         line: { color: '10B981', width: 1.5 },
         rectRadius: 0.12
       });
-      slide.addText(`CORRECT ANSWER: ${correctOpt}  •  LINGUISTIC RATIONALE`, {
-        x: 1.1, y: 5.2, w: 11.1, h: 0.35,
-        fontSize: 12, fontFace: 'Arial', bold: true, color: '34D399'
+      slide.addText("EXPLANATION & LINGUISTIC RULE:", {
+        x: 1.1, y: 5.35, w: 11.1, h: 0.3,
+        fontSize: 10, fontFace: 'Arial', bold: true, color: '34D399'
       });
       slide.addText(explanation, {
-        x: 1.1, y: 5.6, w: 11.1, h: 1.0,
-        fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1',
-        lineSpacing: 18
+        x: 1.1, y: 5.7, w: 11.1, h: 0.95,
+        fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
       });
 
       attachNotes(slide, slideItem.speakerNotes);
     }
 
-    // ==========================================
-    // BUILD ALL 25 SLIDES
-    // ==========================================
-
     // --- SLIDE 1: COVER ---
     {
       const s1 = createSlide();
-      
-      // Left Hero Card
       s1.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 0.9, w: 6.2, h: 5.7,
+        x: 0.8, y: 0.9, w: 6.0, h: 5.7,
         fill: { color: '1E293B' },
-        line: { color: '334155', width: 1.5 },
+        line: { color: '6366F1', width: 1.5 },
         rectRadius: 0.15
       });
-      // Pill
       s1.addShape(pptx.ShapeType.roundRect, {
-        x: 1.2, y: 1.3, w: 2.8, h: 0.35,
-        fill: { color: '312E81' },
-        line: { color: '6366F1', width: 1 },
-        rectRadius: 0.08
+        x: 1.2, y: 1.3, w: 0.7, h: 0.7,
+        fill: { color: '6366F1' },
+        line: { color: '6366F1' },
+        rectRadius: 0.15
       });
-      s1.addText("KEYNOTE PRESENTATION", {
-        x: 1.2, y: 1.3, w: 2.8, h: 0.35,
-        fontSize: 9, fontFace: 'Arial', bold: true, color: 'A5B4FC',
-        align: 'center', valign: 'middle'
-      });
-      // Title
       s1.addText("PRONOUNS IN ENGLISH", {
-        x: 1.2, y: 1.85, w: 5.4, h: 1.1,
-        fontSize: 30, fontFace: 'Arial', bold: true, color: 'FFFFFF',
-        lineSpacing: 34
+        x: 1.2, y: 2.2, w: 5.2, h: 1.2,
+        fontSize: 32, fontFace: 'Arial', bold: true, color: 'FFFFFF',
+        lineSpacing: 38
       });
       s1.addText("How Small Words Drive Natural, Fluent Communication", {
-        x: 1.2, y: 3.05, w: 5.4, h: 0.6,
-        fontSize: 13, fontFace: 'Calibri', color: '94A3B8'
+        x: 1.2, y: 3.5, w: 5.2, h: 0.7,
+        fontSize: 14, fontFace: 'Calibri', color: '94A3B8', lineSpacing: 20
       });
-      // Bullets
-      s1.addText("• 5 Essential Pronoun Families (Subject, Object, Possessive, Reflexive, Demonstrative)\n• Eliminating awkward repetition & sounding like an executive\n• 10 Live interactive audience polls + 1 Rapid-Fire Challenge", {
-        x: 1.2, y: 3.75, w: 5.4, h: 1.5,
-        fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1',
-        lineSpacing: 22
-      });
-      // Badge
       s1.addShape(pptx.ShapeType.roundRect, {
-        x: 1.2, y: 5.45, w: 2.9, h: 0.4,
+        x: 1.2, y: 4.4, w: 5.2, h: 0.05,
+        fill: { color: '334155' },
+        line: { color: '334155' }
+      });
+      s1.addText("5 Core Modules â€¢ Strategic Syntax Rules â€¢ 10 Interactive Polls", {
+        x: 1.2, y: 4.7, w: 5.2, h: 0.8,
+        fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
+      });
+      s1.addShape(pptx.ShapeType.roundRect, {
+        x: 1.2, y: 5.7, w: 2.8, h: 0.4,
         fill: { color: '064E3B' },
         line: { color: '10B981', width: 1 },
         rectRadius: 0.08
       });
-      s1.addText("30-Minute Executive Session", {
-        x: 1.2, y: 5.45, w: 2.9, h: 0.4,
-        fontSize: 10, fontFace: 'Arial', bold: true, color: '6EE7B7',
+      s1.addText("Masterclass Series â€¢ 26 Slides", {
+        x: 1.2, y: 5.7, w: 2.8, h: 0.4,
+        fontSize: 11, fontFace: 'Arial', bold: true, color: '34D399',
         align: 'center', valign: 'middle'
       });
 
-      // Right Image Card
       if (assets.hero_cover) {
-        s1.addImage({
-          data: assets.hero_cover,
-          x: 7.3, y: 0.9, w: 5.23, h: 5.7,
-          round: true
-        });
+        s1.addImage({ data: assets.hero_cover, x: 7.3, y: 0.9, w: 5.23, h: 5.7, round: true });
       }
       attachNotes(s1, slidesData[0].speakerNotes);
     }
 
-    // --- SLIDE 2: THE REPETITION STORY ---
+    // --- SLIDE 2: THE PROBLEM WITH REPETITION ---
     {
       const s2 = createSlide();
       addHeader(s2, slidesData[1].category, slidesData[1].title, slidesData[1].subtitle);
 
-      // Left Column: Story & Solution
-      // Story Card
+      // Left Box: Problem Story
       s2.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 1.7, w: 6.4, h: 2.0,
+        x: 0.8, y: 1.8, w: 6.2, h: 5.0,
         fill: { color: '1E293B' },
-        line: { color: 'F87171', width: 1.5 },
+        line: { color: 'EF4444', width: 1.5 },
         rectRadius: 0.12
       });
-      s2.addText("WITHOUT PRONOUNS (Exhausted & Robotic):", {
-        x: 1.1, y: 1.85, w: 5.8, h: 0.3,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: 'F87171'
-      });
-      s2.addText("“If I say: Tom is a student. Tom likes football. Tom plays football every day. Tom lives near my house...”", {
-        x: 1.1, y: 2.2, w: 5.8, h: 0.9,
-        fontSize: 13, fontFace: 'Calibri', italic: true, color: 'E2E8F0',
-        lineSpacing: 20
-      });
-      s2.addText("❓ Observation: Notice how repeating 'Tom' makes speech stiff and repetitive.", {
-        x: 1.1, y: 3.15, w: 5.8, h: 0.4,
-        fontSize: 11, fontFace: 'Calibri', bold: true, color: 'FBBF24'
+      s2.addText("â€œIf I say: Tom is a student. Tom likes football. Tom plays football every day. Tom lives near my house...â€", {
+        x: 1.1, y: 2.1, w: 5.6, h: 1.1,
+        fontSize: 13.5, fontFace: 'Calibri', color: 'FEE2E2', lineSpacing: 22
       });
 
-      // Fluent Delivery Card
       s2.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 3.9, w: 6.4, h: 2.8,
+        x: 1.1, y: 3.35, w: 5.6, h: 0.45,
+        fill: { color: '3B181C' },
+        line: { color: 'F87171', width: 1 },
+        rectRadius: 0.08
+      });
+      s2.addText("Observation: How does repeating 'Tom' affect the natural flow?", {
+        x: 1.1, y: 3.35, w: 5.6, h: 0.45,
+        fontSize: 10.5, fontFace: 'Calibri', bold: true, color: 'FCA5A5',
+        align: 'center', valign: 'middle'
+      });
+
+      s2.addShape(pptx.ShapeType.roundRect, {
+        x: 1.1, y: 4.0, w: 5.6, h: 2.5,
         fill: { color: '064E3B' },
         line: { color: '10B981', width: 1.5 },
-        rectRadius: 0.12
+        rectRadius: 0.1
       });
-      s2.addText("THE FLUENT NATIVE DELIVERY (With Pronouns):", {
-        x: 1.1, y: 4.1, w: 5.8, h: 0.3,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: '34D399'
-      });
-      s2.addText("“Tom is a student. He likes football. He plays football every day.”", {
-        x: 1.1, y: 4.5, w: 5.8, h: 0.8,
-        fontSize: 16, fontFace: 'Arial', bold: true, color: 'FFFFFF',
-        lineSpacing: 24
-      });
-      s2.addText("👉 The pronoun 'He' replaces the noun 'Tom' to keep speech smooth, concise, and natural.", {
-        x: 1.1, y: 5.4, w: 5.8, h: 1.0,
-        fontSize: 12, fontFace: 'Calibri', color: 'A7F3D0',
-        lineSpacing: 18
+      s2.addText("THE FLUENT ENGLISH DELIVERY:\nâ€œTom is a student. He likes football. He plays football every day.â€\n\nðŸ‘‰ The pronoun He replaces the noun Tom to make speech smooth.", {
+        x: 1.3, y: 4.2, w: 5.2, h: 2.1,
+        fontSize: 12, fontFace: 'Calibri', color: 'E0F2FE', lineSpacing: 18
       });
 
-      // Right Image: Tom
+      // Right: Tom Football Image
       if (assets.tom_football) {
-        s2.addImage({
-          data: assets.tom_football,
-          x: 7.5, y: 1.7, w: 5.03, h: 5.0,
-          round: true
-        });
+        s2.addImage({ data: assets.tom_football, x: 7.4, y: 1.8, w: 5.13, h: 5.0, round: true });
       }
       attachNotes(s2, slidesData[1].speakerNotes);
     }
 
-    // --- SLIDE 3: DEFINITION & STRATEGIC VALUE ---
+    // --- SLIDE 3: CONCEPT DEFINITION & 4 ADVANTAGES ---
     {
       const s3 = createSlide();
       addHeader(s3, slidesData[2].category, slidesData[2].title, slidesData[2].subtitle);
 
-      // Left Card: Definition
+      // Left Box: Definition
       s3.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 1.7, w: 5.6, h: 5.0,
+        x: 0.8, y: 1.8, w: 5.7, h: 5.0,
         fill: { color: '1E293B' },
         line: { color: '6366F1', width: 1.5 },
         rectRadius: 0.12
       });
-      s3.addText("LINGUISTIC DEFINITION", {
-        x: 1.1, y: 1.95, w: 5.0, h: 0.3,
+      s3.addText("DEFINITION: PRONOUN = REPLACES A NOUN", {
+        x: 1.1, y: 2.0, w: 5.1, h: 0.35,
         fontSize: 11, fontFace: 'Arial', bold: true, color: '818CF8'
       });
-      s3.addText("Pronoun = Replaces a Noun", {
-        x: 1.1, y: 2.3, w: 5.0, h: 0.5,
-        fontSize: 18, fontFace: 'Arial', bold: true, color: 'FFFFFF'
+      s3.addText("A pronoun is a word used in place of a noun or noun phrase to refer to people, objects, or concepts.", {
+        x: 1.1, y: 2.45, w: 5.1, h: 0.9,
+        fontSize: 13, fontFace: 'Calibri', color: 'FFFFFF', lineSpacing: 20
       });
-      s3.addText("A pronoun is a word used in place of a noun or noun phrase to refer to people, objects, or concepts without naming them repeatedly.", {
-        x: 1.1, y: 2.85, w: 5.0, h: 1.1,
-        fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1',
-        lineSpacing: 18
-      });
-      // Examples Box
+
       s3.addShape(pptx.ShapeType.roundRect, {
-        x: 1.1, y: 4.15, w: 5.0, h: 2.2,
+        x: 1.1, y: 3.5, w: 5.1, h: 3.0,
         fill: { color: '0F172A' },
         line: { color: '334155', width: 1 },
         rectRadius: 0.08
       });
-      s3.addText("• Tom  ➔  he\n• Anna  ➔  she\n• The book  ➔  it\n• Tom and Anna  ➔  they", {
-        x: 1.3, y: 4.3, w: 4.6, h: 1.9,
-        fontSize: 14, fontFace: 'Arial', bold: true, color: '38BDF8',
-        lineSpacing: 26
+      s3.addText("â€¢ Tom âž” he\nâ€¢ Anna âž” she\nâ€¢ The book âž” it\nâ€¢ Tom and Anna âž” they", {
+        x: 1.4, y: 3.8, w: 4.5, h: 2.4,
+        fontSize: 13, fontFace: 'Courier New', color: '67E8F9', lineSpacing: 28
       });
 
-      // Right Card: 4 Strategic Benefits
+      // Right Box: 4 Strategic Benefits
       s3.addShape(pptx.ShapeType.roundRect, {
-        x: 6.8, y: 1.7, w: 5.73, h: 5.0,
+        x: 6.83, y: 1.8, w: 5.7, h: 5.0,
         fill: { color: '1E293B' },
         line: { color: 'F59E0B', width: 1.5 },
         rectRadius: 0.12
       });
-      s3.addText("EXECUTIVE COMMUNICATION VALUE", {
-        x: 7.1, y: 1.95, w: 5.1, h: 0.3,
+      s3.addText("WHY DO WE NEED PRONOUNS? (STRATEGIC BENEFITS)", {
+        x: 7.1, y: 2.0, w: 5.1, h: 0.35,
         fontSize: 11, fontFace: 'Arial', bold: true, color: 'FBBF24'
       });
-      s3.addText("Why Do We Need Pronouns?", {
-        x: 7.1, y: 2.3, w: 5.1, h: 0.5,
-        fontSize: 18, fontFace: 'Arial', bold: true, color: 'FFFFFF'
-      });
-
-      const benefits = [
-        { num: "01", title: "Eliminate Word Repetition", desc: "Keeps professional speech clean, sharp, and executive." },
-        { num: "02", title: "Concise Delivery", desc: "Conveys high-impact ideas with fewer syllables and zero drag." },
-        { num: "03", title: "Natural Speech Rhythm", desc: "Mimics native speaker cadence, tempo, and acoustic flow." },
-        { num: "04", title: "Context & Referent Clarity", desc: "Clearly identifies who or what is being discussed with zero doubt." }
-      ];
-
-      let bY = 2.95;
-      benefits.forEach(b => {
-        s3.addText(b.num + ".  " + b.title, {
-          x: 7.1, y: bY, w: 5.1, h: 0.35,
-          fontSize: 13, fontFace: 'Arial', bold: true, color: 'FBBF24'
-        });
-        s3.addText(b.desc, {
-          x: 7.6, y: bY + 0.3, w: 4.6, h: 0.5,
-          fontSize: 11, fontFace: 'Calibri', color: 'CBD5E1'
-        });
-        bY += 0.85;
+      s3.addText("01. Eliminate Word Repetition:\nKeeps speech clean, sharp, and executive.\n\n02. Concise Delivery:\nConveys high-impact ideas with fewer syllables.\n\n03. Natural Sentence Rhythm:\nMimics native cadence and speech tempo.\n\n04. Context Clarity:\nIdentifies referents with zero ambiguity.", {
+        x: 7.1, y: 2.5, w: 5.1, h: 4.1,
+        fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
       });
 
       attachNotes(s3, slidesData[2].speakerNotes);
     }
 
-    // --- SLIDE 4: ROADMAP - 8 ESSENTIAL FAMILIES ---
+    // --- SLIDE 4: ROADMAP (5 CORE MODULES) ---
     {
       const s4 = createSlide();
       addHeader(s4, slidesData[3].category, slidesData[3].title, slidesData[3].subtitle);
 
-      const cards = [
-        { x: 0.8, y: 1.7, w: 2.7, h: 2.3, color: '818CF8', title: "1. Personal", sub: "Subject & Object roles", items: "I, he, she, him, them..." },
-        { x: 3.8, y: 1.7, w: 2.7, h: 2.3, color: '38BDF8', title: "2. Possessive", sub: "Ownership & Equation", items: "mine = my books..." },
-        { x: 6.8, y: 1.7, w: 2.7, h: 2.3, color: 'C084FC', title: "3. Reflexive", sub: "Self-action & by myself", items: "myself, herself..." },
-        { x: 9.8, y: 1.7, w: 2.7, h: 2.3, color: 'FBBF24', title: "4. Demonstrative", sub: "Distance & Uncountables", items: "this, that, these, those" },
-        { x: 0.8, y: 4.25, w: 2.7, h: 2.3, color: '34D399', title: "5. Indefinite", sub: "Singular Verb Law", items: "everyone, someone..." },
-        { x: 3.8, y: 4.25, w: 2.7, h: 2.3, color: 'F472B6', title: "6. Interrogative", sub: "Precise Inquiries", items: "who, whom, whose..." },
-        { x: 6.8, y: 4.25, w: 2.7, h: 2.3, color: '60A5FA', title: "7. Relative", sub: "TOEIC Clause Connectors", items: "who, which, that..." },
-        { x: 9.8, y: 4.25, w: 2.7, h: 2.3, color: 'F59E0B', title: "8. Compound", sub: "Open Choice Mastery", items: "whoever, whichever..." }
+      const modules = [
+        { num: "PART 01", title: "Subject\nPronouns", words: "I, you, he, she, it, we, they", role: "Khá»Ÿi xÆ°á»›ng hÃ nh Ä‘á»™ng trÆ°á»›c Äá»™ng tá»« (S + V)", color: '6366F1' },
+        { num: "PART 02", title: "Object\nPronouns", words: "me, you, him, her, it, us, them", role: "Tiáº¿p nháº­n tÃ¡c Ä‘á»™ng sau Verb & Giá»›i tá»«", color: '06B6D4' },
+        { num: "PART 03", title: "Possessive\nAdjectives", words: "my, your, his, her, its, our, their", role: "TÃ­nh tá»« bá»• nghÄ©a; Báº®T BUá»˜C cÃ³ Noun Ä‘i sau", color: 'F59E0B' },
+        { num: "PART 04", title: "Possessive\nPronouns", words: "mine, yours, his, hers, ours, theirs", role: "Äáº¡i tá»« Ä‘á»™c láº­p; Possessive Pronoun = Possessive Adjective + Noun", color: '10B981' },
+        { num: "PART 05", title: "Reflexive &\nOverview", words: "myself, yourself... & 4 Families", role: "Trá»ng tÃ¢m Pháº£n thÃ¢n + Tá»•ng quan Ä‘áº¡i tá»« khÃ¡c", color: 'EC4899' }
       ];
 
-      cards.forEach(c => {
+      modules.forEach((m, idx) => {
+        const xPos = 0.8 + (idx * 2.4);
         s4.addShape(pptx.ShapeType.roundRect, {
-          x: c.x, y: c.y, w: c.w, h: c.h,
+          x: xPos, y: 1.8, w: 2.2, h: 4.8,
           fill: { color: '1E293B' },
-          line: { color: c.color, width: 1.5 },
+          line: { color: m.color, width: 2 },
           rectRadius: 0.12
         });
-        s4.addText(c.title, {
-          x: c.x + 0.2, y: c.y + 0.2, w: c.w - 0.4, h: 0.35,
-          fontSize: 14, fontFace: 'Arial', bold: true, color: c.color
+        s4.addShape(pptx.ShapeType.roundRect, {
+          x: xPos + 0.3, y: 2.1, w: 1.6, h: 0.32,
+          fill: { color: m.color },
+          line: { color: m.color },
+          rectRadius: 0.08
         });
-        s4.addText(c.sub, {
-          x: c.x + 0.2, y: c.y + 0.6, w: c.w - 0.4, h: 0.35,
-          fontSize: 10, fontFace: 'Calibri', color: '94A3B8'
+        s4.addText(m.num, {
+          x: xPos + 0.3, y: 2.1, w: 1.6, h: 0.32,
+          fontSize: 10, fontFace: 'Arial', bold: true, color: 'FFFFFF',
+          align: 'center', valign: 'middle'
         });
-        s4.addText(c.items, {
-          x: c.x + 0.2, y: c.y + 1.1, w: c.w - 0.4, h: 0.9,
-          fontSize: 12, fontFace: 'Arial', bold: true, color: 'FFFFFF',
-          lineSpacing: 16
+        s4.addText(m.title, {
+          x: xPos + 0.15, y: 2.6, w: 1.9, h: 0.8,
+          fontSize: 13, fontFace: 'Arial', bold: true, color: 'FFFFFF',
+          align: 'center', lineSpacing: 18
+        });
+        s4.addText(m.words, {
+          x: xPos + 0.15, y: 3.5, w: 1.9, h: 0.8,
+          fontSize: 10, fontFace: 'Courier New', color: '38BDF8',
+          align: 'center', lineSpacing: 14
+        });
+        s4.addShape(pptx.ShapeType.line, {
+          x: xPos + 0.3, y: 4.4, w: 1.6, h: 0,
+          line: { color: '334155', width: 1 }
+        });
+        s4.addText(m.role, {
+          x: xPos + 0.15, y: 4.6, w: 1.9, h: 1.8,
+          fontSize: 11, fontFace: 'Calibri', color: 'CBD5E1',
+          align: 'center', lineSpacing: 16
         });
       });
 
       attachNotes(s4, slidesData[3].speakerNotes);
     }
 
-    // --- SLIDE 5: SUBJECT PRONOUNS ---
+    // --- SLIDE 5: PART 01 - SUBJECT PRONOUNS ---
     {
       const s5 = createSlide();
       addHeader(s5, slidesData[4].category, slidesData[4].title, slidesData[4].subtitle);
 
-      // Left Side: Table
-      const subTable = [
-        [{ text: "Grammatical Role / Person", options: { bold: true, fill: "312E81", color: "FFFFFF" } }, { text: "Subject Pronoun", options: { bold: true, fill: "312E81", color: "38BDF8" } }],
-        ["1st Person Singular", "I"],
-        ["2nd Person (Singular / Plural)", "You"],
-        ["3rd Person Masculine", "He"],
-        ["3rd Person Feminine", "She"],
-        ["3rd Person Inanimate / Animal", "It"],
-        ["1st Person Plural", "We"],
-        ["3rd Person Plural", "They"]
+      // Left Table
+      s5.addShape(pptx.ShapeType.roundRect, {
+        x: 0.8, y: 1.8, w: 5.7, h: 5.0,
+        fill: { color: '1E293B' },
+        line: { color: '6366F1', width: 1.5 },
+        rectRadius: 0.12
+      });
+      s5.addText("PERSON / ROLE", { x: 1.1, y: 2.05, w: 3.0, h: 0.35, fontSize: 11, fontFace: 'Arial', bold: true, color: '94A3B8' });
+      s5.addText("SUBJECT PRONOUN", { x: 4.3, y: 2.05, w: 2.0, h: 0.35, fontSize: 11, fontFace: 'Arial', bold: true, color: '818CF8' });
+
+      const s5Rows = [
+        { role: "1st Person Singular", pron: "I" },
+        { role: "2nd Person (Sing./Plur.)", pron: "You" },
+        { role: "3rd Person Male", pron: "He" },
+        { role: "3rd Person Female", pron: "She" },
+        { role: "3rd Person Inanimate", pron: "It" },
+        { role: "1st Person Plural", pron: "We" },
+        { role: "3rd Person Plural", pron: "They" }
       ];
-      s5.addTable(subTable, {
-        x: 0.8, y: 1.7, w: 5.8,
-        colW: [3.8, 2.0],
-        rowH: 0.5,
-        fontSize: 12, fontFace: 'Arial', color: 'E2E8F0',
-        border: { pt: '1', color: '334155' },
-        fill: '1E293B'
+      s5Rows.forEach((r, idx) => {
+        const yPos = 2.5 + (idx * 0.58);
+        s5.addText(r.role, { x: 1.1, y: yPos, w: 3.0, h: 0.35, fontSize: 11.5, fontFace: 'Calibri', color: 'FFFFFF' });
+        s5.addText(r.pron, { x: 4.3, y: yPos, w: 2.0, h: 0.35, fontSize: 12, fontFace: 'Courier New', bold: true, color: '67E8F9' });
       });
 
-      // Right Side: Rule & Examples
+      // Right Box: Rule & Examples
       s5.addShape(pptx.ShapeType.roundRect, {
-        x: 6.9, y: 1.7, w: 5.63, h: 2.2,
+        x: 6.83, y: 1.8, w: 5.7, h: 5.0,
         fill: { color: '1E293B' },
         line: { color: 'F59E0B', width: 1.5 },
         rectRadius: 0.12
       });
-      s5.addText("⚡ THE STRUCTURAL SYNTAX RULE:", {
-        x: 7.2, y: 1.9, w: 5.0, h: 0.3,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: 'FBBF24'
+      s5.addText("CORE POSITION RULE: [ Subject Pronoun ] + Verb", {
+        x: 7.1, y: 2.1, w: 5.1, h: 0.4,
+        fontSize: 12, fontFace: 'Courier New', bold: true, color: 'FBBF24'
       });
-      s5.addText("Subject Pronoun + Verb", {
-        x: 7.2, y: 2.25, w: 5.0, h: 0.6,
-        fontSize: 22, fontFace: 'Arial', bold: true, color: 'FFFFFF'
+      s5.addText("Sentence Position: Initiates the clause, placed directly BEFORE the verb.\nðŸ‘‰ Example: I love you. ('I' = Subject initiating the action)", {
+        x: 7.1, y: 2.7, w: 5.1, h: 1.2,
+        fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
       });
-      s5.addText("The Subject Pronoun always initiates the action and is positioned BEFORE the main verb in statements.\n\nClassic Sentence Anchor: “I love you” ➔ ‘I’ is the Subject initiating the verb ‘love’.", {
-        x: 7.2, y: 2.9, w: 5.0, h: 1.1,
-        fontSize: 11, fontFace: 'Calibri', color: 'CBD5E1'
-      });
-
-      // Examples Card
       s5.addShape(pptx.ShapeType.roundRect, {
-        x: 6.9, y: 4.15, w: 5.63, h: 2.55,
-        fill: { color: '1E293B' },
-        line: { color: '38BDF8', width: 1.5 },
-        rectRadius: 0.12
+        x: 7.1, y: 4.2, w: 5.1, h: 2.3,
+        fill: { color: '0F172A' },
+        line: { color: '38BDF8', width: 1 },
+        rectRadius: 0.08
       });
-      s5.addText("NATURAL SENTENCE DEMONSTRATIONS:", {
-        x: 7.2, y: 4.35, w: 5.0, h: 0.3,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: '38BDF8'
-      });
-      s5.addText("• I am a student.\n• She is my colleague.\n• He plays football every afternoon.\n• They work at our global office.", {
-        x: 7.2, y: 4.75, w: 5.0, h: 1.7,
-        fontSize: 13, fontFace: 'Calibri', bold: true, color: 'FFFFFF',
-        lineSpacing: 22
+      s5.addText("EVERYDAY EXAMPLES:\nâ€¢ I am a student.\nâ€¢ She is my friend.\nâ€¢ He plays football.\nâ€¢ They play football.", {
+        x: 7.3, y: 4.4, w: 4.7, h: 1.9,
+        fontSize: 12.5, fontFace: 'Calibri', color: 'E0F2FE', lineSpacing: 22
       });
 
       attachNotes(s5, slidesData[4].speakerNotes);
     }
 
-    // --- SLIDE 6: OBJECT PRONOUNS ---
+    // --- SLIDE 6: PART 01 PRACTICE - QUESTION 01 ---
+    buildQuizSlide(slidesData[5], "CHECK 01",
+      "â€œTom is a talented striker. ___ plays football every weekend with his local club.â€",
+      ["A. Him", "B. He", "C. His", "D. Himself"], "B",
+      "Äá»©ng trÆ°á»›c Ä‘á»™ng tá»« 'plays' lÃ m chá»§ ngá»¯ cá»§a cÃ¢u âž” báº¯t buá»™c chá»n Ä‘áº¡i tá»« chá»§ ngá»¯ 'He'. Him (tÃ¢n ngá»¯), His (sá»Ÿ há»¯u), Himself (pháº£n thÃ¢n) Ä‘á»u sai."
+    );
+
+    // --- SLIDE 7: PART 01 PRACTICE - QUESTION 02 ---
+    buildQuizSlide(slidesData[6], "CHECK 02",
+      "â€œAfter the conference ended, David and ___ submitted the project report to the executive director.â€",
+      ["A. me", "B. I", "C. myself", "D. mine"], "B",
+      "'David and I' cÃ¹ng lÃ m chá»§ ngá»¯ cho Ä‘á»™ng tá»« 'submitted'. Táº¡m bá» 'David and', ta cÃ³ 'I submitted' (Ä‘Ãºng), chá»© khÃ´ng thá»ƒ dÃ¹ng 'me submitted'."
+    );
+
+    // --- SLIDE 8: PART 02 - OBJECT PRONOUNS ---
     {
-      const s6 = createSlide();
-      addHeader(s6, slidesData[5].category, slidesData[5].title, slidesData[5].subtitle);
+      const s8 = createSlide();
+      addHeader(s8, slidesData[7].category, slidesData[7].title, slidesData[7].subtitle);
 
-      // Left Side: Table & Principle
-      const objTable = [
-        [{ text: "Subject Form (Doer)", options: { bold: true, fill: "312E81", color: "FFFFFF" } }, { text: "Object Form (Receiver)", options: { bold: true, fill: "064E3B", color: "34D399" } }],
-        ["I", "me"],
-        ["You", "you"],
-        ["He", "him"],
-        ["She", "her"],
-        ["It", "it"],
-        ["We", "us"],
-        ["They", "them"]
-      ];
-      s6.addTable(objTable, {
-        x: 0.8, y: 1.7, w: 5.6,
-        colW: [2.8, 2.8],
-        rowH: 0.42,
-        fontSize: 11, fontFace: 'Arial', color: 'E2E8F0',
-        border: { pt: '1', color: '334155' },
-        fill: '1E293B'
-      });
-
-      s6.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 5.35, w: 5.6, h: 1.35,
+      s8.addShape(pptx.ShapeType.roundRect, {
+        x: 0.8, y: 1.8, w: 6.2, h: 5.0,
         fill: { color: '1E293B' },
-        line: { color: '818CF8', width: 1.5 },
-        rectRadius: 0.1
+        line: { color: '06B6D4', width: 1.5 },
+        rectRadius: 0.12
       });
-      s6.addText("🎯 THE CONTRAST & PLACEMENT PRINCIPLE:", {
-        x: 1.0, y: 5.45, w: 5.2, h: 0.25,
-        fontSize: 10, fontFace: 'Arial', bold: true, color: '818CF8'
+      s8.addText("GRAMMATICAL FUNCTION: RECEIVER OF ACTION", {
+        x: 1.1, y: 2.0, w: 5.6, h: 0.3,
+        fontSize: 10, fontFace: 'Arial', bold: true, color: '22D3EE'
       });
-      s6.addText("• Subject = The one who DOES the action (Before Verb: S + V)\n• Object = The one who RECEIVES the action (After Verb / Preposition: V / Prep + O)\n• Sentence Anchor: “I love you” ➔ ‘you’ sits after the verb ‘love’ as Object.", {
-        x: 1.0, y: 5.75, w: 5.2, h: 0.9,
-        fontSize: 10.5, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 15
+      s8.addText("Object pronouns receive the direct action of a transitive verb OR immediately follow a preposition.", {
+        x: 1.1, y: 2.4, w: 5.6, h: 0.8,
+        fontSize: 13, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 20
+      });
+      s8.addText("TWO GOLDEN POSITIONS:\n1. Direct/Indirect Object: After action verbs (invited them)\n2. Prepositional Object: After prepositions (between you and me)", {
+        x: 1.1, y: 3.3, w: 5.6, h: 1.2,
+        fontSize: 12, fontFace: 'Calibri', color: '6EE7B7', lineSpacing: 20
+      });
+      s8.addText("Complete Set: me, you, him, her, it, us, them", {
+        x: 1.1, y: 4.6, w: 5.6, h: 0.5,
+        fontSize: 12, fontFace: 'Courier New', color: 'CBD5E1'
+      });
+      s8.addText("Example: â€œAnna is friendly. Peter invited HER to lunch.â€", {
+        x: 1.1, y: 5.3, w: 5.6, h: 0.7,
+        fontSize: 11, fontFace: 'Calibri', italic: true, color: '67E8F9'
       });
 
-      // Right Side: Image Anna & Peter + Case study
       if (assets.anna_and_peter) {
-        s6.addImage({
-          data: assets.anna_and_peter,
-          x: 6.7, y: 1.7, w: 5.83, h: 3.2,
-          round: true
-        });
+        s8.addImage({ data: assets.anna_and_peter, x: 7.4, y: 1.8, w: 5.13, h: 5.0, round: true });
       }
-      s6.addShape(pptx.ShapeType.roundRect, {
-        x: 6.7, y: 5.05, w: 5.83, h: 1.65,
-        fill: { color: '064E3B' },
-        line: { color: '10B981', width: 1.5 },
-        rectRadius: 0.12
-      });
-      s6.addText("“She likes him.”", {
-        x: 6.9, y: 5.2, w: 5.4, h: 0.5,
-        fontSize: 18, fontFace: 'Arial', bold: true, color: 'FFFFFF'
-      });
-      s6.addText("• She = Initiator of affection (Subject, placed before verb)\n• him = Recipient of affection (Object, placed after transitive verb 'likes')", {
-        x: 6.9, y: 5.75, w: 5.4, h: 0.8,
-        fontSize: 12, fontFace: 'Calibri', color: 'A7F3D0'
-      });
-
-      attachNotes(s6, slidesData[5].speakerNotes);
+      attachNotes(s8, slidesData[7].speakerNotes);
     }
 
-    // --- QUIZ SLIDES ---
-    // Slide 7: Q1
-    buildQuizSlide(slidesData[6], "CHECK 01", "Tom is my friend. ___ is very nice.", ["A. He", "B. Him", "C. His", "D. Himself"], "A", "'Tom' is the initiator / subject performing before the verb 'is' in the second clause. Therefore, Tom = Subject Pronoun 'He'.");
+    // --- SLIDE 9: PART 02 PRACTICE - QUESTION 03 ---
+    buildQuizSlide(slidesData[8], "CHECK 03",
+      "â€œWe met our new international partners yesterday and invited ___ to visit our head office.â€",
+      ["A. they", "B. their", "C. them", "D. theirs"], "C",
+      "Äá»©ng sau ngoáº¡i Ä‘á»™ng tá»« 'invited' lÃ m tÃ¢n ngá»¯ trá»±c tiáº¿p âž” báº¯t buá»™c chá»n Ä‘áº¡i tá»« tÃ¢n ngá»¯ 'them'. They (chá»§ ngá»¯), Their (Possessive Adjective), Theirs (Possessive Pronoun) Ä‘á»u khÃ´ng há»£p lá»‡."
+    );
 
-    // Slide 8: Q2
-    buildQuizSlide(slidesData[7], "CHECK 02", "“Anna likes Peter.” — If we replace “Peter”, which sentence is correct?", ["A. Anna likes he.", "B. Anna likes him.", "C. Anna likes his.", "D. Anna likes himself."], "B", "Peter receives Anna's affection and sits after the transitive verb 'likes'. Therefore, Peter = Object Pronoun 'him'.");
+    // --- SLIDE 10: PART 02 PRACTICE - QUESTION 04 ---
+    buildQuizSlide(slidesData[9], "CHECK 04",
+      "â€œThis confidential agreement must strictly remain between the client and ___.â€",
+      ["A. I", "B. me", "C. my", "D. mine"], "B",
+      "'Between' lÃ  giá»›i tá»«. Sau giá»›i tá»« báº¯t buá»™c dÃ¹ng Ä‘áº¡i tá»« tÃ¢n ngá»¯ (Object Pronoun) âž” 'between the client and me'. KhÃ´ng thá»ƒ dÃ¹ng 'I'."
+    );
 
-    // --- SLIDE 9: POSSESSIVE PRONOUNS ---
+    // --- SLIDE 11: PART 03 - POSSESSIVE ADJECTIVES (THEORY 1) ---
     {
-      const s9 = createSlide();
-      addHeader(s9, slidesData[8].category, slidesData[8].title, slidesData[8].subtitle);
+      const s11 = createSlide();
+      addHeader(s11, slidesData[10].category, slidesData[10].title, slidesData[10].subtitle);
 
-      const posTable = [
-        [{ text: "Owner (Person)", options: { bold: true, fill: "312E81", color: "FFFFFF" } }, { text: "Possessive Pronoun", options: { bold: true, fill: "581C87", color: "F3E8FF" } }],
-        ["I", "mine"],
-        ["You", "yours"],
-        ["He", "his"],
-        ["She", "hers"],
-        ["It", "its"],
-        ["We", "ours"],
-        ["They", "theirs"]
-      ];
-      s9.addTable(posTable, {
-        x: 0.8, y: 1.7, w: 5.8,
-        colW: [3.0, 2.8],
-        rowH: 0.5,
-        fontSize: 12, fontFace: 'Arial', color: 'E2E8F0',
-        border: { pt: '1', color: '334155' },
-        fill: '1E293B'
-      });
-
-      // Right Side Cards
-      s9.addShape(pptx.ShapeType.roundRect, {
-        x: 6.9, y: 1.7, w: 5.63, h: 2.2,
-        fill: { color: '1E293B' },
-        line: { color: 'C084FC', width: 1.5 },
-        rectRadius: 0.12
-      });
-      s9.addText("🔑 THE STRATEGIC FUNCTION:", {
-        x: 7.2, y: 1.9, w: 5.0, h: 0.3,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: 'C084FC'
-      });
-      s9.addText("Directly Answers: “Whose is this?”", {
-        x: 7.2, y: 2.25, w: 5.0, h: 0.5,
-        fontSize: 18, fontFace: 'Arial', bold: true, color: 'FBBF24'
-      });
-      s9.addText("Used to declare ownership definitively without having to mention the noun a second time.", {
-        x: 7.2, y: 2.85, w: 5.0, h: 0.8,
-        fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1'
-      });
-
-      s9.addShape(pptx.ShapeType.roundRect, {
-        x: 6.9, y: 4.15, w: 5.63, h: 2.55,
-        fill: { color: '1E293B' },
-        line: { color: '10B981', width: 1.5 },
-        rectRadius: 0.12
-      });
-      s9.addText("EXECUTIVE DEMONSTRATION:", {
-        x: 7.2, y: 4.35, w: 5.0, h: 0.3,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: '34D399'
-      });
-      s9.addText("“This book is mine.”", {
-        x: 7.2, y: 4.75, w: 5.0, h: 0.6,
-        fontSize: 22, fontFace: 'Arial', bold: true, color: 'FFFFFF'
-      });
-      s9.addText("= This book belongs to me.\nThe word 'mine' stands completely alone at the end with NO following noun.", {
-        x: 7.2, y: 5.4, w: 5.0, h: 1.0,
-        fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1'
-      });
-
-      attachNotes(s9, slidesData[8].speakerNotes);
-    }
-
-    // --- SLIDE 10: ADJECTIVE VS PRONOUN ---
-    {
-      const s10 = createSlide();
-      addHeader(s10, slidesData[9].category, slidesData[9].title, slidesData[9].subtitle);
-
-      // Left: Possessive Adjective
-      s10.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 1.7, w: 5.7, h: 4.1,
+      // Left Box: Rule & Examples
+      s11.addShape(pptx.ShapeType.roundRect, {
+        x: 0.8, y: 1.8, w: 5.7, h: 5.0,
         fill: { color: '1E293B' },
         line: { color: 'F59E0B', width: 1.5 },
         rectRadius: 0.12
       });
-      s10.addText("CATEGORY A: POSSESSIVE ADJECTIVES", {
-        x: 1.1, y: 1.95, w: 5.1, h: 0.3,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: 'FBBF24'
+      s11.addText("CORE STRUCTURAL LAW: POSSESSIVE ADJECTIVE + NOUN", {
+        x: 1.1, y: 2.0, w: 5.1, h: 0.3,
+        fontSize: 10, fontFace: 'Arial', bold: true, color: 'FBBF24'
       });
-      s10.addText("my, your, his, her, its, our, their", {
-        x: 1.1, y: 2.3, w: 5.1, h: 0.4,
-        fontSize: 14, fontFace: 'Arial', bold: true, color: 'FFFFFF'
+      s11.addText("Possessive adjectives cannot stand alone. They function strictly as determiners that modify and establish ownership over a following noun.", {
+        x: 1.1, y: 2.35, w: 5.1, h: 0.7,
+        fontSize: 12, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 18
       });
-      s10.addShape(pptx.ShapeType.roundRect, {
-        x: 1.1, y: 2.85, w: 5.1, h: 2.6,
+      s11.addText("FORMULA:  [ Possessive Adjective ] + [ MANDATORY NOUN ]", {
+        x: 1.1, y: 3.15, w: 5.1, h: 0.35,
+        fontSize: 11, fontFace: 'Courier New', bold: true, color: '6EE7B7'
+      });
+      s11.addText("Complete Set: my, your, his, her, its, our, their", {
+        x: 1.1, y: 3.65, w: 5.1, h: 0.4,
+        fontSize: 11.5, fontFace: 'Courier New', color: 'CBD5E1'
+      });
+
+      // Examples Box
+      s11.addShape(pptx.ShapeType.roundRect, {
+        x: 1.1, y: 4.25, w: 5.1, h: 2.1,
         fill: { color: '0F172A' },
-        line: { color: '334155', width: 1 },
+        line: { color: 'F59E0B', width: 1 },
         rectRadius: 0.08
       });
-      s10.addText("⚠️ MANDATORY NOUN COLLOCATION:\n\nFormula:  TTSH + Noun / Noun Phrase\n\nExample:  This is my book.\n               My house is beautiful.\n\n➔ CANNOT stand alone without a noun!", {
-        x: 1.3, y: 3.0, w: 4.7, h: 2.3,
-        fontSize: 12.5, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 17
+      s11.addText("VERIFIED EXAMPLES:", {
+        x: 1.3, y: 4.4, w: 4.7, h: 0.3,
+        fontSize: 10.5, fontFace: 'Arial', bold: true, color: 'FBBF24'
+      });
+      s11.addText("1. \"This is my book.\"\n    my modifies 'book' (Possessive Adjective + Noun)\n\n2. \"Her laptop is on the table.\"\n    Her modifies 'laptop' (Never stands alone)", {
+        x: 1.3, y: 4.75, w: 4.7, h: 1.4,
+        fontSize: 11, fontFace: 'Calibri', color: 'FDE68A', lineSpacing: 18
       });
 
-      // Right: Possessive Pronoun
-      s10.addShape(pptx.ShapeType.roundRect, {
-        x: 6.83, y: 1.7, w: 5.7, h: 4.1,
+      // Right Box: Its vs It's Trap
+      s11.addShape(pptx.ShapeType.roundRect, {
+        x: 6.83, y: 1.8, w: 5.7, h: 5.0,
         fill: { color: '1E293B' },
-        line: { color: '818CF8', width: 1.5 },
+        line: { color: '06B6D4', width: 1.5 },
         rectRadius: 0.12
       });
-      s10.addText("CATEGORY B: POSSESSIVE PRONOUNS", {
-        x: 7.1, y: 1.95, w: 5.1, h: 0.3,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: '818CF8'
+      s11.addText("THE NOTORIOUS 'ITS' VS 'IT'S' TRAP", {
+        x: 7.1, y: 2.0, w: 5.1, h: 0.3,
+        fontSize: 10, fontFace: 'Arial', bold: true, color: '22D3EE'
       });
-      s10.addText("mine, yours, his, hers, ours, theirs", {
-        x: 7.1, y: 2.3, w: 5.1, h: 0.4,
-        fontSize: 14, fontFace: 'Arial', bold: true, color: 'FFFFFF'
-      });
-      s10.addShape(pptx.ShapeType.roundRect, {
-        x: 7.1, y: 2.85, w: 5.1, h: 2.6,
-        fill: { color: '0F172A' },
-        line: { color: '334155', width: 1 },
+      s11.addShape(pptx.ShapeType.roundRect, {
+        x: 7.1, y: 2.5, w: 5.1, h: 1.6,
+        fill: { color: '0C2D48' },
+        line: { color: '38BDF8', width: 1 },
         rectRadius: 0.08
       });
-      s10.addText("✅ STANDALONE SYNTACTIC ROLE:\n\nFormula:  STANDALONE (Replaces Adjective + Noun)\n\nExample:  The book is mine. (= my book)\n               The car is hers. (= her car)\n\n➔ Already replaces the noun completely!", {
-        x: 7.3, y: 3.0, w: 4.7, h: 2.3,
-        fontSize: 12.5, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 17
+      s11.addText("🔵 ITS (NO APOSTROPHE) = Tính từ sở hữu\nDùng để chỉ quyền sở hữu của đồ vật, sự vật, con vật:\n👉 “The company updated its security protocol.”", {
+        x: 7.3, y: 2.6, w: 4.7, h: 1.4,
+        fontSize: 11.5, fontFace: 'Calibri', color: 'E0F2FE', lineSpacing: 18
       });
 
-      // Bottom Rule Banner: Algebraic Equation
-      s10.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 6.0, w: 11.73, h: 0.85,
-        fill: { color: '1E1B4B' },
-        line: { color: '6366F1', width: 1.5 },
-        rectRadius: 0.1
+      s11.addShape(pptx.ShapeType.roundRect, {
+        x: 7.1, y: 4.4, w: 5.1, h: 1.6,
+        fill: { color: '2A1215' },
+        line: { color: 'EF4444', width: 1 },
+        rectRadius: 0.08
       });
-      s10.addText("💡 THE ALGEBRAIC LAW:   Possessive Pronoun = Possessive Adjective + Noun   (mine = my books)   |   TTSH + N/NP (My house is beautiful)", {
-        x: 0.8, y: 6.0, w: 11.73, h: 0.85,
-        fontSize: 12.5, fontFace: 'Arial', bold: true, color: 'FBBF24',
-        align: 'center', valign: 'middle'
+      s11.addText("🔴 IT'S (WITH APOSTROPHE) = Viết tắt của 'it is' / 'it has'\nLà cụm Chủ ngữ + Động từ, không phải tính từ sở hữu:\n👉 “It's important to double-check the figures.”", {
+        x: 7.3, y: 4.5, w: 4.7, h: 1.4,
+        fontSize: 11.5, fontFace: 'Calibri', color: 'FEE2E2', lineSpacing: 18
       });
 
-      attachNotes(s10, slidesData[9].speakerNotes);
+      attachNotes(s11, slidesData[10].speakerNotes);
     }
 
-    // Slide 11: Q3
-    buildQuizSlide(slidesData[10], "CHECK 03", "This is ___ book.", ["A. mine", "B. my", "C. me", "D. I"], "B", "The noun 'book' immediately follows the blank. By the rule [Possessive Adjective + Noun], we must choose 'my'.");
-
-    // Slide 12: Q4
-    buildQuizSlide(slidesData[11], "CHECK 04", "This book is ___.", ["A. my", "B. me", "C. mine", "D. I"], "C", "There is NO noun after the blank at the end of the sentence. Therefore, we use the standalone possessive pronoun 'mine'.");
-
-    // --- SLIDE 13: REFLEXIVE PRONOUNS ---
+    // --- SLIDE 12: PART 03 - THE 7 POSSESSIVE ADJECTIVES (THEORY 2 - BỔ SUNG) ---
     {
-      const s13 = createSlide();
-      addHeader(s13, slidesData[12].category, slidesData[12].title, slidesData[12].subtitle);
+      const s12 = createSlide();
+      addHeader(s12, slidesData[11].category, slidesData[11].title, slidesData[11].subtitle);
 
-      // Left Column: 3 Core Functions Card
-      s13.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 1.7, w: 6.0, h: 2.35,
+      // Left Box: Singular (5 rows)
+      s12.addShape(pptx.ShapeType.roundRect, {
+        x: 0.8, y: 1.8, w: 5.7, h: 5.0,
         fill: { color: '1E293B' },
-        line: { color: 'C084FC', width: 1.5 },
+        line: { color: 'F59E0B', width: 1.5 },
         rectRadius: 0.12
       });
-      s13.addText("🪞 3 DISTINCT CORE FUNCTIONS:", {
-        x: 1.1, y: 1.85, w: 5.4, h: 0.25,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: 'C084FC'
-      });
-      s13.addText("1. Subject = Object: “I love myself” (Action returns to doer)\n2. Emphatic: “She carries these books herself” (Intensifies doer)\n3. Idiom with ‘by’: “by myself / by yourself” = alone (unassisted)", {
-        x: 1.1, y: 2.2, w: 5.4, h: 1.7,
-        fontSize: 11.5, fontFace: 'Calibri', bold: true, color: 'FFFFFF', lineSpacing: 17
+      s12.addText("SINGULAR FORMS (DẠNG SỐ ÍT)", {
+        x: 1.1, y: 2.0, w: 5.1, h: 0.3,
+        fontSize: 10, fontFace: 'Arial', bold: true, color: 'FBBF24'
       });
 
-      // Singular vs Plural Table
-      const refTable = [
-        [{ text: "Singular (-self)", options: { bold: true, fill: "312E81", color: "FFFFFF" } }, { text: "Plural (-selves)", options: { bold: true, fill: "581C87", color: "F3E8FF" } }],
-        ["myself, yourself", "ourselves"],
-        ["himself, herself, itself", "yourselves, themselves"]
+      const singularPairs = [
+        { pro: "I", adj: "MY", eg: "my phone", vn: "điện thoại của tôi" },
+        { pro: "YOU", adj: "YOUR", eg: "your idea", vn: "ý tưởng của bạn" },
+        { pro: "HE", adj: "HIS", eg: "his car", vn: "xe của anh ấy" },
+        { pro: "SHE", adj: "HER", eg: "her bag", vn: "túi của cô ấy" },
+        { pro: "IT", adj: "ITS", eg: "its tail", vn: "cái đuôi của nó" }
       ];
-      s13.addTable(refTable, {
-        x: 0.8, y: 4.25, w: 6.0,
-        colW: [3.0, 3.0],
-        rowH: 0.55,
-        fontSize: 12, fontFace: 'Arial', color: 'E2E8F0',
-        border: { pt: '1', color: '334155' },
-        fill: '1E293B'
-      });
 
-      // Right Column: Image
-      if (assets.reflexive_mirror) {
-        s13.addImage({
-          data: assets.reflexive_mirror,
-          x: 7.1, y: 1.7, w: 5.43, h: 5.0,
-          round: true
+      singularPairs.forEach((item, idx) => {
+        const yPos = 2.45 + (idx * 0.82);
+        s12.addShape(pptx.ShapeType.roundRect, {
+          x: 1.1, y: yPos, w: 5.1, h: 0.68,
+          fill: { color: '0F172A' },
+          line: { color: '334155', width: 1 },
+          rectRadius: 0.06
         });
-      }
-      attachNotes(s13, slidesData[12].speakerNotes);
-    }
-
-    // Slide 14: Q5
-    buildQuizSlide(slidesData[13], "CHECK 05", "John cut ___ while cooking.", ["A. him", "B. his", "C. himself", "D. he"], "C", "John performed the slicing action and John suffered the injury. The doer and receiver are the exact same person ➔ 'himself'.");
-
-    // --- SLIDE 15: DEMONSTRATIVE PRONOUNS ---
-    {
-      const s15 = createSlide();
-      addHeader(s15, slidesData[14].category, slidesData[14].title, slidesData[14].subtitle);
-
-      // Left Column: 2x2 Matrix Table & Rules
-      const demTable = [
-        [{ text: "Quantity / Distance", options: { bold: true, fill: "312E81", color: "FFFFFF" } }, { text: "NEAR (Close to Speaker)", options: { bold: true, fill: "0369A1", color: "38BDF8" } }, { text: "FAR (Distant from Speaker)", options: { bold: true, fill: "B45309", color: "FBBF24" } }],
-        ["Singular (1 item)", "THIS  (This is my phone)", "THAT  (That is my car)"],
-        ["Plural (Multiple items)", "THESE  (These are my books)", "THOSE  (Those are my shoes)"]
-      ];
-      s15.addTable(demTable, {
-        x: 0.8, y: 1.7, w: 6.0,
-        colW: [2.0, 2.0, 2.0],
-        rowH: 0.75,
-        fontSize: 11, fontFace: 'Arial', color: 'E2E8F0',
-        border: { pt: '1', color: '334155' },
-        fill: '1E293B'
-      });
-
-      s15.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 4.4, w: 6.0, h: 2.3,
-        fill: { color: '1E293B' },
-        line: { color: '38BDF8', width: 1.5 },
-        rectRadius: 0.12
-      });
-      s15.addText("⚡ THE TWO-AXIS COORDINATE & ADVANCED RULES:", {
-        x: 1.1, y: 4.55, w: 5.4, h: 0.25,
-        fontSize: 10, fontFace: 'Arial', bold: true, color: '38BDF8'
-      });
-      s15.addText("• Axis 1 (Distance): This / These = NEAR  |  That / Those = FAR\n• Axis 2 (Quantity): This / That = 1 (Singular)  |  These / Those = MANY (Plural)\n• Uncountable Nouns: Use THIS / THAT (e.g. this water, that advice)\n• Contextual Reference: 'That' frequently refers back to an identified idea.", {
-        x: 1.1, y: 4.85, w: 5.4, h: 1.7,
-        fontSize: 10.5, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 15
-      });
-
-      // Right Column: Image
-      if (assets.spatial_pointers) {
-        s15.addImage({
-          data: assets.spatial_pointers,
-          x: 7.1, y: 1.7, w: 5.43, h: 5.0,
-          round: true
+        s12.addText(`${item.pro}  →  ${item.adj}`, {
+          x: 1.25, y: yPos + 0.12, w: 2.2, h: 0.4,
+          fontSize: 12, fontFace: 'Arial', bold: true, color: 'FBBF24'
         });
-      }
-      attachNotes(s15, slidesData[14].speakerNotes);
-    }
-
-    // Slide 16: Q6
-    buildQuizSlide(slidesData[15], "CHECK 06", "You are holding a book in your hand. You say: “___ is my book.”", ["A. Those", "B. These", "C. This", "D. That"], "C", "The book is held right in your hand (NEAR) and is 1 item (SINGULAR) ➔ 'This'.");
-
-    // Slide 17: Q7
-    buildQuizSlide(slidesData[16], "CHECK 07", "You see multiple cars parked far down the road. You say: “___ are cars.”", ["A. This", "B. That", "C. These", "D. Those"], "D", "Multiple vehicles (PLURAL) positioned in the distance (FAR) ➔ 'Those'.");
-
-    // --- SLIDE 18: INDEFINITE PRONOUNS & SINGULAR VERB LAW ---
-    {
-      const s18 = createSlide();
-      addHeader(s18, slidesData[17].category, slidesData[17].title, slidesData[17].subtitle);
-
-      // Left Table: Indefinite Pronouns Matrix
-      const indTable = [
-        [{ text: "Suffix / Category", options: { bold: true, fill: "312E81", color: "FFFFFF" } }, { text: "Indefinite Pronouns", options: { bold: true, fill: "312E81", color: "38BDF8" } }, { text: "Agreement Law", options: { bold: true, fill: "312E81", color: "FBBF24" } }],
-        ["-body / -one (People)", "everyone, someone, anyone, no one, everybody, somebody, nobody", "SINGULAR VERB"],
-        ["-thing (Objects/Events)", "everything, something, anything, nothing", "SINGULAR VERB"],
-        ["Distribution / Choice", "each, either, neither, another, each other", "SINGULAR VERB"]
-      ];
-      s18.addTable(indTable, {
-        x: 0.8, y: 1.7, w: 6.2,
-        colW: [1.8, 3.2, 1.2],
-        rowH: 0.75,
-        fontSize: 10.5, fontFace: 'Arial', color: 'E2E8F0',
-        border: { pt: '1', color: '334155' },
-        fill: '1E293B'
+        s12.addText(`${item.eg} (${item.vn})`, {
+          x: 3.3, y: yPos + 0.14, w: 2.8, h: 0.4,
+          fontSize: 11, fontFace: 'Calibri', color: 'E2E8F0'
+        });
       });
 
-      // Right Top: Singular Verb Law Banner
-      s18.addShape(pptx.ShapeType.roundRect, {
-        x: 7.3, y: 1.7, w: 5.23, h: 2.3,
-        fill: { color: '1E293B' },
-        line: { color: 'EF4444', width: 2 },
-        rectRadius: 0.12
-      });
-      s18.addText("⚠️ THE CRUCIAL TOEIC LAW:", {
-        x: 7.5, y: 1.85, w: 4.8, h: 0.25,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: 'F87171'
-      });
-      s18.addText("Indefinite Pronoun + Singular Verb", {
-        x: 7.5, y: 2.15, w: 4.8, h: 0.45,
-        fontSize: 16, fontFace: 'Arial', bold: true, color: 'FFFFFF'
-      });
-      s18.addText("Formula: Vs/es  |  is  |  was  |  has\n\nEven though 'everyone/everybody' represents all people conceptually, English grammar commands a SINGULAR verb without exception!", {
-        x: 7.5, y: 2.65, w: 4.8, h: 1.2,
-        fontSize: 11, fontFace: 'Calibri', color: 'FCD34D', lineSpacing: 16
-      });
-
-      // Right Bottom: Example Demonstrations
-      s18.addShape(pptx.ShapeType.roundRect, {
-        x: 7.3, y: 4.15, w: 5.23, h: 2.55,
+      // Right Box: Plural (2 rows) + Core Law
+      s12.addShape(pptx.ShapeType.roundRect, {
+        x: 6.83, y: 1.8, w: 5.7, h: 5.0,
         fill: { color: '1E293B' },
         line: { color: '10B981', width: 1.5 },
         rectRadius: 0.12
       });
-      s18.addText("EXECUTIVE SENTENCE DEMONSTRATIONS:", {
-        x: 7.5, y: 4.35, w: 4.8, h: 0.25,
+      s12.addText("PLURAL FORMS & CORE GRAMMAR LAW", {
+        x: 7.1, y: 2.0, w: 5.1, h: 0.3,
         fontSize: 10, fontFace: 'Arial', bold: true, color: '34D399'
       });
-      s18.addText("• Everyone has a vital role in our department.\n• Somebody is waiting at the executive lounge.\n• Nothing is impossible if we collaborate.\n• Each of the proposals was approved.", {
-        x: 7.5, y: 4.7, w: 4.8, h: 1.8,
-        fontSize: 11.5, fontFace: 'Calibri', bold: true, color: 'FFFFFF', lineSpacing: 19
+
+      const pluralPairs = [
+        { pro: "WE", adj: "OUR", eg: "our team", vn: "đội của chúng tôi" },
+        { pro: "THEY", adj: "THEIR", eg: "their house", vn: "nhà của họ" }
+      ];
+
+      pluralPairs.forEach((item, idx) => {
+        const yPos = 2.45 + (idx * 0.82);
+        s12.addShape(pptx.ShapeType.roundRect, {
+          x: 7.1, y: yPos, w: 5.1, h: 0.68,
+          fill: { color: '0F172A' },
+          line: { color: '334155', width: 1 },
+          rectRadius: 0.06
+        });
+        s12.addText(`${item.pro}  →  ${item.adj}`, {
+          x: 7.25, y: yPos + 0.12, w: 2.2, h: 0.4,
+          fontSize: 12, fontFace: 'Arial', bold: true, color: '34D399'
+        });
+        s12.addText(`${item.eg} (${item.vn})`, {
+          x: 9.3, y: yPos + 0.14, w: 2.8, h: 0.4,
+          fontSize: 11, fontFace: 'Calibri', color: 'E2E8F0'
+        });
       });
 
-      attachNotes(s18, slidesData[17].speakerNotes);
+      // Core Grammar Law Card
+      s12.addShape(pptx.ShapeType.roundRect, {
+        x: 7.1, y: 4.3, w: 5.1, h: 2.1,
+        fill: { color: '0F172A' },
+        line: { color: 'F59E0B', width: 1.5 },
+        rectRadius: 0.08
+      });
+      s12.addText("📌 QUY TẮC NGỮ PHÁP BẤT BIẾN:", {
+        x: 7.3, y: 4.45, w: 4.7, h: 0.3,
+        fontSize: 10.5, fontFace: 'Arial', bold: true, color: 'FBBF24'
+      });
+      s12.addText("[ Tính từ sở hữu ] + [ NOUN / Cụm Danh Từ ]", {
+        x: 7.3, y: 4.85, w: 4.7, h: 0.35,
+        fontSize: 12, fontFace: 'Courier New', bold: true, color: '6EE7B7'
+      });
+      s12.addText("Cả 7 tính từ sở hữu bắt buộc phải có danh từ đi liền phía sau để xác định quyền sở hữu. Chúng TUYỆT ĐỐI không bao giờ đứng độc lập một mình!", {
+        x: 7.3, y: 5.25, w: 4.7, h: 0.95,
+        fontSize: 11, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
+      });
+
+      attachNotes(s12, slidesData[11].speakerNotes);
     }
 
-    // Slide 19: Check 08
-    buildQuizSlide(slidesData[18], "CHECK 08", "“Everyone on the executive board ___ agreed to the proposal.”", ["A. have", "B. has", "C. are", "D. were"], "B", "Even though 'everyone' refers to multiple members conceptually, indefinite pronouns ending in -one, -body, -thing strictly take a SINGULAR verb. Between 'has' and 'have', 'has' is the singular form.");
+    // --- SLIDE 13: PART 03 PRACTICE - QUESTION 05 (CHECK 1) ---
+    buildQuizSlide(slidesData[12], "CHECK 05",
+      "\"John is looking for _______ keys. He cannot find them anywhere.\"",
+      ["A. he", "B. him", "C. his", "D. himself"], "C",
+      "Ngay sau khoảng trống là danh từ số nhiều keys (chìa khóa). Áp dụng quy tắc: [Tính từ sở hữu + Noun], vị trí này cần một tính từ sở hữu để bổ nghĩa cho keys. Chủ thể là danh từ chỉ người nam số ít (John), do đó ta chọn his."
+    );
 
-    // --- SLIDE 20: INTERROGATIVE PRONOUNS ---
+    // --- SLIDE 14: PART 03 PRACTICE - QUESTION 06 (CHECK 2) ---
+    buildQuizSlide(slidesData[13], "CHECK 06",
+      "\"We invited all of _______ friends to the end-of-year party.\"",
+      ["A. our", "B. us", "C. ours", "D. we"], "A",
+      "Phía sau khoảng trống có danh từ friends (những người bạn). Theo công thức [Tính từ sở hữu + Noun], ta cần một tính từ sở hữu. Với đại từ chủ ngữ We (chúng tôi), tính từ sở hữu tương ứng là our (our friends = những người bạn của chúng tôi). Lưu ý: ours là đại từ sở hữu, đứng một mình và không có danh từ friends theo sau."
+    );
+
+
+    // --- SLIDE 15: PART 04 - POSSESSIVE PRONOUNS (NO BROKEN IMAGES - RICH TABLE & PILLS) ---
+    {
+      const s15 = createSlide();
+      addHeader(s15, slidesData[14].category, slidesData[14].title, slidesData[14].subtitle);
+
+      // Left Box: Owner Table
+      s15.addShape(pptx.ShapeType.roundRect, {
+        x: 0.8, y: 1.8, w: 5.7, h: 5.0,
+        fill: { color: '1E293B' },
+        line: { color: '8B5CF6', width: 1.5 },
+        rectRadius: 0.12
+      });
+      s15.addText("OWNER", { x: 1.2, y: 2.1, w: 2.2, h: 0.3, fontSize: 11, fontFace: 'Arial', bold: true, color: '94A3B8' });
+      s15.addText("POSSESSIVE PRONOUN", { x: 3.6, y: 2.1, w: 2.6, h: 0.3, fontSize: 11, fontFace: 'Arial', bold: true, color: 'C084FC' });
+
+      const pronRows = [
+        { owner: "I", pron: "mine" }, { owner: "You", pron: "yours" },
+        { owner: "He", pron: "his" }, { owner: "She", pron: "hers" },
+        { owner: "It", pron: "its" }, { owner: "We", pron: "ours" },
+        { owner: "They", pron: "theirs" }
+      ];
+
+      pronRows.forEach((r, idx) => {
+        const yPos = 2.5 + (idx * 0.55);
+        s15.addText(r.owner, { x: 1.2, y: yPos, w: 2.2, h: 0.35, fontSize: 12, fontFace: 'Calibri', color: 'FFFFFF' });
+        s15.addText(r.pron, { x: 3.6, y: yPos, w: 2.6, h: 0.35, fontSize: 12, fontFace: 'Courier New', bold: true, color: 'C084FC' });
+      });
+
+      // Right Box: Strategic Demonstration
+      s15.addShape(pptx.ShapeType.roundRect, {
+        x: 6.83, y: 1.8, w: 5.7, h: 5.0,
+        fill: { color: '1E293B' },
+        line: { color: '10B981', width: 1.5 },
+        rectRadius: 0.12
+      });
+      s15.addText("STRATEGIC ROLE: STANDALONE OWNERSHIP", {
+        x: 7.1, y: 2.0, w: 5.1, h: 0.3,
+        fontSize: 10, fontFace: 'Arial', bold: true, color: '34D399'
+      });
+      s15.addText("Used to declare ownership definitively without repeating the noun:\nâ€œWhose is this?â€", {
+        x: 7.1, y: 2.4, w: 5.1, h: 0.8,
+        fontSize: 13, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 20
+      });
+
+      s15.addShape(pptx.ShapeType.roundRect, {
+        x: 7.1, y: 3.4, w: 5.1, h: 1.6,
+        fill: { color: '064E3B' },
+        line: { color: '10B981', width: 1 },
+        rectRadius: 0.08
+      });
+      s15.addText("EXECUTIVE DEMONSTRATION:\nâ€œThis book is MINE.â€\n= This book belongs to me.\n(Stands completely alone without any accompanying noun)", {
+        x: 7.3, y: 3.5, w: 4.7, h: 1.4,
+        fontSize: 12, fontFace: 'Calibri', bold: true, color: 'A7F3D0', lineSpacing: 18
+      });
+
+      attachNotes(s15, slidesData[14].speakerNotes);
+    }
+
+    // --- SLIDE 16: PART 03 & 04 SYNTHESIS ---
+    {
+      const s16 = createSlide();
+      addHeader(s16, slidesData[15].category, slidesData[15].title, slidesData[15].subtitle);
+
+      s16.addShape(pptx.ShapeType.roundRect, {
+        x: 0.8, y: 1.8, w: 11.73, h: 5.0,
+        fill: { color: '1E293B' },
+        line: { color: '6366F1', width: 1 },
+        rectRadius: 0.12
+      });
+
+      const synthRows = [
+        { person: "1st Person Singular", adj: "my laptop", pron: "mine" },
+        { person: "2nd Person (Sing./Plur.)", adj: "your report", pron: "yours" },
+        { person: "3rd Person Male", adj: "his office", pron: "his" },
+        { person: "3rd Person Female", adj: "her proposal", pron: "hers" },
+        { person: "1st Person Plural", adj: "our project", pron: "ours" },
+        { person: "3rd Person Plural", adj: "their strategy", pron: "theirs" }
+      ];
+
+      // Table Header
+      s16.addText("PERSON / ENTITY", { x: 1.2, y: 2.1, w: 3.5, h: 0.35, fontSize: 11, fontFace: 'Arial', bold: true, color: '94A3B8' });
+      s16.addText("POSSESSIVE ADJ (+ NOUN)", { x: 4.8, y: 2.1, w: 3.8, h: 0.35, fontSize: 11, fontFace: 'Arial', bold: true, color: 'FBBF24' });
+      s16.addText("POSSESSIVE PRONOUN (STANDALONE)", { x: 8.7, y: 2.1, w: 3.5, h: 0.35, fontSize: 11, fontFace: 'Arial', bold: true, color: '34D399' });
+
+      synthRows.forEach((r, idx) => {
+        const yPos = 2.6 + (idx * 0.65);
+        s16.addText(r.person, { x: 1.2, y: yPos, w: 3.5, h: 0.4, fontSize: 12, fontFace: 'Calibri', color: 'FFFFFF' });
+        s16.addText(r.adj, { x: 4.8, y: yPos, w: 3.8, h: 0.4, fontSize: 12, fontFace: 'Calibri', bold: true, color: 'FDE68A' });
+        s16.addText(r.pron, { x: 8.7, y: yPos, w: 3.5, h: 0.4, fontSize: 12, fontFace: 'Calibri', bold: true, color: '6EE7B7' });
+      });
+
+      attachNotes(s16, slidesData[15].speakerNotes);
+    }
+
+    // --- SLIDE 17: PART 04 PRACTICE - QUESTION 07 ---
+    buildQuizSlide(slidesData[16], "CHECK 07",
+      "â€œMy car is in the repair shop, but ___ is parked outside.â€",
+      ["A. your", "B. yours", "C. you", "D. yourself"], "B",
+      "Chá»— trá»‘ng lÃ m chá»§ ngá»¯ cá»§a váº¿ sau vÃ  khÃ´ng cÃ³ danh tá»« Ä‘i kÃ¨m âž” báº¯t buá»™c dÃ¹ng Possessive Pronoun 'yours' (= your car). PhÆ°Æ¡ng Ã¡n 'your' báº¯t buá»™c pháº£i cÃ³ danh tá»« phÃ­a sau."
+    );
+
+    // --- SLIDE 18: PART 04 PRACTICE - QUESTION 08 ---
+    buildQuizSlide(slidesData[17], "CHECK 08",
+      "â€œThese project documents belong to the marketing team; in fact, they are ___.â€",
+      ["A. their", "B. them", "C. theirs", "D. themselves"], "C",
+      "Äá»©ng sau Ä‘á»™ng tá»« 'are' á»Ÿ cuá»‘i cÃ¢u Ä‘á»ƒ chá»‰ sá»± sá»Ÿ há»¯u Ä‘á»™c láº­p (they are theirs = they are their documents). Báº¯t buá»™c dÃ¹ng Possessive Pronoun 'theirs'."
+    );
+
+    // --- SLIDE 19: PART 05 - REFLEXIVE PRONOUNS (CORE FOCUS) ---
+    {
+      const s19 = createSlide();
+      addHeader(s19, slidesData[18].category, slidesData[18].title, slidesData[18].subtitle);
+
+      s19.addShape(pptx.ShapeType.roundRect, {
+        x: 0.8, y: 1.8, w: 6.2, h: 5.0,
+        fill: { color: '1E293B' },
+        line: { color: 'EC4899', width: 1.5 },
+        rectRadius: 0.12
+      });
+      s19.addText("3 STRATEGIC WORKPLACE FUNCTIONS", {
+        x: 1.1, y: 2.0, w: 5.6, h: 0.3,
+        fontSize: 10, fontFace: 'Arial', bold: true, color: 'F472B6'
+      });
+      s19.addText("1. Reflection (Subject = Object):\nAction reflects back onto the actor: â€œI love myself.â€\n\n2. Emphatic Intensifier:\nEmphasizes personal execution: â€œShe carries these books herself.â€\n\n3. Solo Execution (By + Oneself):\nCompleting a task alone: â€œI did it by myself.â€ (= alone)", {
+        x: 1.1, y: 2.4, w: 5.6, h: 2.6,
+        fontSize: 11.5, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 18
+      });
+      s19.addText("Forms: myself, yourself, himself, herself, itself, ourselves, yourselves, themselves", {
+        x: 1.1, y: 5.3, w: 5.6, h: 0.8,
+        fontSize: 10.5, fontFace: 'Courier New', color: 'FBCFE8'
+      });
+
+      if (assets.reflexive_mirror) {
+        s19.addImage({ data: assets.reflexive_mirror, x: 7.4, y: 1.8, w: 5.13, h: 5.0, round: true });
+      }
+      attachNotes(s19, slidesData[18].speakerNotes);
+    }
+
+    // --- SLIDE 20: PART 05 - OVERVIEW OF OTHER PRONOUNS ---
     {
       const s20 = createSlide();
       addHeader(s20, slidesData[19].category, slidesData[19].title, slidesData[19].subtitle);
 
-      const intTable = [
-        [{ text: "Pronoun", options: { bold: true, fill: "312E81", color: "FFFFFF" } }, { text: "Inquiry Target & Meaning", options: { bold: true, fill: "312E81", color: "38BDF8" } }],
-        ["Who", "Person (Subject)  ➔  “Who is she?”"],
-        ["Whom", "Person (Object, formal)  ➔  “Whom did you meet?”"],
-        ["Whose", "Possession / Ownership  ➔  “Whose book is this?”"],
-        ["What", "Thing, Event, Idea  ➔  “What is this?”"],
-        ["Which", "Specific Choice among options  ➔  “Which do you like?”"]
-      ];
-      s20.addTable(intTable, {
-        x: 0.8, y: 1.7, w: 6.2,
-        colW: [1.8, 4.4],
-        rowH: 0.65,
-        fontSize: 11, fontFace: 'Arial', color: 'E2E8F0',
-        border: { pt: '1', color: '334155' },
-        fill: '1E293B'
-      });
+      // Left: Spatial pointer image
+      if (assets.spatial_pointers) {
+        s20.addImage({ data: assets.spatial_pointers, x: 0.8, y: 1.8, w: 4.8, h: 4.9, round: true });
+      }
 
-      // Right 4 Cards
-      const intCards = [
-        { y: 1.7, color: '38BDF8', word: "WHO", ex: "“Who is she?” (Person as Subject)" },
-        { y: 2.95, color: 'C084FC', word: "WHOSE", ex: "“Whose phone is this?” (Investigating Ownership)" },
-        { y: 4.2, color: '34D399', word: "WHAT", ex: "“What happened?” (Inquiring on Events/Things)" },
-        { y: 5.45, color: 'FBBF24', word: "WHICH", ex: "“Which one do you prefer?” (Definite Choice)" }
+      // Right: 4 Overview Cards
+      const extCards = [
+        {
+          title: "1. DEMONSTRATIVE (Chá»‰ Ä‘á»‹nh)",
+          words: "This, That, These, Those",
+          rules: "Gáº§n: This / These â€¢ Xa: That / Those. CÃ³ thá»ƒ Ä‘i kÃ¨m danh tá»« khÃ´ng Ä‘áº¿m Ä‘Æ°á»£c (This advice).",
+          color: '38BDF8'
+        },
+        {
+          title: "2. INDEFINITE (Báº¥t Ä‘á»‹nh)",
+          words: "everyone, someone, anything...",
+          rules: "âš ï¸ QUY Táº®C VÃ€NG: LuÃ´n chia Ä‘á»™ng tá»« sá»‘ Ã­t (Everyone is ready).",
+          color: '34D399'
+        },
+        {
+          title: "3. INTERROGATIVE (Nghi váº¥n)",
+          words: "who, whom, whose, what, which",
+          rules: "DÃ¹ng Ä‘á»ƒ Ä‘áº·t cÃ¢u há»i trá»±c tiáº¿p hoáº·c giÃ¡n tiáº¿p: â€œWhose jacket is this?â€",
+          color: '60A5FA'
+        },
+        {
+          title: "4. RELATIVE (Quan há»‡)",
+          words: "who, which, that, whose, whoever",
+          rules: "Ná»‘i má»‡nh Ä‘á» phá»¥: â€œThe candidate who won the election...â€",
+          color: 'FBBF24'
+        }
       ];
 
-      intCards.forEach(c => {
+      extCards.forEach((c, idx) => {
+        const yPos = 1.8 + (idx * 1.25);
         s20.addShape(pptx.ShapeType.roundRect, {
-          x: 7.3, y: c.y, w: 5.23, h: 1.1,
+          x: 5.8, y: yPos, w: 6.73, h: 1.15,
           fill: { color: '1E293B' },
-          line: { color: c.color, width: 1.5 },
-          rectRadius: 0.1
+          line: { color: c.color, width: 1.2 },
+          rectRadius: 0.08
         });
-        s20.addText(c.word, {
-          x: 7.5, y: c.y + 0.15, w: 4.8, h: 0.3,
-          fontSize: 13, fontFace: 'Arial', bold: true, color: c.color
+        s20.addText(c.title + "  |  " + c.words, {
+          x: 6.0, y: yPos + 0.1, w: 6.3, h: 0.3,
+          fontSize: 10.5, fontFace: 'Arial', bold: true, color: c.color
         });
-        s20.addText(c.ex, {
-          x: 7.5, y: c.y + 0.45, w: 4.8, h: 0.5,
-          fontSize: 12, fontFace: 'Calibri', color: 'FFFFFF'
+        s20.addText(c.rules, {
+          x: 6.0, y: yPos + 0.45, w: 6.3, h: 0.6,
+          fontSize: 11, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 15
         });
       });
 
       attachNotes(s20, slidesData[19].speakerNotes);
     }
 
-    // Slide 21: Check 09
-    buildQuizSlide(slidesData[20], "CHECK 09", "“___ is your best friend?”", ["A. What", "B. Who", "C. Whose", "D. Which"], "B", "The query investigates a human being ('best friend') as the subject of the clause ➔ 'Who'.");
+    // --- SLIDE 21: PART 05 PRACTICE - QUESTION 09 ---
+    buildQuizSlide(slidesData[20], "CHECK 09",
+      "\"Due to the unexpected absence of her assistant, Ms. Gable had to organize the entire quarterly conference on _______.\"",
+      ["A. her own", "B. her", "C. hers", "D. herself"], "A",
+      "ThÃ nh ngá»¯ cá»‘ Ä‘á»‹nh 'on one's own' = tá»± mÃ¬nh lÃ m, khÃ´ng cÃ³ sá»± trá»£ giÃºp (independently / without help). Giá»›i tá»« 'on' báº¯t buá»™c Ä‘i vá»›i 'her own'. Náº¿u dÃ¹ng Ä‘áº¡i tá»« pháº£n thÃ¢n thÃ¬ pháº£i lÃ  'by herself' chá»© khÃ´ng dÃ¹ng 'on herself'."
+    );
 
-    // Slide 22: Check 10
-    buildQuizSlide(slidesData[21], "CHECK 10", "“___ phone is this?”", ["A. Who", "B. What", "C. Whose", "D. Which"], "C", "The query asks who owns the phone (Whose = Belonging to whom) ➔ 'Whose'.");
+    // --- SLIDE 22: PART 05 PRACTICE - QUESTION 10 ---
+    buildQuizSlide(slidesData[21], "CHECK 10",
+      "\"Before submitting the financial auditing report to the board, Ms. Patel checked the spreadsheet _______ to ensure zero calculation errors.\"",
+      ["A. hers", "B. herself", "C. she", "D. her"], "B",
+      "Äáº¡i tá»« pháº£n thÃ¢n 'herself' Ä‘á»©ng cuá»‘i má»‡nh Ä‘á» Ä‘Ã³ng vai trÃ² Ä‘áº¡i tá»« nháº¥n máº¡nh (Intensive Pronoun) Ä‘á»ƒ nháº¥n máº¡nh Ä‘Ã­ch thÃ¢n cÃ´ Patel Ä‘Ã£ tá»± tay kiá»ƒm tra báº£ng tÃ­nh. Vá»›i chá»§ ngá»¯ ná»¯ 'Ms. Patel' âž” chá»n 'herself'."
+    );
 
-    // --- SLIDE 23: RELATIVE PRONOUNS CLAUSE CONNECTOR MATRIX ---
+    // --- SLIDE 23: EXECUTIVE DECISION FRAMEWORK ---
     {
       const s23 = createSlide();
       addHeader(s23, slidesData[22].category, slidesData[22].title, slidesData[22].subtitle);
 
-      // Relative Pronouns Formula Matrix Table
-      const relTable = [
-        [{ text: "Antecedent (Noun)", options: { bold: true, fill: "312E81", color: "FFFFFF" } }, { text: "Connector", options: { bold: true, fill: "312E81", color: "38BDF8" } }, { text: "Followed By", options: { bold: true, fill: "312E81", color: "FBBF24" } }, { text: "Exam Pattern & Natural Demonstration", options: { bold: true, fill: "312E81", color: "34D399" } }],
-        ["N (Person)", "WHO", "+ Verb (V)", "N(person) + WHO + V  ➔  The engineer who designed this app"],
-        ["N (Person)", "WHOM", "+ Clause (S + V)", "N(person) + WHOM + S + V  ➔  The client whom we met yesterday"],
-        ["N (Thing / Object)", "WHICH", "+ V / S + V", "N(thing) + WHICH + V / S + V  ➔  The contract which was signed"],
-        ["N (Person / Thing)", "WHOSE", "+ Noun + V", "N + WHOSE + N + V  ➔  The author whose book won the global award"]
+      const questions = [
+        {
+          num: "QUESTION 1",
+          q: "Who does the action?",
+          sub: "â€¢ Initiator before Verb âž” Subject Pronoun\n(He plays football)",
+          color: '6366F1'
+        },
+        {
+          num: "QUESTION 2",
+          q: "Who/What receives?",
+          sub: "â€¢ Target after Verb/Preposition âž” Object Pronoun\n(I like him / between you and me)",
+          color: '38BDF8'
+        },
+        {
+          num: "QUESTION 3",
+          q: "Bounces back or alone?",
+          sub: "â€¢ Action reflects on doer / Solo âž” Reflexive\n(He hurt himself / by himself)",
+          color: 'EC4899'
+        }
       ];
-      s23.addTable(relTable, {
-        x: 0.8, y: 1.7, w: 11.73,
-        colW: [2.2, 1.5, 2.2, 5.83],
-        rowH: 0.72,
-        fontSize: 11, fontFace: 'Arial', color: 'E2E8F0',
-        border: { pt: '1', color: '334155' },
-        fill: '1E293B'
-      });
 
-      // Bottom Banner: Rapid TOEIC Formula
-      s23.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 5.05, w: 11.73, h: 1.7,
-        fill: { color: '1E1B4B' },
-        line: { color: '6366F1', width: 2 },
-        rectRadius: 0.12
-      });
-      s23.addText("⚡ TOEIC RAPID RECOGNITION FORMULA MATRIX:", {
-        x: 1.1, y: 5.25, w: 11.13, h: 0.25,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: 'FBBF24'
-      });
-      s23.addText("• Blank after Person + followed by Verb ➔ Pick WHO immediately!\n• Blank after Person + followed by Subject + Verb ➔ Pick WHOM (Object position)!\n• Blank between two Nouns declaring possession ➔ Pick WHOSE without hesitation!", {
-        x: 1.1, y: 5.6, w: 11.13, h: 1.0,
-        fontSize: 12, fontFace: 'Calibri', color: 'FFFFFF', lineSpacing: 18
+      questions.forEach((item, idx) => {
+        const xPos = 0.8 + (idx * 4.0);
+        s23.addShape(pptx.ShapeType.roundRect, {
+          x: xPos, y: 1.8, w: 3.73, h: 4.8,
+          fill: { color: '1E293B' },
+          line: { color: item.color, width: 1.5 },
+          rectRadius: 0.12
+        });
+        s23.addText(item.num, {
+          x: xPos + 0.2, y: 2.1, w: 3.33, h: 0.35,
+          fontSize: 11, fontFace: 'Arial', bold: true, color: item.color, align: 'center'
+        });
+        s23.addText(item.q, {
+          x: xPos + 0.2, y: 2.6, w: 3.33, h: 0.8,
+          fontSize: 13, fontFace: 'Arial', bold: true, color: 'FFFFFF', align: 'center'
+        });
+        s23.addText(item.sub, {
+          x: xPos + 0.2, y: 3.6, w: 3.33, h: 2.6,
+          fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 22
+        });
       });
 
       attachNotes(s23, slidesData[22].speakerNotes);
     }
 
-    // --- SLIDE 24: THAT RESTRICTIONS & PARTICIPLE REDUCTION ---
+    // --- SLIDE 24: MASTER TAXONOMY MATRIX ---
     {
       const s24 = createSlide();
       addHeader(s24, slidesData[23].category, slidesData[23].title, slidesData[23].subtitle);
 
-      // Left: THAT Restrictions
       s24.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 1.7, w: 5.7, h: 5.0,
+        x: 0.8, y: 1.8, w: 11.73, h: 5.0,
         fill: { color: '1E293B' },
-        line: { color: 'EF4444', width: 2 },
+        line: { color: '38BDF8', width: 1 },
         rectRadius: 0.12
-      });
-      s24.addText("🚫 THE 2 STRICT 'THAT' RESTRICTIONS", {
-        x: 1.1, y: 1.9, w: 5.1, h: 0.3,
-        fontSize: 12, fontFace: 'Arial', bold: true, color: 'F87171'
-      });
-      s24.addShape(pptx.ShapeType.roundRect, {
-        x: 1.1, y: 2.3, w: 5.1, h: 1.8,
-        fill: { color: '0F172A' },
-        line: { color: '334155', width: 1 },
-        rectRadius: 0.08
-      });
-      s24.addText("1. COMMA PROHIBITION (Non-defining clauses):\n   ❌ Mr. David, that is our CFO, spoke today.\n   ✅ Mr. David, who is our CFO, spoke today.\n\n2. PREPOSITION PROHIBITION:\n   ❌ The company in that we invested...\n   ✅ The company in which we invested...", {
-        x: 1.25, y: 2.4, w: 4.8, h: 1.6,
-        fontSize: 11, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 16
-      });
-      s24.addText("RULE: 'THAT' is versatile, but NEVER appears after a comma or a preposition in formal English/TOEIC!", {
-        x: 1.1, y: 4.3, w: 5.1, h: 2.2,
-        fontSize: 11.5, fontFace: 'Calibri', bold: true, color: 'FCD34D', lineSpacing: 18
       });
 
-      // Right: Participle Clause Reduction
-      s24.addShape(pptx.ShapeType.roundRect, {
-        x: 6.83, y: 1.7, w: 5.7, h: 5.0,
-        fill: { color: '1E293B' },
-        line: { color: '38BDF8', width: 2 },
-        rectRadius: 0.12
-      });
-      s24.addText("⚡ ADVANCED PARTICIPLE REDUCTION TRAP", {
-        x: 7.1, y: 1.9, w: 5.1, h: 0.3,
-        fontSize: 12, fontFace: 'Arial', bold: true, color: '38BDF8'
-      });
-      s24.addShape(pptx.ShapeType.roundRect, {
-        x: 7.1, y: 2.3, w: 5.1, h: 1.8,
-        fill: { color: '0F172A' },
-        line: { color: '334155', width: 1 },
-        rectRadius: 0.08
-      });
-      s24.addText("1. ACTIVE VOICE REDUCTION (V-ing):\n   “The man who lives next door...”\n   ➔ “The man living next door...”\n\n2. PASSIVE VOICE REDUCTION (V3/ed):\n   “The proposal which was submitted yesterday...”\n   ➔ “The proposal submitted yesterday...”", {
-        x: 7.25, y: 2.4, w: 4.8, h: 1.6,
-        fontSize: 11, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 16
-      });
-      s24.addText("EXAM TRAP: When the relative pronoun is eliminated, the verb transforms into a participle (V-ing / V3), NOT an active finite verb!", {
-        x: 7.1, y: 4.3, w: 5.1, h: 2.2,
-        fontSize: 11.5, fontFace: 'Calibri', bold: true, color: '34D399', lineSpacing: 18
+      const matrixRows = [
+        { entity: "I (TÃ´i)", s: "I", o: "me", a: "my + N", p: "mine", r: "myself" },
+        { entity: "You (Báº¡n)", s: "you", o: "you", a: "your + N", p: "yours", r: "yourself / -selves" },
+        { entity: "He (Anh áº¥y)", s: "he", o: "him", a: "his + N", p: "his", r: "himself" },
+        { entity: "She (CÃ´ áº¥y)", s: "she", o: "her", a: "her + N", p: "hers", r: "herself" },
+        { entity: "It (NÃ³)", s: "it", o: "it", a: "its + N", p: "its", r: "itself" },
+        { entity: "We (ChÃºng tÃ´i)", s: "we", o: "us", a: "our + N", p: "ours", r: "ourselves" },
+        { entity: "They (Há»)", s: "they", o: "them", a: "their + N", p: "theirs", r: "themselves" }
+      ];
+
+      s24.addText("ENTITY", { x: 1.0, y: 2.05, w: 2.4, h: 0.3, fontSize: 10, fontFace: 'Arial', bold: true, color: '94A3B8' });
+      s24.addText("SUBJECT", { x: 3.5, y: 2.05, w: 1.6, h: 0.3, fontSize: 10, fontFace: 'Arial', bold: true, color: '818CF8' });
+      s24.addText("OBJECT", { x: 5.2, y: 2.05, w: 1.6, h: 0.3, fontSize: 10, fontFace: 'Arial', bold: true, color: '22D3EE' });
+      s24.addText("POSS. ADJ", { x: 6.9, y: 2.05, w: 1.8, h: 0.3, fontSize: 10, fontFace: 'Arial', bold: true, color: 'FBBF24' });
+      s24.addText("POSS. PRON", { x: 8.8, y: 2.05, w: 1.8, h: 0.3, fontSize: 10, fontFace: 'Arial', bold: true, color: '34D399' });
+      s24.addText("REFLEXIVE", { x: 10.7, y: 2.05, w: 1.6, h: 0.3, fontSize: 10, fontFace: 'Arial', bold: true, color: 'F472B6' });
+
+      matrixRows.forEach((r, idx) => {
+        const yPos = 2.45 + (idx * 0.58);
+        s24.addText(r.entity, { x: 1.0, y: yPos, w: 2.4, h: 0.35, fontSize: 11, fontFace: 'Calibri', color: 'FFFFFF' });
+        s24.addText(r.s, { x: 3.5, y: yPos, w: 1.6, h: 0.35, fontSize: 11, fontFace: 'Calibri', bold: true, color: 'A5B4FC' });
+        s24.addText(r.o, { x: 5.2, y: yPos, w: 1.6, h: 0.35, fontSize: 11, fontFace: 'Calibri', bold: true, color: '67E8F9' });
+        s24.addText(r.a, { x: 6.9, y: yPos, w: 1.8, h: 0.35, fontSize: 11, fontFace: 'Calibri', bold: true, color: 'FDE68A' });
+        s24.addText(r.p, { x: 8.8, y: yPos, w: 1.8, h: 0.35, fontSize: 11, fontFace: 'Calibri', bold: true, color: '6EE7B7' });
+        s24.addText(r.r, { x: 10.7, y: yPos, w: 1.6, h: 0.35, fontSize: 11, fontFace: 'Calibri', bold: true, color: 'FBCFE8' });
       });
 
       attachNotes(s24, slidesData[23].speakerNotes);
     }
 
-    // Slide 25: Check 11
-    buildQuizSlide(slidesData[24], "CHECK 11", "“The senior manager, ___ we met at the summit, approved the budget.”", ["A. that", "B. whom", "C. which", "D. whose"], "B", "Two critical clues: 1) Antecedent is a person ('senior manager'); 2) Following is a clause 'we met' (S + V) with a preceding comma. 'that' is strictly prohibited after commas, making 'whom' the correct object relative pronoun.");
+    // --- SLIDE 25: GRAND CHALLENGE ---
+    {
+      const s25 = createSlide();
+      addHeader(s25, slidesData[24].category, slidesData[24].title, slidesData[24].subtitle);
 
-    // --- SLIDE 26: ADVANCED COMPOUND PRONOUNS (WHOEVER & WHICHEVER) ---
+      // Left: Sarah Laptop Image
+      if (assets.sarah_laptop) {
+        s25.addImage({ data: assets.sarah_laptop, x: 0.8, y: 1.8, w: 5.2, h: 4.9, round: true });
+      }
+
+      // Right: Challenge Question Box
+      s25.addShape(pptx.ShapeType.roundRect, {
+        x: 6.3, y: 1.8, w: 6.23, h: 4.9,
+        fill: { color: '1E293B' },
+        line: { color: 'EF4444', width: 1.5 },
+        rectRadius: 0.12
+      });
+      s25.addShape(pptx.ShapeType.roundRect, {
+        x: 6.6, y: 2.05, w: 2.0, h: 0.35,
+        fill: { color: 'EF4444' },
+        line: { color: 'EF4444' },
+        rectRadius: 0.08
+      });
+      s25.addText("GRAND CHALLENGE", {
+        x: 6.6, y: 2.05, w: 2.0, h: 0.35,
+        fontSize: 10, fontFace: 'Arial', bold: true, color: 'FFFFFF', align: 'center', valign: 'middle'
+      });
+      s25.addText("â€œSarah has a new laptop. ___ laptop is very expensive, but the laptop is not ___.â€", {
+        x: 6.6, y: 2.55, w: 5.6, h: 1.1,
+        fontSize: 13.5, fontFace: 'Arial', bold: true, color: 'FFFFFF', lineSpacing: 20
+      });
+
+      const grandOpts = [
+        "A. Hers / her",
+        "B. Her / hers",
+        "C. She / her",
+        "D. Her / she"
+      ];
+      grandOpts.forEach((opt, idx) => {
+        const isCorrect = idx === 1;
+        const yPos = 3.8 + (idx * 0.48);
+        s25.addShape(pptx.ShapeType.roundRect, {
+          x: 6.6, y: yPos, w: 5.6, h: 0.4,
+          fill: { color: isCorrect ? '064E3B' : '0F172A' },
+          line: { color: isCorrect ? '10B981' : '334155', width: 1 },
+          rectRadius: 0.06
+        });
+        s25.addText(opt + (isCorrect ? "  âœ“ [CORRECT ANSWER]" : ""), {
+          x: 6.8, y: yPos, w: 5.2, h: 0.4,
+          fontSize: 11, fontFace: 'Calibri', bold: isCorrect,
+          color: isCorrect ? '34D399' : 'E2E8F0', valign: 'middle'
+        });
+      });
+
+      s25.addText("Breakdown: 1. 'Her laptop' (precedes noun) | 2. 'not hers' (stands alone at end)", {
+        x: 6.6, y: 5.85, w: 5.6, h: 0.6,
+        fontSize: 10.5, fontFace: 'Calibri', italic: true, color: '94A3B8'
+      });
+
+      attachNotes(s25, slidesData[24].speakerNotes);
+    }
+
+    // --- SLIDE 26: CONCLUSION & DISCUSSION ---
     {
       const s26 = createSlide();
       addHeader(s26, slidesData[25].category, slidesData[25].title, slidesData[25].subtitle);
 
-      // Left: WHOEVER Equation
       s26.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 1.7, w: 5.7, h: 4.0,
+        x: 1.5, y: 2.0, w: 10.33, h: 4.5,
         fill: { color: '1E293B' },
-        line: { color: 'F59E0B', width: 1.5 },
-        rectRadius: 0.12
-      });
-      s26.addText("🌟 WHOEVER — THE TOEIC EQUATION", {
-        x: 1.1, y: 1.9, w: 5.1, h: 0.3,
-        fontSize: 12, fontFace: 'Arial', bold: true, color: 'FBBF24'
-      });
-      s26.addShape(pptx.ShapeType.roundRect, {
-        x: 1.1, y: 2.3, w: 5.1, h: 1.1,
-        fill: { color: '0F172A' },
-        line: { color: 'F59E0B', width: 1 },
-        rectRadius: 0.08
-      });
-      s26.addText("Whoever + V(sing)  =  Anyone who + V(sing)", {
-        x: 1.1, y: 2.3, w: 5.1, h: 1.1,
-        fontSize: 13, fontFace: 'Arial', bold: true, color: 'FFFFFF',
-        align: 'center', valign: 'middle'
-      });
-      s26.addText("• Meaning: “Bất kỳ ai / Bất cứ ai mà...”\n• Example: “Whoever arrives first receives the VIP handbook.”\n• TOEIC Trap: 'Whoever' already embeds 'Anyone who'. Never say 'Anyone whoever'!", {
-        x: 1.1, y: 3.6, w: 5.1, h: 1.9,
-        fontSize: 11.5, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
-      });
-
-      // Right: WHICHEVER Choices
-      s26.addShape(pptx.ShapeType.roundRect, {
-        x: 6.83, y: 1.7, w: 5.7, h: 4.0,
-        fill: { color: '1E293B' },
-        line: { color: '38BDF8', width: 1.5 },
-        rectRadius: 0.12
-      });
-      s26.addText("🌟 WHICHEVER — THE LIMITED CHOICE CONNECTOR", {
-        x: 7.1, y: 1.9, w: 5.1, h: 0.3,
-        fontSize: 12, fontFace: 'Arial', bold: true, color: '38BDF8'
-      });
-      s26.addShape(pptx.ShapeType.roundRect, {
-        x: 7.1, y: 2.3, w: 5.1, h: 1.1,
-        fill: { color: '0F172A' },
-        line: { color: '38BDF8', width: 1 },
-        rectRadius: 0.08
-      });
-      s26.addText("Selection from a Known Limited Set of Options", {
-        x: 7.1, y: 2.3, w: 5.1, h: 1.1,
-        fontSize: 12.5, fontFace: 'Arial', bold: true, color: '38BDF8',
-        align: 'center', valign: 'middle'
-      });
-      s26.addText("• As Subject: “Whichever is cheaper will be selected.”\n• As Object: “Choose whichever you prefer.”\n• As Determiner: “Take whichever flight suits your schedule.”", {
-        x: 7.1, y: 3.6, w: 5.1, h: 1.9,
-        fontSize: 11.5, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
-      });
-
-      // Bottom Card
-      s26.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 5.9, w: 11.73, h: 0.95,
-        fill: { color: '1E1B4B' },
         line: { color: '6366F1', width: 1.5 },
+        rectRadius: 0.15
+      });
+      s26.addText("â€œPronouns may be small words, but they are very important in English.â€", {
+        x: 2.0, y: 2.5, w: 9.33, h: 1.2,
+        fontSize: 22, fontFace: 'Arial', bold: true, color: 'FFFFFF',
+        align: 'center', lineSpacing: 30
+      });
+      s26.addText("Pronouns appear in almost every sentence. By mastering who/what they replace, their grammatical position, and their standalone vs. modifier roles, natural English becomes effortless.", {
+        x: 2.0, y: 3.8, w: 9.33, h: 1.2,
+        fontSize: 14, fontFace: 'Calibri', color: '94A3B8',
+        align: 'center', lineSpacing: 22
+      });
+      s26.addShape(pptx.ShapeType.roundRect, {
+        x: 4.8, y: 5.2, w: 3.73, h: 0.6,
+        fill: { color: '6366F1' },
+        line: { color: '6366F1' },
         rectRadius: 0.1
       });
-      s26.addText("⚡ GRAMMATICAL AGREEMENT: Both 'Whoever' and 'Whichever' resolve open conditional clauses and strictly command SINGULAR verb agreement!", {
-        x: 0.8, y: 5.9, w: 11.73, h: 0.95,
-        fontSize: 12.5, fontFace: 'Arial', bold: true, color: 'FBBF24',
+      s26.addText("Thank You! Opening Floor for Q&A", {
+        x: 4.8, y: 5.2, w: 3.73, h: 0.6,
+        fontSize: 12, fontFace: 'Arial', bold: true, color: 'FFFFFF',
         align: 'center', valign: 'middle'
       });
 
       attachNotes(s26, slidesData[25].speakerNotes);
     }
 
-    // Slide 27: Check 12
-    buildQuizSlide(slidesData[26], "CHECK 12", "“___ arrives at the conference venue first will receive a complimentary VIP pass.”", ["A. Anyone", "B. Whomever", "C. Whoever", "D. Which"], "C", "The blank acts as the subject of the clause 'arrives...'. Under the TOEIC equation, 'Whoever + V' = 'Anyone who + V'. 'Anyone' alone lacks the connecting relative pronoun.");
-
-    // --- SLIDE 28: THE 3 GOLDEN QUESTIONS ---
-    {
-      const s28 = createSlide();
-      addHeader(s28, slidesData[27].category, slidesData[27].title, slidesData[27].subtitle);
-
-      const q3Cards = [
-        { x: 0.8, color: '818CF8', qNum: "QUESTION 1", qTitle: "Who does the action?", res: "➔ SUBJECT PRONOUN", ex: "He plays football • She reads", desc: "Positioned before the verb as the initiator." },
-        { x: 4.8, color: '38BDF8', qNum: "QUESTION 2", qTitle: "Who or what receives?", res: "➔ OBJECT PRONOUN", ex: "I like him • They help us", desc: "Positioned after the verb or preposition as target." },
-        { x: 8.8, color: 'C084FC', qNum: "QUESTION 3", qTitle: "Bounces back to doer?", res: "➔ REFLEXIVE PRONOUN", ex: "He hurt himself • Cooked by myself", desc: "Used when doer and receiver are identical." }
-      ];
-
-      q3Cards.forEach(c => {
-        s28.addShape(pptx.ShapeType.roundRect, {
-          x: c.x, y: 1.7, w: 3.7, h: 5.0,
-          fill: { color: '1E293B' },
-          line: { color: c.color, width: 2 },
-          rectRadius: 0.15
-        });
-        s28.addText(c.qNum, {
-          x: c.x + 0.3, y: 2.0, w: 3.1, h: 0.3,
-          fontSize: 11, fontFace: 'Arial', bold: true, color: c.color
-        });
-        s28.addText(c.qTitle, {
-          x: c.x + 0.3, y: 2.4, w: 3.1, h: 0.8,
-          fontSize: 18, fontFace: 'Arial', bold: true, color: 'FFFFFF', lineSpacing: 22
-        });
-        s28.addShape(pptx.ShapeType.roundRect, {
-          x: c.x + 0.3, y: 3.4, w: 3.1, h: 0.6,
-          fill: { color: '0F172A' },
-          line: { color: c.color, width: 1 },
-          rectRadius: 0.08
-        });
-        s28.addText(c.res, {
-          x: c.x + 0.3, y: 3.4, w: 3.1, h: 0.6,
-          fontSize: 12, fontFace: 'Arial', bold: true, color: c.color,
-          align: 'center', valign: 'middle'
-        });
-        s28.addText(c.ex, {
-          x: c.x + 0.3, y: 4.3, w: 3.1, h: 0.7,
-          fontSize: 13, fontFace: 'Calibri', bold: true, color: 'FFFFFF', lineSpacing: 18
-        });
-        s28.addText(c.desc, {
-          x: c.x + 0.3, y: 5.2, w: 3.1, h: 1.0,
-          fontSize: 11, fontFace: 'Calibri', color: '94A3B8', lineSpacing: 16
-        });
-      });
-
-      attachNotes(s28, slidesData[27].speakerNotes);
-    }
-
-    // --- SLIDE 29: ALL-IN-ONE MASTER MATRIX ---
-    {
-      const s29 = createSlide();
-      addHeader(s29, slidesData[28].category, slidesData[28].title, slidesData[28].subtitle);
-
-      const allTable = [
-        [{ text: "Grammar Category", options: { bold: true, fill: "312E81", color: "FFFFFF" } }, { text: "Key English Pronouns", options: { bold: true, fill: "312E81", color: "38BDF8" } }, { text: "Sentence Function & Placement Rules", options: { bold: true, fill: "312E81", color: "FBBF24" } }],
-        ["1. Subject Pronoun", "I, you, he, she, it, we, they", "The doer; stands before the main verb (S + V)."],
-        ["2. Object Pronoun", "me, you, him, her, it, us, them", "The receiver; stands after verb or preposition (V/Prep + O)."],
-        ["3. Possessive Pronoun", "mine, yours, his, hers, ours, theirs", "ĐTSH = TTSH + N; stands alone without noun."],
-        ["4. Reflexive Pronoun", "myself, yourself, himself, ourselves, themselves", "S = O; emphatic; or 'by myself' = alone."],
-        ["5. Demonstrative", "this, that, these, those", "Distance (Near/Far) & Quantity (Singular/Plural)."],
-        ["6. Indefinite Pronoun", "everyone, someone, anything, each, another...", "Commands strictly SINGULAR verb agreement (Vs/es, is, has)."],
-        ["7. Relative Pronoun", "who, whom, which, that, whose", "Connects clauses; 'THAT' banned after commas/prepositions."],
-        ["8. Compound Pronoun", "whoever, whichever...", "Whoever = Anyone who + V(sing); Whichever for choices."]
-      ];
-
-      s29.addTable(allTable, {
-        x: 0.8, y: 1.7, w: 11.73,
-        colW: [2.5, 4.2, 5.03],
-        rowH: 0.52,
-        fontSize: 11, fontFace: 'Arial', color: 'E2E8F0',
-        border: { pt: '1', color: '334155' },
-        fill: '1E293B'
-      });
-
-      attachNotes(s29, slidesData[28].speakerNotes);
-    }
-
-    // --- SLIDE 30: GRAND CHALLENGE (SARAH'S LAPTOP) ---
-    {
-      const s30 = createSlide();
-      addHeader(s30, slidesData[29].category, slidesData[29].title, slidesData[29].subtitle);
-
-      // Left Image: Sarah
-      if (assets.sarah_laptop) {
-        s30.addImage({
-          data: assets.sarah_laptop,
-          x: 0.8, y: 1.7, w: 4.8, h: 5.0,
-          round: true
-        });
-      }
-
-      // Right Challenge Container
-      // Question Card
-      s30.addShape(pptx.ShapeType.roundRect, {
-        x: 5.8, y: 1.7, w: 6.73, h: 1.25,
-        fill: { color: '1E293B' },
-        line: { color: 'EF4444', width: 2 },
-        rectRadius: 0.12
-      });
-      s30.addText("GRAND CHALLENGE:", {
-        x: 6.0, y: 1.85, w: 6.3, h: 0.25,
-        fontSize: 10, fontFace: 'Arial', bold: true, color: 'F87171'
-      });
-      s30.addText("Sarah has a new laptop. ___ laptop is very expensive, but the laptop is not ___.", {
-        x: 6.0, y: 2.15, w: 6.3, h: 0.7,
-        fontSize: 13, fontFace: 'Arial', bold: true, color: 'FFFFFF', lineSpacing: 20
-      });
-
-      // 4 Options in 2x2
-      const sarahOpts = [
-        { x: 5.8, y: 3.1, txt: "A.  Hers / her", corr: false },
-        { x: 9.25, y: 3.1, txt: "B.  Her / hers  ✓", corr: true },
-        { x: 5.8, y: 4.0, txt: "C.  She / her", corr: false },
-        { x: 9.25, y: 4.0, txt: "D.  Her / she", corr: false }
-      ];
-
-      sarahOpts.forEach(opt => {
-        s30.addShape(pptx.ShapeType.roundRect, {
-          x: opt.x, y: opt.y, w: 3.28, h: 0.75,
-          fill: { color: opt.corr ? '064E3B' : '1E293B' },
-          line: { color: opt.corr ? '10B981' : '334155', width: opt.corr ? 2 : 1 },
-          rectRadius: 0.08
-        });
-        s30.addText(opt.txt, {
-          x: opt.x + 0.2, y: opt.y, w: 2.88, h: 0.75,
-          fontSize: 12, fontFace: 'Arial', bold: opt.corr,
-          color: opt.corr ? '34D399' : 'E2E8F0', valign: 'middle'
-        });
-      });
-
-      // Explanation Box
-      s30.addShape(pptx.ShapeType.roundRect, {
-        x: 5.8, y: 4.95, w: 6.73, h: 1.75,
-        fill: { color: '0F2922' },
-        line: { color: '10B981', width: 1.5 },
-        rectRadius: 0.1
-      });
-      s30.addText("ANSWER: B (Her / hers)  •  DUAL PARADIGM BREAKDOWN", {
-        x: 6.0, y: 5.1, w: 6.3, h: 0.3,
-        fontSize: 11, fontFace: 'Arial', bold: true, color: '34D399'
-      });
-      s30.addText("1. 'Her laptop' ➔ Precedes noun 'laptop' ➔ Possessive Adjective (TTSH + N).\n2. 'not hers' ➔ Stands completely alone at sentence end ➔ Possessive Pronoun (hers = her laptop).", {
-        x: 6.0, y: 5.45, w: 6.3, h: 1.1,
-        fontSize: 11, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
-      });
-
-      attachNotes(s30, slidesData[29].speakerNotes);
-    }
-
-    // --- SLIDE 31: RAPID FIRE ROUND ---
-    {
-      const s31 = createSlide();
-      addHeader(s31, slidesData[30].category, slidesData[30].title, slidesData[30].subtitle);
-
-      const rapids = [
-        { q: "1.  Tom is a student. [  ___  ] studies English.", ans: "HE" },
-        { q: "2.  I like Anna. I often talk to [  ___  ].", ans: "HER" },
-        { q: "3.  This is my pen. The pen is [  ___  ].", ans: "MINE" },
-        { q: "4.  He made the cake by [  ___  ].", ans: "HIMSELF" },
-        { q: "5.  [  ___  ] are my shoes (pointing to shoes on feet).", ans: "THESE" }
-      ];
-
-      let rY = 1.7;
-      rapids.forEach(r => {
-        // Bar container
-        s31.addShape(pptx.ShapeType.roundRect, {
-          x: 0.8, y: rY, w: 11.73, h: 0.85,
-          fill: { color: '1E293B' },
-          line: { color: '334155', width: 1 },
-          rectRadius: 0.1
-        });
-        // Sentence
-        s31.addText(r.q, {
-          x: 1.1, y: rY, w: 8.5, h: 0.85,
-          fontSize: 13, fontFace: 'Arial', bold: true, color: 'FFFFFF',
-          valign: 'middle'
-        });
-        // Answer Pill
-        s31.addShape(pptx.ShapeType.roundRect, {
-          x: 10.2, y: rY + 0.15, w: 2.0, h: 0.55,
-          fill: { color: '064E3B' },
-          line: { color: '10B981', width: 1.5 },
-          rectRadius: 0.28
-        });
-        s31.addText("➔  " + r.ans, {
-          x: 10.2, y: rY + 0.15, w: 2.0, h: 0.55,
-          fontSize: 12, fontFace: 'Arial', bold: true, color: '34D399',
-          align: 'center', valign: 'middle'
-        });
-
-        rY += 1.0;
-      });
-
-      attachNotes(s31, slidesData[30].speakerNotes);
-    }
-
-    // --- SLIDE 32: CONCLUSION & Q&A ---
-    {
-      const s32 = createSlide();
-      addHeader(s32, slidesData[31].category, slidesData[31].title, slidesData[31].subtitle);
-
-      // Quote Card
-      s32.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 1.7, w: 11.73, h: 1.4,
-        fill: { color: '1E1B4B' },
-        line: { color: '6366F1', width: 2 },
-        rectRadius: 0.15
-      });
-      s32.addText("“Pronouns may be small words, but they form the backbone of natural English.”", {
-        x: 1.1, y: 1.85, w: 11.13, h: 0.5,
-        fontSize: 18, fontFace: 'Arial', bold: true, color: 'FBBF24',
-        align: 'center', valign: 'middle'
-      });
-      s32.addText("Pronouns appear in almost every sentence. By identifying who/what they replace and their grammatical position, natural English becomes effortless.", {
-        x: 1.1, y: 2.45, w: 11.13, h: 0.5,
-        fontSize: 11.5, fontFace: 'Calibri', color: 'CBD5E1',
-        align: 'center'
-      });
-
-      // 6 Golden Takeaways
-      s32.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 3.25, w: 11.73, h: 2.65,
-        fill: { color: '1E293B' },
-        line: { color: '38BDF8', width: 1.5 },
-        rectRadius: 0.12
-      });
-      s32.addText("THE 6 GOLDEN RULES TO TAKE HOME:", {
-        x: 1.1, y: 3.4, w: 11.13, h: 0.25,
-        fontSize: 11.5, fontFace: 'Arial', bold: true, color: '38BDF8'
-      });
-      s32.addText("1. Pronoun = Replaces a noun to eliminate repetitive speech and sound executive.\n2. Subject Pronoun = The initiator positioned before the verb (He plays football).\n3. Object Pronoun = The recipient positioned after the verb or preposition (She likes him).\n4. Possessive Pronoun = Standalone ownership without a noun (mine = my books).\n5. Indefinite Pronoun = Strictly conjugated with SINGULAR verbs (Everyone has...).\n6. Relative Pronouns = Clause connectors; 'THAT' strictly forbidden after commas and prepositions.", {
-        x: 1.1, y: 3.75, w: 11.13, h: 2.0,
-        fontSize: 11.5, fontFace: 'Calibri', color: 'FFFFFF', lineSpacing: 18
-      });
-
-      // Q&A Banner
-      s32.addShape(pptx.ShapeType.roundRect, {
-        x: 0.8, y: 6.05, w: 11.73, h: 0.75,
-        fill: { color: '064E3B' },
-        line: { color: '10B981', width: 1.5 },
-        rectRadius: 0.1
-      });
-      s32.addText("THANK YOU FOR YOUR ATTENTION!  •  Q&A SESSION NOW OPEN", {
-        x: 0.8, y: 6.05, w: 11.73, h: 0.75,
-        fontSize: 13, fontFace: 'Arial', bold: true, color: '34D399',
-        align: 'center', valign: 'middle'
-      });
-
-      attachNotes(s32, slidesData[31].speakerNotes);
-    }
-
-    // Export PPTX and inject smooth slide transitions (Fade) via JSZip
-    pptx.write({ outputType: 'blob' })
-      .then(async (blob) => {
-        let finalBlob = blob;
-        if (window.JSZip) {
-          try {
-            const zip = await JSZip.loadAsync(blob);
-            const slideRegex = /^ppt\/slides\/slide\d+\.xml$/;
-            for (const [filename, file] of Object.entries(zip.files)) {
-              if (slideRegex.test(filename)) {
-                let xml = await file.async("string");
-                if (!xml.includes("<p:transition")) {
-                  // Standard OpenXML Slide Transition (Fade, medium speed)
-                  const transXml = '<p:transition spd="med" advClick="1"><p:fade/></p:transition>';
-                  if (xml.includes("</p:clrMapOvr>")) {
-                    xml = xml.replace("</p:clrMapOvr>", "</p:clrMapOvr>" + transXml);
-                  } else if (xml.includes("</p:cSld>")) {
-                    xml = xml.replace("</p:cSld>", "</p:cSld>" + transXml);
-                  }
-                  zip.file(filename, xml);
-                }
-              }
-            }
-            finalBlob = await zip.generateAsync({ type: "blob" });
-          } catch (e) {
-            console.warn("Could not inject transitions:", e);
-          }
-        }
-
-        // Trigger browser download
-        const url = URL.createObjectURL(finalBlob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'English_Pronouns_Masterclass.pptx';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        btn.innerHTML = `<span>Đã tải thành công! ✅</span>`;
-        setTimeout(() => {
+    // Write file to client browser
+    pptx.writeFile({ fileName: "Pronouns_Keynote_Masterclass_26_Slides.pptx" })
+      .then(() => {
+        if (btn) {
           btn.innerHTML = originalText;
           btn.disabled = false;
-        }, 3000);
+        }
       })
-      .catch(err => {
-        alert('Lỗi xuất PPTX: ' + err);
-        btn.innerHTML = originalText;
-        btn.disabled = false;
+      .catch((err) => {
+        console.error("PPTX Generation Error:", err);
+        if (btn) {
+          btn.innerHTML = `<span>Lá»—i xuáº¥t PPTX</span>`;
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 3000);
+        }
       });
 
   } catch (err) {
-    alert('Lỗi tạo PPTX: ' + err.message);
-    btn.innerHTML = originalText;
-    btn.disabled = false;
+    console.error("PPTX Initialization Error:", err);
+    if (btn) {
+      btn.innerHTML = `<span>Lá»—i khá»Ÿi táº¡o</span>`;
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }, 3000);
+    }
   }
 };
