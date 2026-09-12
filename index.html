@@ -1181,15 +1181,16 @@
         <span>🖥️ Cửa Sổ Thuyết Trình</span>
       </button>
 
-      <button class="btn btn-accent" id="exportPptxBtn"
-        title="Xuất toàn bộ bài giảng sang file PowerPoint (.pptx) chuẩn (Có sẵn ghi chú tiếng Việt trong Notes)">
+      <a href="./Pronouns_Keynote_Masterclass_26_Slides.pptx" download="Pronouns_Keynote_Masterclass_26_Slides.pptx"
+        class="btn btn-accent" id="exportPptxBtn" style="text-decoration:none;"
+        title="Tải toàn bộ bài giảng sang file PowerPoint (.pptx) chuẩn (Đầy đủ 26 slide, font chuẩn Arial & Calibri)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="7 10 12 15 17 10"></polyline>
           <line x1="12" y1="15" x2="12" y2="3"></line>
         </svg>
         <span>Tải file .PPTX</span>
-      </button>
+      </a>
 
       <button class="btn" id="toggleSpeakerBtn" title="Bật/Tắt thanh ghi chú ngay trên màn hình (Phím S)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3384,7 +3385,6 @@
     // Event Listeners & Hotkeys
     document.getElementById('prevSlideBtn').addEventListener('click', prevSlide);
     document.getElementById('nextSlideBtn').addEventListener('click', nextSlide);
-    document.getElementById('exportPptxBtn').addEventListener('click', exportPPTX);
 
     // Toggle Speaker Dock (Presenter View)
     const speakerDock = document.getElementById('speakerDock');

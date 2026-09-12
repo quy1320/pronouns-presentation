@@ -2,10 +2,23 @@
 // Produces 16:9 widescreen slides with modern card layouts, embedded 3D illustrations, styled quiz cards, and verbatim Vietnamese speaker notes.
 
 window.exportPPTX = function() {
+  // Fast direct download of standardized pre-built PPTX (100% standard Calibri & Arial)
+  try {
+    const a = document.createElement('a');
+    a.href = './Pronouns_Keynote_Masterclass_26_Slides.pptx';
+    a.download = 'Pronouns_Keynote_Masterclass_26_Slides.pptx';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    return;
+  } catch (e) {
+    console.warn("Direct download fallback to PptxGenJS generator:", e);
+  }
+
   const btn = document.getElementById('exportPptxBtn');
   const originalText = btn ? btn.innerHTML : '';
   if (btn) {
-      btn.innerHTML = `<span>Exporting 26-Slide Masterclass Deck...</span>`;
+    btn.innerHTML = `<span>Exporting 26-Slide Masterclass Deck...</span>`;
     btn.disabled = true;
   }
 
@@ -13,6 +26,7 @@ window.exportPPTX = function() {
     const pptx = new PptxGenJS();
     pptx.defineLayout({ name: 'WIDE169', width: 13.333, height: 7.5 });
     pptx.layout = 'WIDE169';
+    pptx.theme = { headFontFace: 'Arial', bodyFontFace: 'Calibri' };
     pptx.author = 'English Masterclass Keynote';
     pptx.company = 'English Mastery';
     pptx.title = 'English Pronouns Keynote Presentation - 26 Slides';
@@ -131,7 +145,7 @@ window.exportPPTX = function() {
           align: 'center', valign: 'middle'
         });
 
-        slide.addText(textOnly + (isCorrect ? "  âœ“ [CORRECT]" : ""), {
+        slide.addText(textOnly + (isCorrect ? "  [CORRECT]" : ""), {
           x: pos.x + 0.9, y: pos.y + 0.15, w: 4.6, h: 0.6,
           fontSize: 13, fontFace: 'Calibri', bold: isCorrect,
           color: isCorrect ? '34D399' : 'E2E8F0',
@@ -187,7 +201,7 @@ window.exportPPTX = function() {
         fill: { color: '334155' },
         line: { color: '334155' }
       });
-      s1.addText("5 Core Modules â€¢ Strategic Syntax Rules â€¢ 10 Interactive Polls", {
+      s1.addText("5 Core Modules • Strategic Syntax Rules • 10 Interactive Polls", {
         x: 1.2, y: 4.7, w: 5.2, h: 0.8,
         fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
       });
@@ -197,7 +211,7 @@ window.exportPPTX = function() {
         line: { color: '10B981', width: 1 },
         rectRadius: 0.08
       });
-      s1.addText("Masterclass Series â€¢ 26 Slides", {
+      s1.addText("Masterclass Series • 26 Slides", {
         x: 1.2, y: 5.7, w: 2.8, h: 0.4,
         fontSize: 11, fontFace: 'Arial', bold: true, color: '34D399',
         align: 'center', valign: 'middle'
@@ -221,7 +235,7 @@ window.exportPPTX = function() {
         line: { color: 'EF4444', width: 1.5 },
         rectRadius: 0.12
       });
-      s2.addText("â€œIf I say: Tom is a student. Tom likes football. Tom plays football every day. Tom lives near my house...â€", {
+      s2.addText(""If I say: Tom is a student. Tom likes football. Tom plays football every day. Tom lives near my house..."", {
         x: 1.1, y: 2.1, w: 5.6, h: 1.1,
         fontSize: 13.5, fontFace: 'Calibri', color: 'FEE2E2', lineSpacing: 22
       });
@@ -244,7 +258,7 @@ window.exportPPTX = function() {
         line: { color: '10B981', width: 1.5 },
         rectRadius: 0.1
       });
-      s2.addText("THE FLUENT ENGLISH DELIVERY:\nâ€œTom is a student. He likes football. He plays football every day.â€\n\nðŸ‘‰ The pronoun He replaces the noun Tom to make speech smooth.", {
+      s2.addText("THE FLUENT ENGLISH DELIVERY:\n"Tom is a student. He likes football. He plays football every day."\n\n> The pronoun He replaces the noun Tom to make speech smooth.", {
         x: 1.3, y: 4.2, w: 5.2, h: 2.1,
         fontSize: 12, fontFace: 'Calibri', color: 'E0F2FE', lineSpacing: 18
       });
@@ -283,7 +297,7 @@ window.exportPPTX = function() {
         line: { color: '334155', width: 1 },
         rectRadius: 0.08
       });
-      s3.addText("â€¢ Tom âž” he\nâ€¢ Anna âž” she\nâ€¢ The book âž” it\nâ€¢ Tom and Anna âž” they", {
+      s3.addText(• Tom -> he\n• Anna -> she\n• The book -> it\n• Tom and Anna -> they", {
         x: 1.4, y: 3.8, w: 4.5, h: 2.4,
         fontSize: 13, fontFace: 'Courier New', color: '67E8F9', lineSpacing: 28
       });
@@ -404,7 +418,7 @@ window.exportPPTX = function() {
         x: 7.1, y: 2.1, w: 5.1, h: 0.4,
         fontSize: 12, fontFace: 'Courier New', bold: true, color: 'FBBF24'
       });
-      s5.addText("Sentence Position: Initiates the clause, placed directly BEFORE the verb.\nðŸ‘‰ Example: I love you. ('I' = Subject initiating the action)", {
+      s5.addText("Sentence Position: Initiates the clause, placed directly BEFORE the verb.\n> Example: I love you. ('I' = Subject initiating the action)", {
         x: 7.1, y: 2.7, w: 5.1, h: 1.2,
         fontSize: 12, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
       });
@@ -414,7 +428,7 @@ window.exportPPTX = function() {
         line: { color: '38BDF8', width: 1 },
         rectRadius: 0.08
       });
-      s5.addText("EVERYDAY EXAMPLES:\nâ€¢ I am a student.\nâ€¢ She is my friend.\nâ€¢ He plays football.\nâ€¢ They play football.", {
+      s5.addText("EVERYDAY EXAMPLES:\n• I am a student.\n• She is my friend.\n• He plays football.\n• They play football.", {
         x: 7.3, y: 4.4, w: 4.7, h: 1.9,
         fontSize: 12.5, fontFace: 'Calibri', color: 'E0F2FE', lineSpacing: 22
       });
@@ -424,16 +438,16 @@ window.exportPPTX = function() {
 
     // --- SLIDE 6: PART 01 PRACTICE - QUESTION 01 ---
     buildQuizSlide(slidesData[5], "CHECK 01",
-      "â€œTom is a talented striker. ___ plays football every weekend with his local club.â€",
+      ""Tom is a talented striker. ___ plays football every weekend with his local club."",
       ["A. Him", "B. He", "C. His", "D. Himself"], "B",
-        "Positioned before verb 'plays' as subject ➔ requires Subject Pronoun 'He'. Him (Object), His (Possessive), Himself (Reflexive) cannot function as subject."
+        "Positioned before verb 'plays' as subject -> requires Subject Pronoun 'He'. Him (Object), His (Possessive), Himself (Reflexive) cannot function as subject."
     );
 
     // --- SLIDE 7: PART 01 PRACTICE - QUESTION 02 ---
     buildQuizSlide(slidesData[6], "CHECK 02",
-      "â€œAfter the conference ended, David and ___ submitted the project report to the executive director.â€",
+      ""After the conference ended, David and ___ submitted the project report to the executive director."",
       ["A. me", "B. I", "C. myself", "D. mine"], "B",
-        "'David and I' act as compound subjects for verb 'submitted'. Verification trick: omit 'David and' ➔ 'I submitted' (correct), never 'me submitted'."
+        "'David and I' act as compound subjects for verb 'submitted'. Verification trick: omit 'David and' -> 'I submitted' (correct), never 'me submitted'."
     );
 
     // --- SLIDE 8: PART 02 - OBJECT PRONOUNS ---
@@ -463,7 +477,7 @@ window.exportPPTX = function() {
         x: 1.1, y: 4.6, w: 5.6, h: 0.5,
         fontSize: 12, fontFace: 'Courier New', color: 'CBD5E1'
       });
-      s8.addText("Example: â€œAnna is friendly. Peter invited HER to lunch.â€", {
+      s8.addText("Example: "Anna is friendly. Peter invited HER to lunch."", {
         x: 1.1, y: 5.3, w: 5.6, h: 0.7,
         fontSize: 11, fontFace: 'Calibri', italic: true, color: '67E8F9'
       });
@@ -476,16 +490,16 @@ window.exportPPTX = function() {
 
     // --- SLIDE 9: PART 02 PRACTICE - QUESTION 03 ---
     buildQuizSlide(slidesData[8], "CHECK 03",
-      "â€œWe met our new international partners yesterday and invited ___ to visit our head office.â€",
+      ""We met our new international partners yesterday and invited ___ to visit our head office."",
       ["A. they", "B. their", "C. them", "D. theirs"], "C",
-        "Follows transitive verb 'invited' as direct object ➔ requires Object Pronoun 'them'. They (Subject), Their (Adjective), Theirs (Pronoun) are invalid."
+        "Follows transitive verb 'invited' as direct object -> requires Object Pronoun 'them'. They (Subject), Their (Adjective), Theirs (Pronoun) are invalid."
     );
 
     // --- SLIDE 10: PART 02 PRACTICE - QUESTION 04 ---
     buildQuizSlide(slidesData[9], "CHECK 04",
-      "â€œThis confidential agreement must strictly remain between the client and ___.â€",
+      ""This confidential agreement must strictly remain between the client and ___."",
       ["A. I", "B. me", "C. my", "D. mine"], "B",
-        "'Between' is a preposition. Prepositions require Object Pronouns ➔ 'between the client and me'. 'I' cannot follow a preposition."
+        "'Between' is a preposition. Prepositions require Object Pronouns -> 'between the client and me'. 'I' cannot follow a preposition."
     );
 
     // --- SLIDE 11: PART 03 - POSSESSIVE ADJECTIVES (THEORY 1) ---
@@ -550,7 +564,7 @@ window.exportPPTX = function() {
         line: { color: '38BDF8', width: 1 },
         rectRadius: 0.08
       });
-      s11.addText("🔵 ITS (NO APOSTROPHE) = Possessive Adjective\nDenotes ownership for objects, entities, or animals:\n👉 “The company updated its security protocol.”", {
+      s11.addText("[1] ITS (NO APOSTROPHE) = Possessive Adjective\nDenotes ownership for objects, entities, or animals:\n> "The company updated its security protocol."", {
         x: 7.3, y: 2.6, w: 4.7, h: 1.4,
         fontSize: 11.5, fontFace: 'Calibri', color: 'E0F2FE', lineSpacing: 18
       });
@@ -561,7 +575,7 @@ window.exportPPTX = function() {
         line: { color: 'EF4444', width: 1 },
         rectRadius: 0.08
       });
-      s11.addText("🔴 IT'S (WITH APOSTROPHE) = Contraction of 'it is' / 'it has'\nA complete clause (Subject + Verb), NOT a possessive adjective:\n👉 “It's important to double-check the figures.”", {
+      s11.addText("[2] IT'S (WITH APOSTROPHE) = Contraction of 'it is' / 'it has'\nA complete clause (Subject + Verb), NOT a possessive adjective:\n> "It's important to double-check the figures."", {
         x: 7.3, y: 4.5, w: 4.7, h: 1.4,
         fontSize: 11.5, fontFace: 'Calibri', color: 'FEE2E2', lineSpacing: 18
       });
@@ -602,7 +616,7 @@ window.exportPPTX = function() {
           line: { color: '334155', width: 1 },
           rectRadius: 0.06
         });
-        s12.addText(`${item.pro}  →  ${item.adj}`, {
+        s12.addText(`${item.pro}  ->  ${item.adj}`, {
           x: 1.25, y: yPos + 0.12, w: 2.2, h: 0.4,
           fontSize: 12, fontFace: 'Arial', bold: true, color: 'FBBF24'
         });
@@ -637,7 +651,7 @@ window.exportPPTX = function() {
           line: { color: '334155', width: 1 },
           rectRadius: 0.06
         });
-        s12.addText(`${item.pro}  →  ${item.adj}`, {
+        s12.addText(`${item.pro}  ->  ${item.adj}`, {
           x: 7.25, y: yPos + 0.12, w: 2.2, h: 0.4,
           fontSize: 12, fontFace: 'Arial', bold: true, color: '34D399'
         });
@@ -654,7 +668,7 @@ window.exportPPTX = function() {
         line: { color: 'F59E0B', width: 1.5 },
         rectRadius: 0.08
       });
-      s12.addText("📌 CORE SYNTAX RULE:", {
+      s12.addText("[RULE] CORE SYNTAX RULE:", {
         x: 7.3, y: 4.45, w: 4.7, h: 0.3,
         fontSize: 10.5, fontFace: 'Arial', bold: true, color: 'FBBF24'
       });
@@ -674,14 +688,14 @@ window.exportPPTX = function() {
     buildQuizSlide(slidesData[12], "CHECK 05",
       "\"John is looking for _______ keys. He cannot find them anywhere.\"",
       ["A. he", "B. him", "C. his", "D. himself"], "C",
-      "Immediately following the blank is the plural noun keys. Apply rule: [Possessive Adjective + Noun], this position requires a possessive adjective to modify keys. Referring to singular male John ➔ select 'his'."
+      "Immediately following the blank is the plural noun keys. Apply rule: [Possessive Adjective + Noun], this position requires a possessive adjective to modify keys. Referring to singular male John -> select 'his'."
     );
 
     // --- SLIDE 14: PART 03 PRACTICE - QUESTION 06 (CHECK 2) ---
     buildQuizSlide(slidesData[13], "CHECK 06",
       "\"We invited all of _______ friends to the end-of-year party.\"",
       ["A. our", "B. us", "C. ours", "D. we"], "A",
-      "Following the blank is the plural noun friends. According to formula [Possessive Adjective + Noun], a possessive adjective is required. For subject We ➔ select 'our'."
+      "Following the blank is the plural noun friends. According to formula [Possessive Adjective + Noun], a possessive adjective is required. For subject We -> select 'our'."
     );
 
 
@@ -724,7 +738,7 @@ window.exportPPTX = function() {
         x: 7.1, y: 2.0, w: 5.1, h: 0.3,
         fontSize: 10, fontFace: 'Arial', bold: true, color: '34D399'
       });
-      s15.addText("Used to declare ownership definitively without repeating the noun:\nâ€œWhose is this?â€", {
+      s15.addText("Used to declare ownership definitively without repeating the noun:\n"Whose is this?"", {
         x: 7.1, y: 2.4, w: 5.1, h: 0.8,
         fontSize: 13, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 20
       });
@@ -735,7 +749,7 @@ window.exportPPTX = function() {
         line: { color: '10B981', width: 1 },
         rectRadius: 0.08
       });
-      s15.addText("EXECUTIVE DEMONSTRATION:\nâ€œThis book is MINE.â€\n= This book belongs to me.\n(Stands completely alone without any accompanying noun)", {
+      s15.addText("EXECUTIVE DEMONSTRATION:\n"This book is MINE."\n= This book belongs to me.\n(Stands completely alone without any accompanying noun)", {
         x: 7.3, y: 3.5, w: 4.7, h: 1.4,
         fontSize: 12, fontFace: 'Calibri', bold: true, color: 'A7F3D0', lineSpacing: 18
       });
@@ -781,16 +795,16 @@ window.exportPPTX = function() {
 
     // --- SLIDE 17: PART 04 PRACTICE - QUESTION 07 ---
     buildQuizSlide(slidesData[16], "CHECK 07",
-      "â€œMy car is in the repair shop, but ___ is parked outside.â€",
+      ""My car is in the repair shop, but ___ is parked outside."",
       ["A. your", "B. yours", "C. you", "D. yourself"], "B",
-      "Follows clause transition without an accompanying noun ➔ strictly requires Possessive Pronoun 'yours' (= your car). 'Your' is an adjective and requires a noun."
+      "Follows clause transition without an accompanying noun -> strictly requires Possessive Pronoun 'yours' (= your car). 'Your' is an adjective and requires a noun."
     );
 
     // --- SLIDE 18: PART 04 PRACTICE - QUESTION 08 ---
     buildQuizSlide(slidesData[17], "CHECK 08",
-      "â€œThese project documents belong to the marketing team; in fact, they are ___.â€",
+      ""These project documents belong to the marketing team; in fact, they are ___."",
       ["A. their", "B. them", "C. theirs", "D. themselves"], "C",
-      "Positioned after verb 'are' at sentence end to denote independent ownership (they are theirs = they are their documents) ➔ requires Possessive Pronoun 'theirs'."
+      "Positioned after verb 'are' at sentence end to denote independent ownership (they are theirs = they are their documents) -> requires Possessive Pronoun 'theirs'."
     );
 
     // --- SLIDE 19: PART 05 - REFLEXIVE PRONOUNS (CORE FOCUS) ---
@@ -808,7 +822,7 @@ window.exportPPTX = function() {
         x: 1.1, y: 2.0, w: 5.6, h: 0.3,
         fontSize: 10, fontFace: 'Arial', bold: true, color: 'F472B6'
       });
-      s19.addText("1. Reflection (Subject = Object):\nAction reflects back onto the actor: â€œI love myself.â€\n\n2. Emphatic Intensifier:\nEmphasizes personal execution: â€œShe carries these books herself.â€\n\n3. Solo Execution (By + Oneself):\nCompleting a task alone: â€œI did it by myself.â€ (= alone)", {
+      s19.addText("1. Reflection (Subject = Object):\nAction reflects back onto the actor: "I love myself."\n\n2. Emphatic Intensifier:\nEmphasizes personal execution: "She carries these books herself."\n\n3. Solo Execution (By + Oneself):\nCompleting a task alone: "I did it by myself." (= alone)", {
         x: 1.1, y: 2.4, w: 5.6, h: 2.6,
         fontSize: 11.5, fontFace: 'Calibri', color: 'E2E8F0', lineSpacing: 18
       });
@@ -844,19 +858,19 @@ window.exportPPTX = function() {
         {
           title: "2. INDEFINITE PRONOUNS",
           words: "everyone, someone, anything...",
-          rules: "⚠️ GOLDEN RULE: Always takes a singular verb (Everyone is ready).",
+          rules: "[!] GOLDEN RULE: Always takes a singular verb (Everyone is ready).",
           color: '34D399'
         },
         {
           title: "3. INTERROGATIVE PRONOUNS",
           words: "who, whom, whose, what, which",
-          rules: "Introduces direct or indirect inquiries: “Whose jacket is this?”",
+          rules: "Introduces direct or indirect inquiries: "Whose jacket is this?"",
           color: '60A5FA'
         },
         {
           title: "4. RELATIVE PRONOUNS",
           words: "who, which, that, whose, whoever",
-          rules: "Connects relative clauses to antecedent nouns: “The candidate who won the election...”",
+          rules: "Connects relative clauses to antecedent nouns: "The candidate who won the election..."",
           color: 'FBBF24'
         }
       ];
@@ -886,7 +900,7 @@ window.exportPPTX = function() {
     buildQuizSlide(slidesData[20], "CHECK 09",
       "\"Due to the unexpected absence of her assistant, Ms. Gable had to organize the entire quarterly conference on _______.\"",
       ["A. her own", "B. her", "C. hers", "D. herself"], "A",
-        "Classic idiomatic syntax 'by + Reflexive Pronoun' = without assistance (alone / on one's own). Since subject is 'He' ➔ select 'by himself'."
+        "Classic idiomatic syntax 'by + Reflexive Pronoun' = without assistance (alone / on one's own). Since subject is 'He' -> select 'by himself'."
     );
 
     // --- SLIDE 22: PART 05 PRACTICE - QUESTION 10 ---
@@ -905,19 +919,19 @@ window.exportPPTX = function() {
         {
           num: "QUESTION 1",
           q: "Who does the action?",
-          sub: "â€¢ Initiator before Verb âž” Subject Pronoun\n(He plays football)",
+          sub: • Initiator before Verb -> Subject Pronoun\n(He plays football)",
           color: '6366F1'
         },
         {
           num: "QUESTION 2",
           q: "Who/What receives?",
-          sub: "â€¢ Target after Verb/Preposition âž” Object Pronoun\n(I like him / between you and me)",
+          sub: • Target after Verb/Preposition -> Object Pronoun\n(I like him / between you and me)",
           color: '38BDF8'
         },
         {
           num: "QUESTION 3",
           q: "Bounces back or alone?",
-          sub: "â€¢ Action reflects on doer / Solo âž” Reflexive\n(He hurt himself / by himself)",
+          sub: • Action reflects on doer / Solo -> Reflexive\n(He hurt himself / by himself)",
           color: 'EC4899'
         }
       ];
@@ -1016,7 +1030,7 @@ window.exportPPTX = function() {
         x: 6.6, y: 2.05, w: 2.0, h: 0.35,
         fontSize: 10, fontFace: 'Arial', bold: true, color: 'FFFFFF', align: 'center', valign: 'middle'
       });
-      s25.addText("â€œSarah has a new laptop. ___ laptop is very expensive, but the laptop is not ___.â€", {
+      s25.addText(""Sarah has a new laptop. ___ laptop is very expensive, but the laptop is not ___."", {
         x: 6.6, y: 2.55, w: 5.6, h: 1.1,
         fontSize: 13.5, fontFace: 'Arial', bold: true, color: 'FFFFFF', lineSpacing: 20
       });
@@ -1036,7 +1050,7 @@ window.exportPPTX = function() {
           line: { color: isCorrect ? '10B981' : '334155', width: 1 },
           rectRadius: 0.06
         });
-        s25.addText(opt + (isCorrect ? "  âœ“ [CORRECT ANSWER]" : ""), {
+        s25.addText(opt + (isCorrect ? "  [CORRECT] [CORRECT ANSWER]" : ""), {
           x: 6.8, y: yPos, w: 5.2, h: 0.4,
           fontSize: 11, fontFace: 'Calibri', bold: isCorrect,
           color: isCorrect ? '34D399' : 'E2E8F0', valign: 'middle'
@@ -1062,7 +1076,7 @@ window.exportPPTX = function() {
         line: { color: '6366F1', width: 1.5 },
         rectRadius: 0.15
       });
-      s26.addText("â€œPronouns may be small words, but they are very important in English.â€", {
+      s26.addText(""Pronouns may be small words, but they are very important in English."", {
         x: 2.0, y: 2.5, w: 9.33, h: 1.2,
         fontSize: 22, fontFace: 'Arial', bold: true, color: 'FFFFFF',
         align: 'center', lineSpacing: 30
