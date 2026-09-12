@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Presenter Console - Màn hình dành riêng cho người thuyết trình</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --bg: #0b0f19;
@@ -242,17 +245,21 @@
       border-color: #818cf8;
       box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
     }
+
     .nav-btn-primary:hover {
       background: linear-gradient(135deg, #4f46e5, #4338ca);
     }
   </style>
 </head>
+
 <body>
 
   <!-- Header -->
   <header>
     <div class="title-badge">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
       PRESENTER CONSOLE
       <span class="status-pill">● Đã đồng bộ với màn chiếu</span>
     </div>
@@ -261,7 +268,7 @@
 
   <!-- Body -->
   <main class="console-body">
-    
+
     <!-- Left: Slide status & Next slide -->
     <div class="left-panel">
       <div class="preview-card" style="flex:1;">
@@ -270,7 +277,7 @@
           <span id="slideCounterBadge" style="color:var(--cyan); font-family:monospace; font-size:0.9rem;">Slide 1 / 26</span>
         </div>
         <div class="slide-name" id="currentSlideTitle">PRONOUNS IN ENGLISH</div>
-        
+
         <div style="margin-top:1.5rem; color:#9ca3af; font-size:0.95rem; line-height:1.5;">
           👁️ Màn hình khán giả / Máy chiếu đang hiển thị <strong>100% Tiếng Anh</strong>.<br>
           Ghi chú bên phải là kịch bản nói tiếng Việt chỉ dành riêng cho bạn.
@@ -278,7 +285,8 @@
 
         <div class="next-preview">
           <div class="card-label" style="color:var(--amber);">SLIDE KẾ TIẾP (NEXT UP)</div>
-          <div style="font-weight:700; color:#e5e7eb; font-size:1.05rem;" id="nextSlideTitle">The Problem with Repetition</div>
+          <div style="font-weight:700; color:#e5e7eb; font-size:1.05rem;" id="nextSlideTitle">The Problem with
+            Repetition</div>
         </div>
       </div>
     </div>
@@ -287,13 +295,18 @@
     <div class="notes-panel">
       <div class="notes-header">
         <h3>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
           Kịch bản nói tiếng Việt (Đọc to nguyên văn)
         </h3>
         <div style="display:flex; align-items:center; gap:0.5rem;">
           <span style="font-size:0.85rem; color:#9ca3af; margin-right:0.5rem;">Cỡ chữ:</span>
-          <button class="nav-btn" id="btnZoomOut" style="padding:0.2rem 0.6rem; font-size:0.85rem;" title="Giảm cỡ chữ">A-</button>
-          <button class="nav-btn" id="btnZoomIn" style="padding:0.2rem 0.6rem; font-size:0.85rem;" title="Tăng cỡ chữ">A+</button>
+          <button class="nav-btn" id="btnZoomOut" style="padding:0.2rem 0.6rem; font-size:0.85rem;"
+            title="Giảm cỡ chữ">A-</button>
+          <button class="nav-btn" id="btnZoomIn" style="padding:0.2rem 0.6rem; font-size:0.85rem;"
+            title="Tăng cỡ chữ">A+</button>
         </div>
       </div>
       <div class="notes-content" id="notesBody" style="font-size:1.25rem;">
@@ -306,7 +319,9 @@
   <!-- Controller Footer -->
   <footer>
     <button class="nav-btn" id="prevBtn">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
       Slide trước
     </button>
 
@@ -373,4 +388,5 @@
     });
   </script>
 </body>
+
 </html>

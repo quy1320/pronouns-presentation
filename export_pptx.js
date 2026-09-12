@@ -5,7 +5,7 @@ window.exportPPTX = function() {
   const btn = document.getElementById('exportPptxBtn');
   const originalText = btn ? btn.innerHTML : '';
   if (btn) {
-    btn.innerHTML = `<span>Äang táº¡o PowerPoint 26 Slide cao cáº¥p...</span>`;
+      btn.innerHTML = `<span>Exporting 26-Slide Masterclass Deck...</span>`;
     btn.disabled = true;
   }
 
@@ -313,11 +313,11 @@ window.exportPPTX = function() {
       addHeader(s4, slidesData[3].category, slidesData[3].title, slidesData[3].subtitle);
 
       const modules = [
-        { num: "PART 01", title: "Subject\nPronouns", words: "I, you, he, she, it, we, they", role: "Khá»Ÿi xÆ°á»›ng hÃ nh Ä‘á»™ng trÆ°á»›c Äá»™ng tá»« (S + V)", color: '6366F1' },
-        { num: "PART 02", title: "Object\nPronouns", words: "me, you, him, her, it, us, them", role: "Tiáº¿p nháº­n tÃ¡c Ä‘á»™ng sau Verb & Giá»›i tá»«", color: '06B6D4' },
-        { num: "PART 03", title: "Possessive\nAdjectives", words: "my, your, his, her, its, our, their", role: "TÃ­nh tá»« bá»• nghÄ©a; Báº®T BUá»˜C cÃ³ Noun Ä‘i sau", color: 'F59E0B' },
-        { num: "PART 04", title: "Possessive\nPronouns", words: "mine, yours, his, hers, ours, theirs", role: "Äáº¡i tá»« Ä‘á»™c láº­p; Possessive Pronoun = Possessive Adjective + Noun", color: '10B981' },
-        { num: "PART 05", title: "Reflexive &\nOverview", words: "myself, yourself... & 4 Families", role: "Trá»ng tÃ¢m Pháº£n thÃ¢n + Tá»•ng quan Ä‘áº¡i tá»« khÃ¡c", color: 'EC4899' }
+        { num: "PART 01", title: "Subject\nPronouns", words: "I, you, he, she, it, we, they", role: "Initiates action before main verb (S + V)", color: '6366F1' },
+        { num: "PART 02", title: "Object\nPronouns", words: "me, you, him, her, it, us, them", role: "Receives action after verb & preposition", color: '06B6D4' },
+        { num: "PART 03", title: "Possessive\nAdjectives", words: "my, your, his, her, its, our, their", role: "Adjective modifier; strictly requires a noun", color: 'F59E0B' },
+        { num: "PART 04", title: "Possessive\nPronouns", words: "mine, yours, his, hers, ours, theirs", role: "Stands alone; Possessive Pronoun = Possessive Adj + Noun", color: '10B981' },
+        { num: "PART 05", title: "Reflexive &\nOverview", words: "myself, yourself... & 4 Families", role: "Reflexive focus + Overview of other pronoun families", color: 'EC4899' }
       ];
 
       modules.forEach((m, idx) => {
@@ -426,14 +426,14 @@ window.exportPPTX = function() {
     buildQuizSlide(slidesData[5], "CHECK 01",
       "â€œTom is a talented striker. ___ plays football every weekend with his local club.â€",
       ["A. Him", "B. He", "C. His", "D. Himself"], "B",
-      "Äá»©ng trÆ°á»›c Ä‘á»™ng tá»« 'plays' lÃ m chá»§ ngá»¯ cá»§a cÃ¢u âž” báº¯t buá»™c chá»n Ä‘áº¡i tá»« chá»§ ngá»¯ 'He'. Him (tÃ¢n ngá»¯), His (sá»Ÿ há»¯u), Himself (pháº£n thÃ¢n) Ä‘á»u sai."
+        "Positioned before verb 'plays' as subject ➔ requires Subject Pronoun 'He'. Him (Object), His (Possessive), Himself (Reflexive) cannot function as subject."
     );
 
     // --- SLIDE 7: PART 01 PRACTICE - QUESTION 02 ---
     buildQuizSlide(slidesData[6], "CHECK 02",
       "â€œAfter the conference ended, David and ___ submitted the project report to the executive director.â€",
       ["A. me", "B. I", "C. myself", "D. mine"], "B",
-      "'David and I' cÃ¹ng lÃ m chá»§ ngá»¯ cho Ä‘á»™ng tá»« 'submitted'. Táº¡m bá» 'David and', ta cÃ³ 'I submitted' (Ä‘Ãºng), chá»© khÃ´ng thá»ƒ dÃ¹ng 'me submitted'."
+        "'David and I' act as compound subjects for verb 'submitted'. Verification trick: omit 'David and' ➔ 'I submitted' (correct), never 'me submitted'."
     );
 
     // --- SLIDE 8: PART 02 - OBJECT PRONOUNS ---
@@ -478,14 +478,14 @@ window.exportPPTX = function() {
     buildQuizSlide(slidesData[8], "CHECK 03",
       "â€œWe met our new international partners yesterday and invited ___ to visit our head office.â€",
       ["A. they", "B. their", "C. them", "D. theirs"], "C",
-      "Äá»©ng sau ngoáº¡i Ä‘á»™ng tá»« 'invited' lÃ m tÃ¢n ngá»¯ trá»±c tiáº¿p âž” báº¯t buá»™c chá»n Ä‘áº¡i tá»« tÃ¢n ngá»¯ 'them'. They (chá»§ ngá»¯), Their (Possessive Adjective), Theirs (Possessive Pronoun) Ä‘á»u khÃ´ng há»£p lá»‡."
+        "Follows transitive verb 'invited' as direct object ➔ requires Object Pronoun 'them'. They (Subject), Their (Adjective), Theirs (Pronoun) are invalid."
     );
 
     // --- SLIDE 10: PART 02 PRACTICE - QUESTION 04 ---
     buildQuizSlide(slidesData[9], "CHECK 04",
       "â€œThis confidential agreement must strictly remain between the client and ___.â€",
       ["A. I", "B. me", "C. my", "D. mine"], "B",
-      "'Between' lÃ  giá»›i tá»«. Sau giá»›i tá»« báº¯t buá»™c dÃ¹ng Ä‘áº¡i tá»« tÃ¢n ngá»¯ (Object Pronoun) âž” 'between the client and me'. KhÃ´ng thá»ƒ dÃ¹ng 'I'."
+        "'Between' is a preposition. Prepositions require Object Pronouns ➔ 'between the client and me'. 'I' cannot follow a preposition."
     );
 
     // --- SLIDE 11: PART 03 - POSSESSIVE ADJECTIVES (THEORY 1) ---
@@ -550,7 +550,7 @@ window.exportPPTX = function() {
         line: { color: '38BDF8', width: 1 },
         rectRadius: 0.08
       });
-      s11.addText("🔵 ITS (NO APOSTROPHE) = Tính từ sở hữu\nDùng để chỉ quyền sở hữu của đồ vật, sự vật, con vật:\n👉 “The company updated its security protocol.”", {
+      s11.addText("🔵 ITS (NO APOSTROPHE) = Possessive Adjective\nDenotes ownership for objects, entities, or animals:\n👉 “The company updated its security protocol.”", {
         x: 7.3, y: 2.6, w: 4.7, h: 1.4,
         fontSize: 11.5, fontFace: 'Calibri', color: 'E0F2FE', lineSpacing: 18
       });
@@ -561,7 +561,7 @@ window.exportPPTX = function() {
         line: { color: 'EF4444', width: 1 },
         rectRadius: 0.08
       });
-      s11.addText("🔴 IT'S (WITH APOSTROPHE) = Viết tắt của 'it is' / 'it has'\nLà cụm Chủ ngữ + Động từ, không phải tính từ sở hữu:\n👉 “It's important to double-check the figures.”", {
+      s11.addText("🔴 IT'S (WITH APOSTROPHE) = Contraction of 'it is' / 'it has'\nA complete clause (Subject + Verb), NOT a possessive adjective:\n👉 “It's important to double-check the figures.”", {
         x: 7.3, y: 4.5, w: 4.7, h: 1.4,
         fontSize: 11.5, fontFace: 'Calibri', color: 'FEE2E2', lineSpacing: 18
       });
@@ -569,7 +569,7 @@ window.exportPPTX = function() {
       attachNotes(s11, slidesData[10].speakerNotes);
     }
 
-    // --- SLIDE 12: PART 03 - THE 7 POSSESSIVE ADJECTIVES (THEORY 2 - BỔ SUNG) ---
+    // --- SLIDE 12: PART 03 - THE 7 POSSESSIVE ADJECTIVES (THEORY 2) ---
     {
       const s12 = createSlide();
       addHeader(s12, slidesData[11].category, slidesData[11].title, slidesData[11].subtitle);
@@ -581,17 +581,17 @@ window.exportPPTX = function() {
         line: { color: 'F59E0B', width: 1.5 },
         rectRadius: 0.12
       });
-      s12.addText("SINGULAR FORMS (DẠNG SỐ ÍT)", {
+      s12.addText("SINGULAR FORMS (INDIVIDUAL OWNERSHIP)", {
         x: 1.1, y: 2.0, w: 5.1, h: 0.3,
         fontSize: 10, fontFace: 'Arial', bold: true, color: 'FBBF24'
       });
 
       const singularPairs = [
-        { pro: "I", adj: "MY", eg: "my phone", vn: "điện thoại của tôi" },
-        { pro: "YOU", adj: "YOUR", eg: "your idea", vn: "ý tưởng của bạn" },
-        { pro: "HE", adj: "HIS", eg: "his car", vn: "xe của anh ấy" },
-        { pro: "SHE", adj: "HER", eg: "her bag", vn: "túi của cô ấy" },
-        { pro: "IT", adj: "ITS", eg: "its tail", vn: "cái đuôi của nó" }
+        { pro: "I", adj: "MY", eg: "my phone", vn: "e.g., my phone" },
+        { pro: "YOU", adj: "YOUR", eg: "your idea", vn: "e.g., your idea" },
+        { pro: "HE", adj: "HIS", eg: "his car", vn: "e.g., his car" },
+        { pro: "SHE", adj: "HER", eg: "her bag", vn: "e.g., her bag" },
+        { pro: "IT", adj: "ITS", eg: "its tail", vn: "e.g., its tail" }
       ];
 
       singularPairs.forEach((item, idx) => {
@@ -625,8 +625,8 @@ window.exportPPTX = function() {
       });
 
       const pluralPairs = [
-        { pro: "WE", adj: "OUR", eg: "our team", vn: "đội của chúng tôi" },
-        { pro: "THEY", adj: "THEIR", eg: "their house", vn: "nhà của họ" }
+        { pro: "WE", adj: "OUR", eg: "our team", vn: "e.g., our team" },
+        { pro: "THEY", adj: "THEIR", eg: "their house", vn: "e.g., their house" }
       ];
 
       pluralPairs.forEach((item, idx) => {
@@ -654,15 +654,15 @@ window.exportPPTX = function() {
         line: { color: 'F59E0B', width: 1.5 },
         rectRadius: 0.08
       });
-      s12.addText("📌 QUY TẮC NGỮ PHÁP BẤT BIẾN:", {
+      s12.addText("📌 CORE SYNTAX RULE:", {
         x: 7.3, y: 4.45, w: 4.7, h: 0.3,
         fontSize: 10.5, fontFace: 'Arial', bold: true, color: 'FBBF24'
       });
-      s12.addText("[ Tính từ sở hữu ] + [ NOUN / Cụm Danh Từ ]", {
+      s12.addText("[ Possessive Adjective ] + [ NOUN / Noun Phrase ]", {
         x: 7.3, y: 4.85, w: 4.7, h: 0.35,
         fontSize: 12, fontFace: 'Courier New', bold: true, color: '6EE7B7'
       });
-      s12.addText("Cả 7 tính từ sở hữu bắt buộc phải có danh từ đi liền phía sau để xác định quyền sở hữu. Chúng TUYỆT ĐỐI không bao giờ đứng độc lập một mình!", {
+      s12.addText("All 7 possessive adjectives strictly require a following noun to denote ownership. They never stand alone!", {
         x: 7.3, y: 5.25, w: 4.7, h: 0.95,
         fontSize: 11, fontFace: 'Calibri', color: 'CBD5E1', lineSpacing: 18
       });
@@ -674,14 +674,14 @@ window.exportPPTX = function() {
     buildQuizSlide(slidesData[12], "CHECK 05",
       "\"John is looking for _______ keys. He cannot find them anywhere.\"",
       ["A. he", "B. him", "C. his", "D. himself"], "C",
-      "Ngay sau khoảng trống là danh từ số nhiều keys (chìa khóa). Áp dụng quy tắc: [Tính từ sở hữu + Noun], vị trí này cần một tính từ sở hữu để bổ nghĩa cho keys. Chủ thể là danh từ chỉ người nam số ít (John), do đó ta chọn his."
+      "Immediately following the blank is the plural noun keys. Apply rule: [Possessive Adjective + Noun], this position requires a possessive adjective to modify keys. Referring to singular male John ➔ select 'his'."
     );
 
     // --- SLIDE 14: PART 03 PRACTICE - QUESTION 06 (CHECK 2) ---
     buildQuizSlide(slidesData[13], "CHECK 06",
       "\"We invited all of _______ friends to the end-of-year party.\"",
       ["A. our", "B. us", "C. ours", "D. we"], "A",
-      "Phía sau khoảng trống có danh từ friends (những người bạn). Theo công thức [Tính từ sở hữu + Noun], ta cần một tính từ sở hữu. Với đại từ chủ ngữ We (chúng tôi), tính từ sở hữu tương ứng là our (our friends = những người bạn của chúng tôi). Lưu ý: ours là đại từ sở hữu, đứng một mình và không có danh từ friends theo sau."
+      "Following the blank is the plural noun friends. According to formula [Possessive Adjective + Noun], a possessive adjective is required. For subject We ➔ select 'our'."
     );
 
 
@@ -783,14 +783,14 @@ window.exportPPTX = function() {
     buildQuizSlide(slidesData[16], "CHECK 07",
       "â€œMy car is in the repair shop, but ___ is parked outside.â€",
       ["A. your", "B. yours", "C. you", "D. yourself"], "B",
-      "Chá»— trá»‘ng lÃ m chá»§ ngá»¯ cá»§a váº¿ sau vÃ  khÃ´ng cÃ³ danh tá»« Ä‘i kÃ¨m âž” báº¯t buá»™c dÃ¹ng Possessive Pronoun 'yours' (= your car). PhÆ°Æ¡ng Ã¡n 'your' báº¯t buá»™c pháº£i cÃ³ danh tá»« phÃ­a sau."
+      "Follows clause transition without an accompanying noun ➔ strictly requires Possessive Pronoun 'yours' (= your car). 'Your' is an adjective and requires a noun."
     );
 
     // --- SLIDE 18: PART 04 PRACTICE - QUESTION 08 ---
     buildQuizSlide(slidesData[17], "CHECK 08",
       "â€œThese project documents belong to the marketing team; in fact, they are ___.â€",
       ["A. their", "B. them", "C. theirs", "D. themselves"], "C",
-      "Äá»©ng sau Ä‘á»™ng tá»« 'are' á»Ÿ cuá»‘i cÃ¢u Ä‘á»ƒ chá»‰ sá»± sá»Ÿ há»¯u Ä‘á»™c láº­p (they are theirs = they are their documents). Báº¯t buá»™c dÃ¹ng Possessive Pronoun 'theirs'."
+      "Positioned after verb 'are' at sentence end to denote independent ownership (they are theirs = they are their documents) ➔ requires Possessive Pronoun 'theirs'."
     );
 
     // --- SLIDE 19: PART 05 - REFLEXIVE PRONOUNS (CORE FOCUS) ---
@@ -836,27 +836,27 @@ window.exportPPTX = function() {
       // Right: 4 Overview Cards
       const extCards = [
         {
-          title: "1. DEMONSTRATIVE (Chá»‰ Ä‘á»‹nh)",
+          title: "1. DEMONSTRATIVE PRONOUNS",
           words: "This, That, These, Those",
-          rules: "Gáº§n: This / These â€¢ Xa: That / Those. CÃ³ thá»ƒ Ä‘i kÃ¨m danh tá»« khÃ´ng Ä‘áº¿m Ä‘Æ°á»£c (This advice).",
+          rules: "Near: This / These • Far: That / Those. Note: This/That also pair with uncountable nouns (This advice, That water).",
           color: '38BDF8'
         },
         {
-          title: "2. INDEFINITE (Báº¥t Ä‘á»‹nh)",
+          title: "2. INDEFINITE PRONOUNS",
           words: "everyone, someone, anything...",
-          rules: "âš ï¸ QUY Táº®C VÃ€NG: LuÃ´n chia Ä‘á»™ng tá»« sá»‘ Ã­t (Everyone is ready).",
+          rules: "⚠️ GOLDEN RULE: Always takes a singular verb (Everyone is ready).",
           color: '34D399'
         },
         {
-          title: "3. INTERROGATIVE (Nghi váº¥n)",
+          title: "3. INTERROGATIVE PRONOUNS",
           words: "who, whom, whose, what, which",
-          rules: "DÃ¹ng Ä‘á»ƒ Ä‘áº·t cÃ¢u há»i trá»±c tiáº¿p hoáº·c giÃ¡n tiáº¿p: â€œWhose jacket is this?â€",
+          rules: "Introduces direct or indirect inquiries: “Whose jacket is this?”",
           color: '60A5FA'
         },
         {
-          title: "4. RELATIVE (Quan há»‡)",
+          title: "4. RELATIVE PRONOUNS",
           words: "who, which, that, whose, whoever",
-          rules: "Ná»‘i má»‡nh Ä‘á» phá»¥: â€œThe candidate who won the election...â€",
+          rules: "Connects relative clauses to antecedent nouns: “The candidate who won the election...”",
           color: 'FBBF24'
         }
       ];
@@ -886,14 +886,14 @@ window.exportPPTX = function() {
     buildQuizSlide(slidesData[20], "CHECK 09",
       "\"Due to the unexpected absence of her assistant, Ms. Gable had to organize the entire quarterly conference on _______.\"",
       ["A. her own", "B. her", "C. hers", "D. herself"], "A",
-      "ThÃ nh ngá»¯ cá»‘ Ä‘á»‹nh 'on one's own' = tá»± mÃ¬nh lÃ m, khÃ´ng cÃ³ sá»± trá»£ giÃºp (independently / without help). Giá»›i tá»« 'on' báº¯t buá»™c Ä‘i vá»›i 'her own'. Náº¿u dÃ¹ng Ä‘áº¡i tá»« pháº£n thÃ¢n thÃ¬ pháº£i lÃ  'by herself' chá»© khÃ´ng dÃ¹ng 'on herself'."
+        "Classic idiomatic syntax 'by + Reflexive Pronoun' = without assistance (alone / on one's own). Since subject is 'He' ➔ select 'by himself'."
     );
 
     // --- SLIDE 22: PART 05 PRACTICE - QUESTION 10 ---
     buildQuizSlide(slidesData[21], "CHECK 10",
       "\"Before submitting the financial auditing report to the board, Ms. Patel checked the spreadsheet _______ to ensure zero calculation errors.\"",
       ["A. hers", "B. herself", "C. she", "D. her"], "B",
-      "Äáº¡i tá»« pháº£n thÃ¢n 'herself' Ä‘á»©ng cuá»‘i má»‡nh Ä‘á» Ä‘Ã³ng vai trÃ² Ä‘áº¡i tá»« nháº¥n máº¡nh (Intensive Pronoun) Ä‘á»ƒ nháº¥n máº¡nh Ä‘Ã­ch thÃ¢n cÃ´ Patel Ä‘Ã£ tá»± tay kiá»ƒm tra báº£ng tÃ­nh. Vá»›i chá»§ ngá»¯ ná»¯ 'Ms. Patel' âž” chá»n 'herself'."
+        "Reflexive pronoun 'herself' at clause end serves as an emphatic pronoun highlighting personal agency ('she carries these books herself')."
     );
 
     // --- SLIDE 23: EXECUTIVE DECISION FRAMEWORK ---
@@ -960,13 +960,13 @@ window.exportPPTX = function() {
       });
 
       const matrixRows = [
-        { entity: "I (TÃ´i)", s: "I", o: "me", a: "my + N", p: "mine", r: "myself" },
-        { entity: "You (Báº¡n)", s: "you", o: "you", a: "your + N", p: "yours", r: "yourself / -selves" },
-        { entity: "He (Anh áº¥y)", s: "he", o: "him", a: "his + N", p: "his", r: "himself" },
-        { entity: "She (CÃ´ áº¥y)", s: "she", o: "her", a: "her + N", p: "hers", r: "herself" },
-        { entity: "It (NÃ³)", s: "it", o: "it", a: "its + N", p: "its", r: "itself" },
-        { entity: "We (ChÃºng tÃ´i)", s: "we", o: "us", a: "our + N", p: "ours", r: "ourselves" },
-        { entity: "They (Há»)", s: "they", o: "them", a: "their + N", p: "theirs", r: "themselves" }
+        { entity: "1st Sing. (I)", s: "I", o: "me", a: "my + N", p: "mine", r: "myself" },
+        { entity: "2nd Sing./Plur. (You)", s: "you", o: "you", a: "your + N", p: "yours", r: "yourself / -selves" },
+        { entity: "3rd Male (He)", s: "he", o: "him", a: "his + N", p: "his", r: "himself" },
+        { entity: "3rd Female (She)", s: "she", o: "her", a: "her + N", p: "hers", r: "herself" },
+        { entity: "3rd Neutral (It)", s: "it", o: "it", a: "its + N", p: "its", r: "itself" },
+        { entity: "1st Plural (We)", s: "we", o: "us", a: "our + N", p: "ours", r: "ourselves" },
+        { entity: "3rd Plural (They)", s: "they", o: "them", a: "their + N", p: "theirs", r: "themselves" }
       ];
 
       s24.addText("ENTITY", { x: 1.0, y: 2.05, w: 2.4, h: 0.3, fontSize: 10, fontFace: 'Arial', bold: true, color: '94A3B8' });
@@ -1098,7 +1098,7 @@ window.exportPPTX = function() {
       .catch((err) => {
         console.error("PPTX Generation Error:", err);
         if (btn) {
-          btn.innerHTML = `<span>Lá»—i xuáº¥t PPTX</span>`;
+      btn.innerHTML = `<span>Export Error</span>`;
           setTimeout(() => {
             btn.innerHTML = originalText;
             btn.disabled = false;
@@ -1109,7 +1109,7 @@ window.exportPPTX = function() {
   } catch (err) {
     console.error("PPTX Initialization Error:", err);
     if (btn) {
-      btn.innerHTML = `<span>Lá»—i khá»Ÿi táº¡o</span>`;
+      btn.innerHTML = `<span>Export Error</span>`;
       setTimeout(() => {
         btn.innerHTML = originalText;
         btn.disabled = false;

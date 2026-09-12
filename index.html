@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>English Pronouns Masterclass - Interactive Deck</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <!-- PptxGenJS for direct PPTX export -->
   <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
   <!-- JSZip for injecting PPTX slide transitions -->
@@ -119,6 +122,7 @@
       border-color: #818cf8;
       box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
     }
+
     .btn-primary:hover {
       background: linear-gradient(135deg, #4f46e5, #4338ca);
     }
@@ -307,10 +311,26 @@
       font-family: monospace;
       font-size: 0.95rem;
     }
-    .pill-blue { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
-    .pill-green { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-    .pill-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
-    .pill-orange { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+
+    .pill-blue {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+    }
+
+    .pill-green {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+    }
+
+    .pill-purple {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+    }
+
+    .pill-orange {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+    }
 
     /* Story & Quote Bubbles */
     .story-box {
@@ -433,28 +453,32 @@
       color: white !important;
     }
 
-    .explanation-reveal,
     .quiz-reveal-box {
-      margin-top: 0.75rem;
+      margin-top: 0.5rem;
       padding: 1rem 1.4rem;
       border-radius: 12px;
       background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
       display: none;
-      flex-direction: column;
-      gap: 0.35rem;
-      animation: fadeInSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      align-items: flex-start;
+      gap: 1rem;
+      animation: fadeInSlideUp 0.3s ease-out forwards;
     }
 
-    .explanation-reveal.show,
     .quiz-reveal-box.show {
-      display: flex !important;
+      display: flex;
     }
 
     @keyframes fadeInSlideUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Speaker Notes Dock (Ẩn mặc định để màn hình trình chiếu thuần khiết 100% tiếng Anh) */
@@ -607,9 +631,17 @@
       padding: 0.45rem 0.95rem !important;
       animation: pulsePresent 3s infinite;
     }
+
     @keyframes pulsePresent {
-      0%, 100% { box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4); }
-      50% { box-shadow: 0 4px 25px rgba(219, 39, 119, 0.7); }
+
+      0%,
+      100% {
+        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 4px 25px rgba(219, 39, 119, 0.7);
+      }
     }
 
     /* In Presenter Mode: hide standard deck container and header/footer */
@@ -680,9 +712,17 @@
       box-shadow: 0 0 8px #ef4444;
       animation: blink 1.2s infinite;
     }
+
     @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
     }
 
     .pv-slide-counter {
@@ -794,7 +834,7 @@
       display: flex;
       flex-direction: column;
       padding: 0.9rem 1.1rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
     }
 
     .pv-preview-header {
@@ -865,12 +905,14 @@
       text-align: left;
       transition: all 0.2s;
     }
+
     .pv-quiz-btn:hover {
       background: #334155;
       border-color: #38bdf8;
       color: #ffffff;
       transform: translateY(-1px);
     }
+
     .pv-quiz-btn .btn-letter {
       width: 22px;
       height: 22px;
@@ -904,10 +946,12 @@
       text-align: center;
       transition: all 0.2s;
     }
+
     .pv-tool-btn:hover {
       background: #334155;
       color: #ffffff;
     }
+
     .pv-tool-btn.active {
       background: #b91c1c;
       border-color: #ef4444;
@@ -967,7 +1011,7 @@
       font-size: 1.15rem;
       color: #f1f5f9;
       line-height: 1.8;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     .pv-notes-body-scroll .action-step {
@@ -1020,12 +1064,14 @@
       background: #020617 !important;
       overflow: hidden !important;
     }
+
     body.audience-mode .deck-header,
     body.audience-mode .speaker-dock,
     body.audience-mode .deck-footer,
     body.audience-mode .presenter-view-container {
       display: none !important;
     }
+
     body.audience-mode .presentation-container {
       height: 100vh !important;
       width: 100vw !important;
@@ -1033,6 +1079,7 @@
       padding: 0 !important;
       margin: 0 !important;
     }
+
     body.audience-mode .slide-viewport {
       padding: 0 !important;
       width: 100vw !important;
@@ -1041,6 +1088,7 @@
       align-items: center !important;
       justify-content: center !important;
     }
+
     body.audience-mode .slide-stage {
       max-width: 96vw !important;
       max-height: 94vh !important;
@@ -1048,6 +1096,7 @@
       height: calc(96vw * 9 / 16) !important;
       border-radius: 16px !important;
     }
+
     @media (min-aspect-ratio: 16/9) {
       body.audience-mode .slide-stage {
         height: 94vh !important;
@@ -1065,12 +1114,15 @@
       z-index: 99999;
       display: none;
     }
+
     .screen-overlay.black {
       background: #000000;
     }
+
     .screen-overlay.white {
       background: #ffffff;
     }
+
     .screen-overlay.active {
       display: block;
     }
@@ -1095,46 +1147,71 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- Top Header Bar -->
   <header class="deck-header">
     <div class="brand-title">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+      </svg>
       PRONOUNS MASTERCLASS
       <span class="badge-tag">Audience View (Pure English)</span>
     </div>
 
     <div class="top-controls">
-      <button class="btn btn-present" id="startPptBtn" title="Bắt đầu trình chiếu như PowerPoint (Màn hình chính: Ghi chú thuyết trình | Màn hình phụ: Slide khán giả) [F5]">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+      <button class="btn btn-present" id="startPptBtn"
+        title="Bắt đầu trình chiếu như PowerPoint (Màn hình chính: Ghi chú thuyết trình | Màn hình phụ: Slide khán giả) [F5]">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
         <span>📽️ Trình Chiếu Như PPT (F5)</span>
       </button>
 
-      <button class="btn btn-primary" id="openPresenterWindowBtn" title="Mở cửa sổ ghi chú riêng cho người thuyết trình (Presenter Console)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+      <button class="btn btn-primary" id="openPresenterWindowBtn"
+        title="Mở cửa sổ ghi chú riêng cho người thuyết trình (Presenter Console)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
         <span>🖥️ Cửa Sổ Thuyết Trình</span>
       </button>
 
-      <button class="btn btn-accent" id="exportPptxBtn" title="Xuất toàn bộ bài giảng sang file PowerPoint (.pptx) chuẩn (Có sẵn ghi chú tiếng Việt trong Notes)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      <button class="btn btn-accent" id="exportPptxBtn"
+        title="Xuất toàn bộ bài giảng sang file PowerPoint (.pptx) chuẩn (Có sẵn ghi chú tiếng Việt trong Notes)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
         <span>Tải file .PPTX</span>
       </button>
 
       <button class="btn" id="toggleSpeakerBtn" title="Bật/Tắt thanh ghi chú ngay trên màn hình (Phím S)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
         <span>Ghi Chú (S)</span>
       </button>
 
       <button class="btn" id="toggleFullscreenBtn" title="Toàn màn hình">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <polyline points="9 21 3 21 3 15"></polyline>
+          <line x1="21" y1="3" x2="14" y2="10"></line>
+          <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
       </button>
     </div>
   </header>
 
   <!-- Presentation Workspace -->
   <div class="presentation-container">
-    
+
     <!-- Audience Stage Area (100% PURE ENGLISH) -->
     <main class="slide-viewport">
       <div class="slide-stage" id="slideStage">
@@ -1146,7 +1223,10 @@
     <aside class="speaker-dock hidden" id="speakerDock">
       <div class="dock-header">
         <div class="dock-title">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
           Ghi Chú Người Thuyết Trình
         </div>
         <div class="timer-badge" id="presentationTimer">00:00</div>
@@ -1162,12 +1242,16 @@
   <footer class="deck-footer">
     <div class="nav-buttons">
       <button class="btn" id="prevSlideBtn" title="Slide trước (Mũi tên Trái / PageUp)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
         Previous
       </button>
       <button class="btn btn-primary" id="nextSlideBtn" title="Slide kế tiếp (Mũi tên Phải / Phím Cách)">
         Next Slide
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
       </button>
     </div>
 
@@ -1200,7 +1284,9 @@
       <div class="pv-right-actions">
         <button class="btn btn-sm" id="pvFontDecBtn" title="Giảm cỡ chữ kịch bản (A-)">A-</button>
         <button class="btn btn-sm" id="pvFontIncBtn" title="Tăng cỡ chữ kịch bản (A+)">A+</button>
-        <button class="btn btn-danger btn-sm" id="pvExitBtn" style="background:#dc2626; color:#fff; border:none; padding:0.4rem 0.85rem; border-radius:6px; font-weight:700; cursor:pointer;" title="Thoát chế độ trình chiếu (Esc)">✕ Thoát (Esc)</button>
+        <button class="btn btn-danger btn-sm" id="pvExitBtn"
+          style="background:#dc2626; color:#fff; border:none; padding:0.4rem 0.85rem; border-radius:6px; font-weight:700; cursor:pointer;"
+          title="Thoát chế độ trình chiếu (Esc)">✕ Thoát (Esc)</button>
       </div>
     </div>
 
@@ -1238,15 +1324,18 @@
             <span style="font-size:0.7rem; color:#10b981;">ĐỒNG BỘ 100%</span>
           </div>
           <div class="pv-quiz-pad" id="pvQuizPad" style="display:none;">
-            <div style="font-size:0.75rem; color:#94a3b8; margin-bottom:0.2rem;">BẤM ĐÁP ÁN ĐỂ BẮN PHÁO HOA SANG MÁY CHIẾU:</div>
+            <div style="font-size:0.75rem; color:#94a3b8; margin-bottom:0.2rem;">BẤM ĐÁP ÁN ĐỂ BẮN PHÁO HOA SANG MÁY
+              CHIẾU:</div>
             <div class="pv-quiz-options-grid" id="pvQuizOptionsGrid">
               <!-- Dynamically populated if quiz -->
             </div>
           </div>
           <div class="pv-tools-row">
-            <button class="pv-tool-btn" id="pvBlackBtn" title="Tắt đen màn hình máy chiếu (Phím B)">⬛ Màn hình Đen (B)</button>
+            <button class="pv-tool-btn" id="pvBlackBtn" title="Tắt đen màn hình máy chiếu (Phím B)">⬛ Màn hình Đen
+              (B)</button>
             <button class="pv-tool-btn" id="pvWhiteBtn" title="Màn hình trắng (Phím W)">⬜ Màn hình Trắng (W)</button>
-            <button class="pv-tool-btn" id="pvReopenAudienceBtn" title="Mở lại màn hình khán giả nếu lỡ đóng">🪟 Mở lại màn phụ</button>
+            <button class="pv-tool-btn" id="pvReopenAudienceBtn" title="Mở lại màn hình khán giả nếu lỡ đóng">🪟 Mở lại
+              màn phụ</button>
           </div>
         </div>
       </div>
@@ -1256,10 +1345,16 @@
         <div class="pv-notes-header">
           <div class="pv-notes-title-wrap">
             <div class="pv-notes-main-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
               KỊCH BẢN NÓI TIẾNG VIỆT (DÀNH CHO DIỄN GIẢ ĐỌC)
             </div>
-            <div style="font-size:0.8rem; color:#94a3b8;">Nhìn vào đây để thuyết trình tự tin và lôi cuốn trước hội trường</div>
+            <div style="font-size:0.8rem; color:#94a3b8;">Nhìn vào đây để thuyết trình tự tin và lôi cuốn trước hội
+              trường</div>
           </div>
         </div>
 
@@ -1269,13 +1364,19 @@
 
         <!-- Presenter Bottom Navigation Bar -->
         <div class="pv-bottom-nav">
-          <button class="btn pv-nav-big-btn" id="pvPrevSlideBtn" style="background:#1e293b; color:#cbd5e1; border:1px solid #334155;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <button class="btn pv-nav-big-btn" id="pvPrevSlideBtn"
+            style="background:#1e293b; color:#cbd5e1; border:1px solid #334155;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
             Slide Trước (PageUp)
           </button>
-          <button class="btn btn-primary pv-nav-big-btn" id="pvNextSlideBtn" style="padding:0.75rem 2.2rem; font-size:1.05rem;">
+          <button class="btn btn-primary pv-nav-big-btn" id="pvNextSlideBtn"
+            style="padding:0.75rem 2.2rem; font-size:1.05rem;">
             Slide Kế Tiếp (Phím Cách / ➔)
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
           </button>
         </div>
       </div>
@@ -1298,7 +1399,7 @@
 
     // Audio synthesis for satisfying quiz click feedbacks
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    function playBeep(freq, duration, type='sine') {
+    function playBeep(freq, duration, type = 'sine') {
       try {
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator();
@@ -1311,7 +1412,7 @@
         gain.connect(audioCtx.destination);
         osc.start();
         osc.stop(audioCtx.currentTime + duration);
-      } catch(e){}
+      } catch (e) { }
     }
 
     function soundCorrect() {
@@ -1326,12 +1427,12 @@
     // - SLIDE FACES: 100% CLEAN ENGLISH (Audience view - Professional presentation design)
     // - SPEAKER NOTES: 100% VERBATIM PROFESSIONAL PRESENTER SCRIPTS (Thuyết trình chuyên nghiệp)
     const slidesData = [
-/* Slide 1: Cover */
-    {
-      category: "English Communication Insights",
-      title: "PRONOUNS IN ENGLISH",
-      subtitle: "How Small Words Drive Natural, Fluent Communication",
-      render: () => `
+      /* Slide 1: Cover */
+      {
+        category: "English Communication Insights",
+        title: "PRONOUNS IN ENGLISH",
+        subtitle: "How Small Words Drive Natural, Fluent Communication",
+        render: () => `
         <div class="grid-2" style="align-items:center; gap:2.5rem; flex:1;">
           <div>
             <div style="width:72px; height:72px; border-radius:20px; background:linear-gradient(135deg, #6366f1, #06b6d4); display:flex; align-items:center; justify-content:center; margin-bottom:1.25rem; box-shadow:0 10px 30px rgba(99,102,241,0.4);">
@@ -1358,21 +1459,21 @@
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 LỜI MỞ ĐẦU THUYẾT TRÌNH (Đọc tự tin trước khán phòng):</h4>
         <div class="prompt-bubble">
           "Kính chào quý vị và các bạn! Rất vinh dự được đại diện nhóm có mặt tại đây hôm nay để chia sẻ với mọi người về một chủ đề then chốt quyết định tính tự nhiên và chuẩn xác trong tiếng Anh: <strong>PRONOUNS – ĐẠI TỪ TRONG TIẾNG ANH</strong>.<br><br>
           Bài thuyết trình hôm nay được cấu trúc thành <strong>5 phần chuyên sâu tinh gọn</strong>: Đại từ Chủ ngữ, Đại từ Tân ngữ, Tính từ Sở hữu, Đại từ Sở hữu, và Trọng tâm Đại từ Phản thân cùng cái nhìn tổng quan về các đại từ mở rộng. Sau mỗi phần, chúng ta sẽ có đúng <strong>2 câu hỏi trắc nghiệm tương tác trực tiếp</strong> để cùng luyện tập phản xạ. Xin mời mọi người cùng bắt đầu!"
         </div>
       `
-    },
+      },
 
-/* Slide 2: The Problem with Repetition */
-    {
-      category: "01. Introduction",
-      title: "The Problem with Repetition",
-      subtitle: "Why does this paragraph feel exhausted and unnatural?",
-      render: () => `
+      /* Slide 2: The Problem with Repetition */
+      {
+        category: "01. Introduction",
+        title: "The Problem with Repetition",
+        subtitle: "Why does this paragraph feel exhausted and unnatural?",
+        render: () => `
         <div class="grid-2" style="align-items:center; gap:2rem;">
           <div style="display:flex; flex-direction:column; gap:1rem;">
             <div class="story-box" style="margin-top:0;">
@@ -1411,7 +1512,7 @@
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 DẪN DẮT CÂU CHUYỆN KHỞI ĐẦU:</h4>
         <div class="prompt-bubble">
           "Để bắt đầu, tôi muốn mời quý vị cùng quan sát một ví dụ thực tế trên màn hình:<br>
@@ -1421,14 +1522,14 @@
           Quý vị có thể thấy ngay sự khác biệt: Câu văn lập tức trở nên mượt mà, thanh thoát và tự nhiên. Đó chính là lý do vì sao Đại từ được ví như chất bôi trơn trong ngôn ngữ!"
         </div>
       `
-    },
+      },
 
-    /* Slide 3: Definition & Strategic Value */
-    {
-      category: "01. Introduction",
-      title: "What is a Pronoun & Why Do We Need Them?",
-      subtitle: "Linguistic definition and four strategic communication benefits",
-      render: () => `
+      /* Slide 3: Definition & Strategic Value */
+      {
+        category: "01. Introduction",
+        title: "What is a Pronoun & Why Do We Need Them?",
+        subtitle: "Linguistic definition and four strategic communication benefits",
+        render: () => `
         <div class="grid-2" style="margin-top:0.5rem;">
           <div class="card card-highlight">
             <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.75rem;">
@@ -1476,7 +1577,7 @@
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 PHÂN TÍCH ĐỊNH NGHĨA & GIÁ TRỊ CHIẾN LƯỢC:</h4>
         <div class="prompt-bubble">
           "Vậy dưới góc độ ngôn ngữ, <strong>Đại từ là gì và mang lại giá trị gì cho chúng ta?</strong><br><br>
@@ -1488,14 +1589,14 @@
           4. Và đảm bảo ngữ cảnh luôn rõ ràng, không gây nhầm lẫn đối tượng."
         </div>
       `
-    },
+      },
 
-    /* Slide 4: Roadmap (5 Core Modules) */
-    {
-      category: "00. Executive Overview",
-      title: "Presentation Roadmap: The 5 Core Modules",
-      subtitle: "A restructured, systematic framework from foundational pronouns to advanced applications",
-      render: () => `
+      /* Slide 4: Roadmap (5 Core Modules) */
+      {
+        category: "00. Executive Overview",
+        title: "Presentation Roadmap: The 5 Core Modules",
+        subtitle: "A restructured, systematic framework from foundational pronouns to advanced applications",
+        render: () => `
         <div style="display:flex; flex-direction:column; gap:1.25rem; flex:1;">
           <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:0.9rem;">
             
@@ -1542,12 +1643,12 @@
           </div>
 
           <div class="card" style="background:rgba(15,23,42,0.6); border:1px dashed rgba(255,255,255,0.2); padding:0.9rem 1.5rem; display:flex; justify-content:space-between; align-items:center;">
-            <span style="color:#e2e8f0; font-size:0.9rem;"><strong>Cơ chế tương tác:</strong> Mỗi phần có đúng <strong>2 câu hỏi kiểm tra trực tiếp</strong> ngay sau bài học.</span>
+            <span style="color:#e2e8f0; font-size:0.9rem;"><strong>Interactive Polls:</strong> Each module features <strong>2 live assessment questions</strong> immediately following the lesson.</span>
             <span class="badge-tag" style="background:rgba(99,102,241,0.25); border-color:#818cf8; color:#a5b4fc; font-size:0.8rem;">10 Live Polls • Real-time Feedback</span>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 HƯỚNG DẪN THUYẾT TRÌNH (Giới thiệu 5 Module mới):</h4>
         <div class="prompt-bubble">
           "Kính thưa quý vị, toàn bộ buổi chia sẻ hôm nay được phân bổ thành 5 module cực kỳ mạch lạc:<br><br>
@@ -1559,14 +1660,14 @@
           Đặc biệt, ngay sau mỗi phần, chúng ta sẽ có <strong>đúng 2 câu hỏi trắc nghiệm tương tác</strong> để mọi người cùng chọn đáp án!"
         </div>
       `
-    },
+      },
 
-/* Slide 5: Part 01 - Subject Pronouns */
-    {
-      category: "Part 01 • Subject Pronouns",
-      title: "Subject Pronouns",
-      subtitle: "The initiator of action: Who performs the verb?",
-      render: () => `
+      /* Slide 5: Part 01 - Subject Pronouns */
+      {
+        category: "Part 01 • Subject Pronouns",
+        title: "Subject Pronouns",
+        subtitle: "The initiator of action: Who performs the verb?",
+        render: () => `
         <div class="grid-2" style="margin-top:0.5rem; gap:1.5rem; align-items:center; flex:1;">
           <div class="table-wrapper">
             <table class="styled-table" style="font-size:0.92rem;">
@@ -1614,7 +1715,7 @@
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 PHÂN TÍCH ĐẠI TỪ CHỦ NGỮ (SUBJECT PRONOUNS):</h4>
         <div class="prompt-bubble">
           "Bây giờ chúng ta cùng bước vào <strong>Part 01: Subject Pronouns (Đại từ chủ ngữ)</strong>.<br><br>
@@ -1623,14 +1724,14 @@
           Ví dụ: <em>'He plays football'</em> - đại từ 'He' đứng trước động từ 'plays' làm chủ ngữ."
         </div>
       `
-    },
+      },
 
-    /* Slide 6: Part 01 Practice - Question 01 */
-    {
-      category: "Part 01 Practice • Question 01",
-      title: "Subject Identification Assessment",
-      subtitle: "Identifying the initiator of the verb in everyday communication",
-      render: () => `
+      /* Slide 6: Part 01 Practice - Question 01 */
+      {
+        category: "Part 01 Practice • Question 01",
+        title: "Subject Identification Assessment",
+        subtitle: "Identifying the initiator of the verb in everyday communication",
+        render: () => `
         <div class="quiz-container">
           <div class="quiz-prompt">
             <span class="quiz-badge">CHECK 01</span>
@@ -1647,26 +1748,26 @@
           <div class="explanation-reveal" id="q01-reveal">
             <div style="font-weight:700; color:#34d399; margin-bottom:0.25rem;">✓ Correct Answer: A. He</div>
             <div style="color:#cbd5e1; font-size:0.9rem;">
-              'Tom' là chủ ngữ đứng trước động từ 'is' ở mệnh đề thứ hai ➔ dùng Subject Pronoun 'He'. Him (Object Pronoun), His (Possessive Adjective / Possessive Pronoun), Himself (Reflexive Pronoun) đều sai vị trí chủ ngữ.
+              'Tom' is the subject preceding the verb 'is' in the second clause ➔ requires Subject Pronoun 'He'. Him (Object Pronoun), His (Possessive), and Himself (Reflexive) cannot function as the subject.
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TƯƠNG TÁC (Câu hỏi 01):</h4>
         <div class="prompt-bubble">
           "Câu hỏi đầu tiên: <em>'Tom is my friend. ___ is very nice.'</em><br>
           Chỗ trống đứng ngay trước động từ 'is' đóng vai trò CHỦ NGỮ. Do đó chỉ có <strong>A: He</strong> là Subject Pronoun hợp lệ!"
         </div>
       `
-    },
+      },
 
-    /* Slide 7: Part 01 Practice - Question 02 */
-    {
-      category: "Part 01 Practice • Question 02",
-      title: "Compound Subject Placement",
-      subtitle: "Resolving pronoun choice in multi-subject coordinating structures",
-      render: () => `
+      /* Slide 7: Part 01 Practice - Question 02 */
+      {
+        category: "Part 01 Practice • Question 02",
+        title: "Compound Subject Placement",
+        subtitle: "Resolving pronoun choice in multi-subject coordinating structures",
+        render: () => `
         <div class="quiz-container">
           <div class="quiz-prompt">
             <span class="quiz-badge">CHECK 02</span>
@@ -1683,25 +1784,25 @@
           <div class="explanation-reveal" id="q02-reveal">
             <div style="font-weight:700; color:#34d399; margin-bottom:0.25rem;">✓ Correct Answer: B. I</div>
             <div style="color:#cbd5e1; font-size:0.9rem;">
-              'David and I' cùng làm chủ ngữ cho động từ 'submitted'. Mẹo kiểm tra: tạm bỏ 'David and', ta có 'I submitted...' (đúng), chứ không thể nói 'me submitted...'.
+              'David and I' act as compound subjects for the verb 'submitted'. Verification trick: omit 'David and' ➔ 'I submitted...' (correct), never 'me submitted...'.
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TƯƠNG TÁC (Câu hỏi 02):</h4>
         <div class="prompt-bubble">
           "Câu hỏi 02: Bẫy chủ ngữ ghép 'David and ___'. Cả cụm đứng trước động từ 'submitted' làm chủ ngữ. Tạm bỏ 'David and', ta có 'I submitted' chứ không thể là 'me submitted'. Đáp án đúng là <strong>B: I</strong>!"
         </div>
       `
-    },
+      },
 
-    /* Slide 8: Part 02 - Object Pronouns */
-    {
-      category: "Part 02 • Object Pronouns",
-      title: "Object Pronouns",
-      subtitle: "The receiver of action: Who receives the impact of the verb?",
-      render: () => `
+      /* Slide 8: Part 02 - Object Pronouns */
+      {
+        category: "Part 02 • Object Pronouns",
+        title: "Object Pronouns",
+        subtitle: "The receiver of action: Who receives the impact of the verb?",
+        render: () => `
         <div class="grid-2" style="margin-top:0.35rem; gap:1.5rem; align-items:center; flex:1;">
           <div style="display:flex; flex-direction:column; gap:0.9rem;">
             <div class="table-wrapper">
@@ -1756,7 +1857,7 @@
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 THUYẾT TRÌNH VỀ ĐẠI TỪ TÂN NGỮ (Part 02):</h4>
         <div class="prompt-bubble">
           "Đến với <strong>Part 02: Object Pronouns – Đại từ tân ngữ</strong>: đối tượng tiếp nhận tác động của hành động.<br><br>
@@ -1765,14 +1866,14 @@
           Ví dụ kinh điển trên hình: <em>'She likes him'</em>. 'She' là chủ ngữ, còn 'him' là tân ngữ tiếp nhận tình cảm."
         </div>
       `
-    },
+      },
 
-    /* Slide 9: Part 02 Practice - Question 03 */
-    {
-      category: "Part 02 Practice • Question 03",
-      title: "Object Replacement Analysis",
-      subtitle: "Determining correct recipient pronoun form",
-      render: () => `
+      /* Slide 9: Part 02 Practice - Question 03 */
+      {
+        category: "Part 02 Practice • Question 03",
+        title: "Object Replacement Analysis",
+        subtitle: "Determining correct recipient pronoun form",
+        render: () => `
         <div class="quiz-container">
           <div class="quiz-prompt">
             <span class="quiz-badge">CHECK 03</span>
@@ -1789,25 +1890,25 @@
           <div class="explanation-reveal" id="q03-reveal">
             <div style="font-weight:700; color:#34d399; margin-bottom:0.25rem;">✓ Correct Answer: B. Anna likes him.</div>
             <div style="color:#cbd5e1; font-size:0.9rem;">
-              'Peter' đứng sau động từ 'likes' làm tân ngữ tiếp nhận tác động ➔ bắt buộc dùng Object Pronoun 'him'. Phương án 'he' (Subject Pronoun), 'his' (Possessive Adjective / Possessive Pronoun) đều sai.
+              'Peter' follows the transitive verb 'likes' as direct object ➔ requires Object Pronoun 'him'. Options 'he' (Subject Pronoun) and 'his' (Possessive) are grammatically invalid.
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TƯƠNG TÁC (Câu hỏi 03):</h4>
         <div class="prompt-bubble">
           "Câu hỏi 03: 'Peter' đứng sau ngoại động từ 'likes' làm tân ngữ. Thay thế 'Peter', ta bắt buộc phải dùng Object Pronoun <strong>him</strong>: <em>'Anna likes him'</em>. Đáp án đúng là <strong>B</strong>!"
         </div>
       `
-    },
+      },
 
-    /* Slide 10: Part 02 Practice - Question 04 */
-    {
-      category: "Part 02 Practice • Question 04",
-      title: "Prepositional Object Assessment",
-      subtitle: "Applying the prepositional object rule in professional agreements",
-      render: () => `
+      /* Slide 10: Part 02 Practice - Question 04 */
+      {
+        category: "Part 02 Practice • Question 04",
+        title: "Prepositional Object Assessment",
+        subtitle: "Applying the prepositional object rule in professional agreements",
+        render: () => `
         <div class="quiz-container">
           <div class="quiz-prompt">
             <span class="quiz-badge">CHECK 04</span>
@@ -1824,25 +1925,25 @@
           <div class="explanation-reveal" id="q04-reveal">
             <div style="font-weight:700; color:#34d399; margin-bottom:0.25rem;">✓ Correct Answer: B. me</div>
             <div style="color:#cbd5e1; font-size:0.9rem;">
-              'Between' là giới từ. Sau giới từ bắt buộc dùng Object Pronoun ➔ 'between the client and me'. Không được dùng Subject Pronoun 'I'.
+              'Between' is a preposition. Prepositions require Object Pronouns ➔ 'between the client and me'. Subject Pronoun 'I' cannot follow a preposition.
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TƯƠNG TÁC (Câu hỏi 04):</h4>
         <div class="prompt-bubble">
           "Câu hỏi 04: 'Between' là giới từ. Quy tắc ngữ pháp chuẩn: Sau giới từ BẮT BUỘC là Object Pronoun. Thành ngữ chuẩn: 'Between you and me'. Do đó đáp án chuẩn xác là <strong>B: me</strong>!"
         </div>
       `
-    },
+      },
 
-    /* Slide 11: Part 03 - Possessive Adjectives (Theory 1) */
-    {
-      category: "Part 03 • Possessive Adjectives",
-      title: "Possessive Adjectives",
-      subtitle: "Essential noun modifiers that establish belonging: Possessive Adjective + Noun",
-      render: () => `
+      /* Slide 11: Part 03 - Possessive Adjectives (Theory 1) */
+      {
+        category: "Part 03 • Possessive Adjectives",
+        title: "Possessive Adjectives",
+        subtitle: "Essential noun modifiers that establish belonging: Possessive Adjective + Noun",
+        render: () => `
         <div style="display:flex; flex-direction:column; gap:1.2rem; flex:1;">
           <div class="grid-2" style="gap:1.5rem;">
             <div class="card card-accent">
@@ -1857,7 +1958,7 @@
                 </div>
                 <div style="font-size:1.1rem; color:#fff; font-family:monospace; font-weight:700;">Possessive Adjective + Noun / Noun Phrase</div>
                 <div style="color:#94a3b8; font-size:0.85rem; margin-top:0.3rem;">
-                  * Không bao giờ đứng độc lập một mình mà luôn đi trước danh từ bổ nghĩa.
+                  * Never stands alone; always precedes and modifies an accompanying noun.
                 </div>
               </div>
 
@@ -1883,16 +1984,16 @@
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:0.5rem;">The 'Its' vs. 'It's' Trap</h3>
               <div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.92rem;">
                 <div style="background:rgba(6,182,212,0.15); border:1px solid rgba(6,182,212,0.3); padding:0.75rem 0.9rem; border-radius:8px;">
-                  <div style="color:#38bdf8; font-weight:700; margin-bottom:0.25rem;">🔵 its (không có dấu phẩy) = Tính từ sở hữu</div>
+                  <div style="color:#38bdf8; font-weight:700; margin-bottom:0.25rem;">🔵 its (no apostrophe) = Possessive Adjective</div>
                   <div style="color:#cbd5e1; font-size:0.85rem; line-height:1.4;">
-                    Dùng để chỉ quyền sở hữu của đồ vật, sự vật, con vật:<br>
+                    Denotes ownership for objects, entities, or animals:<br>
                     👉 <em>“The company updated <strong>its</strong> security protocol.”</em>
                   </div>
                 </div>
                 <div style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); padding:0.75rem 0.9rem; border-radius:8px;">
-                  <div style="color:#f87171; font-weight:700; margin-bottom:0.25rem;">🔴 it's (có dấu phẩy) = Viết tắt của 'it is' / 'it has'</div>
+                  <div style="color:#f87171; font-weight:700; margin-bottom:0.25rem;">🔴 it's (with apostrophe) = Contraction of 'it is' / 'it has'</div>
                   <div style="color:#cbd5e1; font-size:0.85rem; line-height:1.4;">
-                    Là một mệnh đề (Chủ ngữ + Động từ), KHÔNG phải tính từ sở hữu:<br>
+                    A complete clause (Subject + Verb), NOT a possessive adjective:<br>
                     👉 <em>“<strong>It's</strong> important to double-check the figures.”</em>
                   </div>
                 </div>
@@ -1901,11 +2002,11 @@
           </div>
 
           <div style="text-align:center; background:linear-gradient(90deg, rgba(245,158,11,0.15), rgba(56,189,248,0.15)); border:1px solid rgba(255,255,255,0.15); padding:0.8rem; border-radius:12px; font-size:1rem;">
-            💡 <strong>The Golden Rule:</strong> <strong>Tính từ sở hữu (Possessive Adjective)</strong> <strong>BẮT BUỘC ĐI KÈM DANH TỪ</strong> (<em>my book, her laptop, their house</em>).
+            💡 <strong>The Golden Rule:</strong> <strong>Possessive Adjectives</strong> <strong>MUST BE ACCOMPANIED BY A NOUN</strong> (<em>my book, her laptop, their house</em>).
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 HƯỚNG DẪN THUYẾT TRÌNH (Part 03 - Possessive Adjectives):</h4>
         <div class="prompt-bubble">
           "Đến với <strong>Part 03: Possessive Adjectives (Tính từ sở hữu)</strong>: <em>my, your, his, her, its, our, their</em>.<br><br>
@@ -1916,21 +2017,21 @@
           Đồng thời, hãy đặc biệt lưu ý bẫy <strong>its vs it's</strong>: 'its' không có dấu phẩy mới là tính từ sở hữu!"
         </div>
       `
-    },
+      },
 
-    /* Slide 12: Part 03 - The 7 Possessive Adjectives (Theory 2 - Bổ sung) */
-    {
-      category: "Part 03 • Possessive Adjectives",
-      title: "The 7 Possessive Adjectives",
-      subtitle: "Tương ứng với từng đại từ nhân xưng, chúng ta có 7 tính từ sở hữu cơ bản",
-      render: () => `
+      /* Slide 12: Part 03 - The 7 Possessive Adjectives (Theory 2) */
+      {
+        category: "Part 03 • Possessive Adjectives",
+        title: "The 7 Possessive Adjectives",
+        subtitle: "Corresponding to each personal pronoun, there are 7 fundamental possessive adjectives",
+        render: () => `
         <div style="display:flex; flex-direction:column; gap:1.1rem; flex:1;">
           <div class="grid-2" style="gap:1.25rem; align-items:stretch;">
             
             <!-- Left Card: Singular (5 rows) -->
             <div class="card" style="padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between; border-left:4px solid #f59e0b;">
               <div style="font-size:0.75rem; font-weight:800; color:#fbbf24; text-transform:uppercase; margin-bottom:0.5rem; letter-spacing:1px;">
-                Singular Forms • Dạng Số Ít
+                Singular Forms (Individual Ownership)
               </div>
               <div style="display:flex; flex-direction:column; gap:0.55rem;">
                 
@@ -1942,7 +2043,7 @@
                   </div>
                   <div style="text-align:right;">
                     <strong style="color:#fff; font-size:0.9rem;">my phone</strong>
-                    <span style="color:#94a3b8; font-size:0.8rem; margin-left:0.3rem;">(điện thoại của tôi)</span>
+                    
                   </div>
                 </div>
 
@@ -1954,7 +2055,7 @@
                   </div>
                   <div style="text-align:right;">
                     <strong style="color:#fff; font-size:0.9rem;">your idea</strong>
-                    <span style="color:#94a3b8; font-size:0.8rem; margin-left:0.3rem;">(ý tưởng của bạn)</span>
+                    
                   </div>
                 </div>
 
@@ -1966,7 +2067,7 @@
                   </div>
                   <div style="text-align:right;">
                     <strong style="color:#fff; font-size:0.9rem;">his car</strong>
-                    <span style="color:#94a3b8; font-size:0.8rem; margin-left:0.3rem;">(xe của anh ấy)</span>
+                    
                   </div>
                 </div>
 
@@ -1978,7 +2079,7 @@
                   </div>
                   <div style="text-align:right;">
                     <strong style="color:#fff; font-size:0.9rem;">her bag</strong>
-                    <span style="color:#94a3b8; font-size:0.8rem; margin-left:0.3rem;">(túi của cô ấy)</span>
+                    
                   </div>
                 </div>
 
@@ -1990,7 +2091,7 @@
                   </div>
                   <div style="text-align:right;">
                     <strong style="color:#fff; font-size:0.9rem;">its tail</strong>
-                    <span style="color:#94a3b8; font-size:0.8rem; margin-left:0.3rem;">(cái đuôi của nó)</span>
+                    
                   </div>
                 </div>
 
@@ -2002,7 +2103,7 @@
               
               <div class="card" style="padding:1.1rem 1.25rem; border-left:4px solid #10b981;">
                 <div style="font-size:0.75rem; font-weight:800; color:#34d399; text-transform:uppercase; margin-bottom:0.5rem; letter-spacing:1px;">
-                  Plural Forms • Dạng Số Nhiều
+                  Plural Forms (Collective Ownership)
                 </div>
                 <div style="display:flex; flex-direction:column; gap:0.55rem;">
                   
@@ -2014,7 +2115,7 @@
                     </div>
                     <div style="text-align:right;">
                       <strong style="color:#fff; font-size:0.9rem;">our team</strong>
-                      <span style="color:#94a3b8; font-size:0.8rem; margin-left:0.3rem;">(đội của chúng tôi)</span>
+                      
                     </div>
                   </div>
 
@@ -2026,7 +2127,7 @@
                     </div>
                     <div style="text-align:right;">
                       <strong style="color:#fff; font-size:0.9rem;">their house</strong>
-                      <span style="color:#94a3b8; font-size:0.8rem; margin-left:0.3rem;">(nhà của họ)</span>
+                      
                     </div>
                   </div>
 
@@ -2036,13 +2137,13 @@
               <!-- Rule Card -->
               <div class="card card-accent" style="padding:1.1rem 1.25rem; flex:1; display:flex; flex-direction:column; justify-content:center;">
                 <div style="color:#fbbf24; font-weight:700; font-size:0.95rem; margin-bottom:0.35rem; display:flex; align-items:center; gap:0.4rem;">
-                  📌 Quy Tắc Ngữ Pháp Cốt Lõi:
+                  📌 Core Syntax Rule:
                 </div>
                 <div style="font-family:monospace; font-size:1.1rem; color:#fff; font-weight:800; background:rgba(0,0,0,0.3); padding:0.5rem 0.75rem; border-radius:6px; margin-bottom:0.5rem; text-align:center;">
-                  [ Tính từ sở hữu ] + [ NOUN / Cụm Danh Từ ]
+                  [ Possessive Adjective ] + [ NOUN / Noun Phrase ]
                 </div>
                 <div style="color:#cbd5e1; font-size:0.85rem; line-height:1.5;">
-                  Tất cả 7 tính từ sở hữu trên <strong>bắt buộc phải có danh từ đi liền phía sau</strong> để xác định đối tượng thuộc về ai. Chúng <em>không bao giờ đứng một mình độc lập</em>!
+                  All 7 possessive adjectives <strong>must be followed immediately by an accompanying noun</strong> to specify ownership. They <em>never stand alone</em>!
                 </div>
               </div>
 
@@ -2051,11 +2152,11 @@
           </div>
 
           <div style="text-align:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); padding:0.65rem; border-radius:10px; font-size:0.92rem; color:#e2e8f0;">
-            🔑 <strong>Tóm lược:</strong> 7 đại từ nhân xưng tương ứng chính xác với 7 tính từ sở hữu: <em>my, your, his, her, its, our, their</em>.
+            🔑 <strong>Key Takeaway:</strong> The 7 personal pronouns map directly to the 7 possessive adjectives: <em>my, your, his, her, its, our, their</em>.
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 HƯỚNG DẪN THUYẾT TRÌNH (7 Tính từ sở hữu cơ bản):</h4>
         <div class="prompt-bubble">
           "Tương ứng với từng đại từ nhân xưng, chúng ta có <strong>7 tính từ sở hữu cơ bản</strong>:<br><br>
@@ -2069,14 +2170,14 @@
           👉 <strong>Quy tắc bất biến:</strong> Cả 7 từ này KHÔNG BAO GIỜ đứng một mình. Chúng luôn cần một Danh từ đi ngay phía sau để tạo thành cụm danh từ hoàn chỉnh!"
         </div>
       `
-    },
+      },
 
-    /* Slide 13: Part 03 Practice - Question 05 (Check 1) */
-    {
-      category: "Part 03 Practice • Question 05",
-      title: "Noun Collocation Assessment",
-      subtitle: "Observing structural dependencies before the noun",
-      render: () => `
+      /* Slide 13: Part 03 Practice - Question 05 (Check 1) */
+      {
+        category: "Part 03 Practice • Question 05",
+        title: "Noun Collocation Assessment",
+        subtitle: "Observing structural dependencies before the noun",
+        render: () => `
         <div class="quiz-container">
           <div class="quiz-prompt">
             <span class="quiz-badge">CHECK 05</span>
@@ -2091,17 +2192,17 @@
           </div>
 
           <div class="explanation-reveal" id="q05-reveal">
-            <div style="font-weight:700; color:#34d399; margin-bottom:0.35rem;">✓ Đáp án đúng: C. his</div>
+            <div style="font-weight:700; color:#34d399; margin-bottom:0.35rem;">✓ Correct Answer: C. his</div>
             <div style="color:#cbd5e1; font-size:0.92rem; line-height:1.6;">
-              <strong>Giải thích chi tiết:</strong><br>
-              • Ngay sau khoảng trống là danh từ số nhiều <strong>keys</strong> (chìa khóa).<br>
-              • Áp dụng quy tắc: <strong>[Tính từ sở hữu + Noun]</strong>, vị trí này cần một tính từ sở hữu để bổ nghĩa cho <em>keys</em>.<br>
-              • Đại từ thay thế/chỉ sở hữu cho danh từ chỉ người nam số ít (<strong>John</strong>), do đó ta chọn <strong>his</strong>.
+              <strong>Detailed Explanation:</strong><br>
+              • Immediately following the blank is the plural noun <strong>keys</strong>.<br>
+              • Apply the rule: <strong>[Possessive Adjective + Noun]</strong>, this position strictly requires a possessive adjective to modify <em>keys</em>.<br>
+              • Referring back to the singular male subject (<strong>John</strong>), the appropriate possessive adjective is <strong>his</strong>.
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TƯƠNG TÁC (Câu hỏi 05):</h4>
         <div class="prompt-bubble">
           "Câu hỏi 05: 'John is looking for _______ keys. He cannot find them anywhere.'<br><br>
@@ -2111,14 +2212,14 @@
           👉 Đáp án chuẩn xác là <strong>C: his</strong>!"
         </div>
       `
-    },
+      },
 
-    /* Slide 15: Part 03 Practice - Question 06 (Check 2) */
-    {
-      category: "Part 03 Practice • Question 06",
-      title: "Subject-Referent Possessive Assessment",
-      subtitle: "Selecting the correct possessive determiner before plural nouns",
-      render: () => `
+      /* Slide 14: Part 03 Practice - Question 06 (Check 2) */
+      {
+        category: "Part 03 Practice • Question 06",
+        title: "Subject-Referent Possessive Assessment",
+        subtitle: "Selecting the correct possessive determiner before plural nouns",
+        render: () => `
         <div class="quiz-container">
           <div class="quiz-prompt">
             <span class="quiz-badge">CHECK 06</span>
@@ -2133,18 +2234,18 @@
           </div>
 
           <div class="explanation-reveal" id="q06-reveal">
-            <div style="font-weight:700; color:#34d399; margin-bottom:0.35rem;">✓ Đáp án đúng: A. our</div>
+            <div style="font-weight:700; color:#34d399; margin-bottom:0.35rem;">✓ Correct Answer: A. our</div>
             <div style="color:#cbd5e1; font-size:0.92rem; line-height:1.6;">
-              <strong>Giải thích chi tiết:</strong><br>
-              • Phía sau khoảng trống có danh từ <strong>friends</strong> (những người bạn).<br>
-              • Theo công thức: <strong>[Tính từ sở hữu + Noun]</strong>, ta cần một tính từ sở hữu.<br>
-              • Với đại từ chủ ngữ <strong>We</strong> (chúng tôi), tính từ sở hữu tương ứng là <strong>our</strong> (<em>our friends</em> = những người bạn của chúng tôi).<br>
-              • <em>Lưu ý:</em> <strong>ours</strong> là đại từ sở hữu (Possessive Pronoun), đứng một mình và không có danh từ <em>friends</em> theo sau.
+              <strong>Detailed Explanation:</strong><br>
+              • Following the blank is the plural noun <strong>friends</strong>.<br>
+              • According to formula: <strong>[Possessive Adjective + Noun]</strong>, a possessive adjective is required.<br>
+              • For subject pronoun <strong>We</strong>, the corresponding possessive adjective is <strong>our</strong> (<em>our friends</em>).<br>
+              • <em>Note:</em> <strong>ours</strong> is a Possessive Pronoun (stands alone without an accompanying noun).
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TƯƠNG TÁC (Câu hỏi 06):</h4>
         <div class="prompt-bubble">
           "Câu hỏi 06: 'We invited all of _______ friends to the end-of-year party.'<br><br>
@@ -2155,14 +2256,14 @@
           👉 Đáp án chuẩn xác là <strong>A: our</strong>!"
         </div>
       `
-    },
+      },
 
-/* Slide 15: Part 04 - Possessive Pronouns (NO BROKEN IMAGES - Rich Table & Pills) */
-    {
-      category: "Part 04 • Possessive Pronouns",
-      title: "Possessive Pronouns",
-      subtitle: "Addressing the fundamental question: “Whose is this?”",
-      render: () => `
+      /* Slide 15: Part 04 - Possessive Pronouns (NO BROKEN IMAGES - Rich Table & Pills) */
+      {
+        category: "Part 04 • Possessive Pronouns",
+        title: "Possessive Pronouns",
+        subtitle: "Addressing the fundamental question: “Whose is this?”",
+        render: () => `
         <div class="grid-2" style="margin-top:0.5rem; flex:1; align-items:center;">
           <div class="table-wrapper">
             <table class="styled-table">
@@ -2205,7 +2306,7 @@
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 THUYẾT TRÌNH VỀ ĐẠI TỪ SỞ HỮU (Part 04):</h4>
         <div class="prompt-bubble">
           "Xin mời quý vị cùng chuyển sang <strong>Part 04: Possessive Pronouns – Đại từ sở hữu</strong>.<br><br>
@@ -2214,14 +2315,14 @@
           Điểm mấu chốt: Từ <strong>mine</strong> trong câu <em>'This book is mine'</em> đứng hoàn toàn độc lập ở cuối câu, tự thân nó đã bao hàm cả ý nghĩa sở hữu mà không cần bất kỳ danh từ nào đi kèm phía sau."
         </div>
       `
-    },
+      },
 
-    /* Slide 16: Synthesis: Possessive Adjective vs Possessive Pronoun */
-    {
-      category: "Part 03 & 04 • Comparative Synthesis",
-      title: "Possessive Adjective vs. Possessive Pronoun",
-      subtitle: "The algebraic formula of English grammar: Possessive Pronoun = Possessive Adjective + Noun",
-      render: () => `
+      /* Slide 16: Synthesis: Possessive Adjective vs Possessive Pronoun */
+      {
+        category: "Part 03 & 04 • Comparative Synthesis",
+        title: "Possessive Adjective vs. Possessive Pronoun",
+        subtitle: "The algebraic formula of English grammar: Possessive Pronoun = Possessive Adjective + Noun",
+        render: () => `
         <div style="display:flex; flex-direction:column; gap:1.25rem; flex:1;">
           <div class="grid-2" style="gap:1.5rem;">
             <div class="card card-accent">
@@ -2267,7 +2368,7 @@
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 PHÂN TÍCH CÔNG THỨC ĐẠI SỐ ĐỘT PHÁ:</h4>
         <div class="prompt-bubble">
           "Kính thưa quý vị, đây là nội dung cực kỳ đắt giá được đúc kết từ tài liệu ôn tập của nhóm chúng tôi: <strong>Công thức đại số của Possessive Pronouns</strong>.<br><br>
@@ -2278,14 +2379,14 @@
           Chỉ cần nhớ: Đã có Noun phía sau ➔ Dùng Possessive Adjective. Muốn gộp Possessive Adjective + Noun đã biết lại làm một ➔ Dùng Possessive Pronoun!"
         </div>
       `
-    },
+      },
 
-    /* Slide 17: Part 04 Practice - Question 07 */
-    {
-      category: "Part 04 Practice • Question 07",
-      title: "Standalone Position Assessment",
-      subtitle: "Observing terminal position without following noun",
-      render: () => `
+      /* Slide 17: Part 04 Practice - Question 07 */
+      {
+        category: "Part 04 Practice • Question 07",
+        title: "Standalone Position Assessment",
+        subtitle: "Observing terminal position without following noun",
+        render: () => `
         <div class="quiz-container">
           <div class="quiz-prompt">
             <span class="quiz-badge">CHECK 07</span>
@@ -2302,29 +2403,29 @@
           <div class="explanation-reveal" id="q07-reveal">
             <div style="font-weight:700; color:#34d399; margin-bottom:0.25rem;">✓ Correct Answer: C. mine</div>
             <div style="color:#cbd5e1; font-size:0.9rem;">
-              Sau động từ 'is' ở cuối câu hoàn toàn không có danh từ đi kèm. Để đứng một mình biểu đạt quyền sở hữu ➔ bắt buộc dùng Possessive Pronoun 'mine'. 'My' là Possessive Adjective bắt buộc phải có danh từ phía sau.
+              Following the verb 'is' at clause end, there is no accompanying noun. To stand independently and denote ownership ➔ requires Possessive Pronoun 'mine'. 'My' is a Possessive Adjective and strictly requires a following noun.
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TƯƠNG TÁC (Câu hỏi 07):</h4>
         <div class="prompt-bubble">
           "Câu hỏi 07: <em>'This book is ___.'</em> Sau chỗ trống là dấu chấm kết câu, không có danh từ đi kèm. Để đứng một mình biểu đạt quyền sở hữu, phương án được chọn là <strong>C: mine</strong>!"
         </div>
       `
-    },
+      },
 
-    /* Slide 18: Part 04 Practice - Question 08 */
-    {
-      category: "Part 04 Practice • Question 08",
-      title: "Predicate Possessive Construction",
-      subtitle: "Distinguishing belonging without accompanying nouns",
-      render: () => `
+      /* Slide 18: Part 04 Practice - Question 08 */
+      {
+        category: "Part 04 Practice • Question 08",
+        title: "Predicate Possessive Construction",
+        subtitle: "Distinguishing belonging without accompanying nouns",
+        render: () => `
         <div class="quiz-container">
           <div class="quiz-prompt">
             <span class="quiz-badge">CHECK 08</span>
-            <div>“These project documents belong to the marketing team; in fact, they are <span style="text-decoration:underline; color:#fbbf24; font-weight:800;">___</span>.”</div>
+            <div>“These project documents belong to the marketing teams; in fact, they are <span style="text-decoration:underline; color:#fbbf24; font-weight:800;">___</span>.”</div>
           </div>
 
           <div class="options-grid" id="q08-options">
@@ -2337,25 +2438,25 @@
           <div class="explanation-reveal" id="q08-reveal">
             <div style="font-weight:700; color:#34d399; margin-bottom:0.25rem;">✓ Correct Answer: C. theirs</div>
             <div style="color:#cbd5e1; font-size:0.9rem;">
-              Đứng sau động từ 'are' ở cuối câu để chỉ sự sở hữu độc lập (they are theirs = they are their documents). Bắt buộc dùng Possessive Pronoun 'theirs'.
+              Positioned after verb 'are' at sentence end to indicate independent ownership (they are theirs = they are their documents) ➔ requires Possessive Pronoun 'theirs'.
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TƯƠNG TÁC (Câu hỏi 08):</h4>
         <div class="prompt-bubble">
           "Câu hỏi 08: Đứng sau động từ 'are' độc lập ở cuối câu để chỉ quyền sở hữu các tài liệu đó là 'của họ'. Phương án chuẩn xác là Possessive Pronoun <strong>C: theirs</strong>!"
         </div>
       `
-    },
+      },
 
-    /* Slide 19: Part 05 - Reflexive Pronouns (Core Focus) */
-    {
-      category: "Part 05 • Reflexive Pronouns (Core Focus)",
-      title: "Reflexive Pronouns: 3 Strategic Functions",
-      subtitle: "Reflection (Subject = Object), Emphatic intensity, and Solo execution (by + reflexive)",
-      render: () => `
+      /* Slide 19: Part 05 - Reflexive Pronouns (Core Focus) */
+      {
+        category: "Part 05 • Reflexive Pronouns (Core Focus)",
+        title: "Reflexive Pronouns: 3 Strategic Functions",
+        subtitle: "Reflection (Subject = Object), Emphatic intensity, and Solo execution (by + reflexive)",
+        render: () => `
         <div class="grid-2" style="gap:1.25rem; flex:1; align-items:stretch;">
           <div style="display:flex; flex-direction:column; gap:0.75rem;">
             <div class="card card-highlight" style="padding:0.9rem 1.1rem;">
@@ -2376,7 +2477,7 @@
                 Stands at the end or after object to highlight that the subject did it personally:
               </p>
               <div style="margin-top:0.35rem; background:rgba(0,0,0,0.3); padding:0.45rem 0.75rem; border-radius:6px; font-size:0.9rem;">
-                👉 <strong style="color:#fff;">She carries these books <span style="color:#fbbf24;">herself</span>.</strong> (<em>Chính cô ấy tự bê</em>)
+                👉 <strong style="color:#fff;">She carries these books <span style="color:#fbbf24;">herself</span>.</strong> (<em>Emphatic / on her own</em>)
               </div>
             </div>
 
@@ -2415,7 +2516,7 @@
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 THUYẾT TRÌNH VỀ 3 CÔNG NĂNG CỦA ĐẠI TỪ PHẢN THÂN:</h4>
         <div class="prompt-bubble">
           "Kính thưa quý vị, bước vào <strong>Part 05</strong>, trọng tâm hàng đầu của chúng ta là <strong>Đại từ Phản thân (Reflexive Pronouns)</strong> với <strong>3 công năng chiến lược</strong>:<br><br>
@@ -2425,14 +2526,14 @@
           Về mặt chính tả: Nhớ chuyển đuôi <strong>-self</strong> ở số ít thành <strong>-selves</strong> ở số nhiều (<em>ourselves, yourselves, themselves</em>)!"
         </div>
       `
-    },
+      },
 
-    /* Slide 20: Part 05 - Overview of Other Pronoun Families (Condensed) */
-    {
-      category: "Part 05 • Other Pronoun Families (Overview)",
-      title: "Overview of Other Pronoun Families",
-      subtitle: "Essential bird's-eye view: Demonstrative, Indefinite, Interrogative & Relative",
-      render: () => `
+      /* Slide 20: Part 05 - Overview of Other Pronoun Families (Condensed) */
+      {
+        category: "Part 05 • Other Pronoun Families (Overview)",
+        title: "Overview of Other Pronoun Families",
+        subtitle: "Essential bird's-eye view: Demonstrative, Indefinite, Interrogative & Relative",
+        render: () => `
         <div class="grid-2" style="gap:1.5rem; flex:1; align-items:center;">
           <div style="display:flex; flex-direction:column; gap:0.75rem;">
             <div style="position:relative; border-radius:16px; overflow:hidden; border:1px solid rgba(56,189,248,0.3); box-shadow:0 12px 30px rgba(0,0,0,0.5);">
@@ -2442,38 +2543,38 @@
               </div>
             </div>
             <div class="card" style="padding:0.75rem; font-size:0.85rem; border-left:4px solid #38bdf8;">
-              <strong style="color:#38bdf8;">Demonstrative Pronouns:</strong> <em>This, That, These, Those</em>. Đặc biệt: <strong>This/That</strong> đi được với cả danh từ không đếm được (<em>This advice, That water</em>).
+              <strong style="color:#38bdf8;">Demonstrative Pronouns:</strong> <em>This, That, These, Those</em>. Note: <strong>This/That</strong> also pair with uncountable nouns (<em>This advice, That water</em>).
             </div>
           </div>
 
           <div style="display:flex; flex-direction:column; gap:0.75rem;">
             <div class="card card-interactive" style="border-left:4px solid #10b981; padding:0.8rem 1rem;">
-              <div style="font-size:0.75rem; font-weight:700; color:#34d399; text-transform:uppercase;">Indefinite Pronouns (Bất định)</div>
+              <div style="font-size:0.75rem; font-weight:700; color:#34d399; text-transform:uppercase;">Indefinite Pronouns</div>
               <div style="color:#fff; font-weight:600; font-size:0.95rem; margin:0.2rem 0;">everyone, someone, anything, nothing...</div>
               <p style="color:#94a3b8; font-size:0.82rem; line-height:1.4;">
-                ⚠️ <strong>Quy tắc vàng:</strong> Luôn chia <strong>động từ số ít (Singular Verb)</strong>: <em>“Everyone is ready.”</em>
+                ⚠️ <strong>Golden Rule:</strong> Always takes a <strong>Singular Verb</strong>: <em>“Everyone is ready.”</em>
               </p>
             </div>
 
             <div class="card card-interactive" style="border-left:4px solid #60a5fa; padding:0.8rem 1rem;">
-              <div style="font-size:0.75rem; font-weight:700; color:#60a5fa; text-transform:uppercase;">Interrogative Pronouns (Nghi vấn)</div>
+              <div style="font-size:0.75rem; font-weight:700; color:#60a5fa; text-transform:uppercase;">Interrogative Pronouns</div>
               <div style="color:#fff; font-weight:600; font-size:0.95rem; margin:0.2rem 0;">who, whom, whose, what, which</div>
               <p style="color:#94a3b8; font-size:0.82rem; line-height:1.4;">
-                Dùng để đặt câu hỏi trực tiếp hoặc câu hỏi gián tiếp: <em>“Whose jacket is this?”</em>
+                Introduces direct or indirect inquiries: <em>“Whose jacket is this?”</em>
               </p>
             </div>
 
             <div class="card card-interactive" style="border-left:4px solid #f59e0b; padding:0.8rem 1rem;">
-              <div style="font-size:0.75rem; font-weight:700; color:#fbbf24; text-transform:uppercase;">Relative Pronouns (Quan hệ)</div>
+              <div style="font-size:0.75rem; font-weight:700; color:#fbbf24; text-transform:uppercase;">Relative Pronouns</div>
               <div style="color:#fff; font-weight:600; font-size:0.95rem; margin:0.2rem 0;">who, whom, which, that, whose, whoever</div>
               <p style="color:#94a3b8; font-size:0.82rem; line-height:1.4;">
-                Nối mệnh đề phụ với danh từ đứng trước: <em>“The candidate who won...”</em>
+                Connects relative clauses to antecedent nouns: <em>“The candidate who won...”</em>
               </p>
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 TỔNG QUAN TINH GỌN CÁC NHÓM ĐẠI TỪ KHÁC (1 Slide):</h4>
         <div class="prompt-bubble">
           "Bên cạnh Đại từ Phản thân, chúng ta điểm nhanh qua 4 nhóm đại từ mở rộng khác được tóm tắt gọn gàng trong slide này:<br><br>
@@ -2483,97 +2584,84 @@
           4. <strong>Đại từ quan hệ (Relative)</strong>: <em>Who, which, that, whose</em> đóng vai trò móc nối các mệnh đề lại với nhau."
         </div>
       `
-    },
+      },
 
-    /* Slide 21: Part 05 Practice - Question 09 */
-    {
-      category: "Part 05 Practice • Question 09",
-      title: "Independent Execution Idiom Assessment",
-      subtitle: "Evaluating the prepositional collocation “on one's own”",
-      render: () => `
+      /* Slide 21: Part 05 Practice - Question 09 */
+      {
+        category: "Part 05 Practice • Question 09",
+        title: "Self-Action Analysis",
+        subtitle: "Identifying identical agent and recipient (Subject = Object)",
+        render: () => `
         <div class="quiz-container">
           <div class="quiz-prompt">
             <span class="quiz-badge">CHECK 09</span>
-            <div>Due to the unexpected absence of her assistant, Ms. Gable had to organize the entire quarterly conference on <span style="text-decoration:underline; color:#fbbf24; font-weight:800;">_______</span>.</div>
+            <div>John cut <span style="text-decoration:underline; color:#fbbf24; font-weight:800;">___</span> while cooking.</div>
           </div>
 
           <div class="options-grid" id="q09-options">
-            <button class="option-btn" onclick="checkAnswer('q09', 'A', true)"><span class="letter">A</span> her own</button>
-            <button class="option-btn" onclick="checkAnswer('q09', 'B', false)"><span class="letter">B</span> her</button>
-            <button class="option-btn" onclick="checkAnswer('q09', 'C', false)"><span class="letter">C</span> hers</button>
-            <button class="option-btn" onclick="checkAnswer('q09', 'D', false)"><span class="letter">D</span> herself</button>
+            <button class="option-btn" onclick="checkAnswer('q09', 'A', false)"><span class="letter">A</span> him</button>
+            <button class="option-btn" onclick="checkAnswer('q09', 'B', false)"><span class="letter">B</span> his</button>
+            <button class="option-btn" onclick="checkAnswer('q09', 'C', true)"><span class="letter">C</span> himself</button>
+            <button class="option-btn" onclick="checkAnswer('q09', 'D', false)"><span class="letter">D</span> he</button>
           </div>
 
           <div class="explanation-reveal" id="q09-reveal">
-            <div style="font-weight:700; color:#34d399; margin-bottom:0.35rem;">✓ Correct Answer: A. her own</div>
-            <div style="color:#cbd5e1; font-size:0.92rem; line-height:1.6;">
-              <strong>The idiom 'on one's own' means independently or without help. The pre-positioned 'on' requires 'her own'.</strong><br>
-              • <em>Giải thích chi tiết:</em> Thành ngữ cố định <strong>'on one's own'</strong> = tự mình làm, độc lập không có sự trợ giúp (tương đương <em>alone / independently</em>).<br>
-              • <em>Lưu ý phân biệt:</em> Đi với giới từ <strong>'on'</strong> thì bắt buộc dùng <strong>'her own'</strong> (on her own). Nếu muốn dùng đại từ phản thân <em>herself</em> thì cấu trúc bắt buộc phải là giới từ <strong>by</strong> (<em>by herself</em>), tiếng Anh không dùng <em>*on herself*</em>.
+            <div style="font-weight:700; color:#34d399; margin-bottom:0.25rem;">✓ Correct Answer: C. himself</div>
+            <div style="color:#cbd5e1; font-size:0.9rem;">
+              John performs the action of cutting and John himself receives the injury (Subject = Object). When the subject and object are identical ➔ requires Reflexive Pronoun 'himself'.
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TƯƠNG TÁC (Câu hỏi 09):</h4>
         <div class="prompt-bubble">
-          "Câu hỏi 09: <em>'Due to the unexpected absence of her assistant, Ms. Gable had to organize the entire quarterly conference on _______.'</em><br><br>
-          - Điểm mấu chốt: Phía trước chỗ trống là giới từ <strong>'on'</strong>.<br>
-          - Thành ngữ cố định: <strong>'on one's own'</strong> (= independently / without help). Với chủ ngữ là nữ (Ms. Gable) ➔ chọn <strong>on her own</strong>.<br>
-          - Rất nhiều người nhầm chọn 'herself', nhưng lưu ý: nếu dùng đại từ phản thân thì phải là <em>'by herself'</em>, còn đi với <em>'on'</em> thì bắt buộc là <strong>'on her own'</strong>.<br>
-          👉 Do đó, đáp án chính xác tuyệt đối là <strong>A: her own</strong>!"
+          "Câu hỏi 09: <em>'John cut ___ while cooking.'</em> John tự làm đứt tay mình, tức là Subject = Object. Đáp án đúng là Reflexive Pronoun <strong>C: himself</strong>!"
         </div>
       `
-    },
+      },
 
-    /* Slide 22: Part 05 Practice - Question 10 */
-    {
-      category: "Part 05 Practice • Question 10",
-      title: "Intensive Pronoun Placement Assessment",
-      subtitle: "Analyzing clause-final emphatic and intensive reflexive pronouns",
-      render: () => `
+      /* Slide 22: Part 05 Practice - Question 10 */
+      {
+        category: "Part 05 Practice • Question 10",
+        title: "Solo Execution Assessment (By + Reflexive)",
+        subtitle: "Evaluating the unassisted completion idiom",
+        render: () => `
         <div class="quiz-container">
           <div class="quiz-prompt">
             <span class="quiz-badge">CHECK 10</span>
-            <div>Before submitting the financial auditing report to the board, Ms. Patel checked the spreadsheet <span style="text-decoration:underline; color:#fbbf24; font-weight:800;">_______</span> to ensure zero calculation errors.</div>
+            <div>“He made the delicious birthday cake completely by <span style="text-decoration:underline; color:#fbbf24; font-weight:800;">___</span>.”</div>
           </div>
 
           <div class="options-grid" id="q10-options">
-            <button class="option-btn" onclick="checkAnswer('q10', 'A', false)"><span class="letter">A</span> hers</button>
-            <button class="option-btn" onclick="checkAnswer('q10', 'B', true)"><span class="letter">B</span> herself</button>
-            <button class="option-btn" onclick="checkAnswer('q10', 'C', false)"><span class="letter">C</span> she</button>
-            <button class="option-btn" onclick="checkAnswer('q10', 'D', false)"><span class="letter">D</span> her</button>
+            <button class="option-btn" onclick="checkAnswer('q10', 'A', false)"><span class="letter">A</span> him</button>
+            <button class="option-btn" onclick="checkAnswer('q10', 'B', true)"><span class="letter">B</span> himself</button>
+            <button class="option-btn" onclick="checkAnswer('q10', 'C', false)"><span class="letter">C</span> his</button>
+            <button class="option-btn" onclick="checkAnswer('q10', 'D', false)"><span class="letter">D</span> he</button>
           </div>
 
           <div class="explanation-reveal" id="q10-reveal">
-            <div style="font-weight:700; color:#34d399; margin-bottom:0.35rem;">✓ Correct Answer: B. herself</div>
-            <div style="color:#cbd5e1; font-size:0.92rem; line-height:1.6;">
-              <strong>The reflexive pronoun 'herself' is used at the end of the clause as an intensive pronoun to emphasize that Ms. Patel performed the checking personally.</strong><br>
-              • <em>Giải thích chi tiết:</em> Mệnh đề đã có đầy đủ thành phần cốt lõi: Chủ ngữ (<em>Ms. Patel</em>), Động từ (<em>checked</em>) và Tân ngữ (<em>the spreadsheet</em>).<br>
-              • Vị trí cuối mệnh đề này cần một đại từ phản thân đóng vai trò nhấn mạnh (<strong>Intensive / Emphatic Pronoun</strong>) nhằm khẳng định chính đích thân cô Patel đã tự tay rà soát bảng tính để đảm bảo không còn sai sót.<br>
-              • Chủ ngữ là nữ (<em>Ms. Patel</em>) ➔ chọn <strong>herself</strong>.
+            <div style="font-weight:700; color:#34d399; margin-bottom:0.25rem;">✓ Correct Answer: B. himself</div>
+            <div style="color:#cbd5e1; font-size:0.9rem;">
+              Classic idiomatic syntax: 'by + Reflexive Pronoun' = without assistance (alone / on one's own). Since subject is 'He' ➔ select 'by himself'.
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TƯƠNG TÁC (Câu hỏi 10):</h4>
         <div class="prompt-bubble">
-          "Câu hỏi 10: <em>'Before submitting the financial auditing report to the board, Ms. Patel checked the spreadsheet _______ to ensure zero calculation errors.'</em><br><br>
-          - Phân tích cấu trúc câu: 'Ms. Patel' (Chủ ngữ) + 'checked' (Động từ) + 'the spreadsheet' (Tân ngữ). Cấu trúc ngữ pháp cơ bản đã hoàn chỉnh.<br>
-          - Chỗ trống đứng sau tân ngữ ở cuối mệnh đề dùng để nhấn mạnh đích thân nhân vật tự tay thực hiện (<strong>Intensive Pronoun</strong>).<br>
-          - Với danh từ chỉ nữ số ít 'Ms. Patel', đại từ phản thân tương ứng là <strong>herself</strong>.<br>
-          👉 Đáp án chuẩn xác là <strong>B: herself</strong>!"
+          "Câu hỏi 10: Thành ngữ 'by + Reflexive Pronoun' mang nghĩa làm một mình không ai trợ giúp. Chủ ngữ là 'He', do đó đáp án chính xác là <strong>B: himself</strong>!"
         </div>
       `
-    },
+      },
 
-    /* Slide 23: Strategic Decision Framework */
-    {
-      category: "Review & Master Framework",
-      title: "The 3 Golden Questions for Any Sentence",
-      subtitle: "A systematic algorithm to select the right pronoun with zero hesitation",
-      render: () => `
+      /* Slide 23: Strategic Decision Framework */
+      {
+        category: "Review & Master Framework",
+        title: "The 3 Golden Questions for Any Sentence",
+        subtitle: "A systematic algorithm to select the right pronoun with zero hesitation",
+        render: () => `
         <div class="grid-3" style="margin-top:1rem; flex:1;">
           <div class="card card-highlight">
             <div style="font-size:2rem; margin-bottom:0.5rem; color:#818cf8;">Q1</div>
@@ -2612,7 +2700,7 @@
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 BỘ KHUNG CHIẾN THUẬT XỬ LÝ NHANH:</h4>
         <div class="prompt-bubble">
           "Kính thưa quý vị, để phản xạ nhanh trong thực tế, chỉ cần tự hỏi <strong>3 Câu hỏi Vàng</strong>:<br><br>
@@ -2621,14 +2709,14 @@
           - <strong>Câu hỏi 3</strong>: Hành động có dội ngược lại người làm hoặc làm một mình không? ➔ Chọn Reflexive Pronoun."
         </div>
       `
-    },
+      },
 
-    /* Slide 24: Master Taxonomy Matrix */
-    {
-      category: "Complete Synthesis",
-      title: "All-in-One Pronouns Master Matrix",
-      subtitle: "The comprehensive 5-column comparative matrix",
-      render: () => `
+      /* Slide 24: Master Taxonomy Matrix */
+      {
+        category: "Complete Synthesis",
+        title: "All-in-One Pronouns Master Matrix",
+        subtitle: "The comprehensive 5-column comparative matrix",
+        render: () => `
         <div class="table-wrapper" style="margin-top:0.35rem; flex:1;">
           <table class="styled-table" style="font-size:0.82rem;">
             <thead>
@@ -2694,20 +2782,20 @@
           </table>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 MA TRẬN TỔNG HỢP TOÀN DIỆN (5 CỘT TRỌNG TÂM):</h4>
         <div class="prompt-bubble">
           "Đây là bảng tra cứu tổng hợp toàn bộ 5 nhóm đại từ cốt lõi mà chúng ta đã làm chủ hôm nay. Từ Subject Pronouns, Object Pronouns, Possessive Adjectives, Possessive Pronouns cho đến Reflexive Pronouns. Quý vị có thể tải file bài giảng về để làm cẩm nang chuẩn mực!"
         </div>
       `
-    },
+      },
 
-    /* Slide 25: Grand Challenge */
-    {
-      category: "Interactive Case • Grand Challenge",
-      title: "The Ultimate Test: Sarah's New Laptop",
-      subtitle: "Synthesizing two distinct possessive paradigms in a single sentence",
-      render: () => `
+      /* Slide 25: Grand Challenge */
+      {
+        category: "Interactive Case • Grand Challenge",
+        title: "The Ultimate Test: Sarah's New Laptop",
+        subtitle: "Synthesizing two distinct possessive paradigms in a single sentence",
+        render: () => `
         <div class="quiz-container" style="max-width:980px; flex:1; display:flex; flex-direction:column; justify-content:center;">
           <div class="grid-2" style="align-items:center; gap:1.5rem;">
             <div style="position:relative; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,0.15); box-shadow:0 15px 35px rgba(0,0,0,0.5);">
@@ -2740,14 +2828,14 @@
               <strong style="color:#34d399; font-size:1.15rem;">Outstanding! Option B: Her / hers</strong>
               <p style="color:#cbd5e1; font-size:0.92rem; margin-top:0.25rem;">
                 <strong>Breakdown:</strong><br>
-                1. <em>Her laptop</em>: Đi trước danh từ 'laptop' ➔ Possessive Adjective (Her).<br>
-                2. <em>not hers</em>: Đứng độc lập ở cuối câu không danh từ đi kèm ➔ Possessive Pronoun (Hers).
+                1. <em>Her laptop</em>: Precedes the noun 'laptop' ➔ Possessive Adjective (Her).<br>
+                2. <em>not hers</em>: Stands independently at sentence end without an accompanying noun ➔ Possessive Pronoun (Hers).
               </p>
             </div>
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 ĐIỀU PHỐI TÌNH HUỐNG TỔNG HỢP CAO CẤP:</h4>
         <div class="prompt-bubble">
           "Và bây giờ, xin mời quý vị đến với thử thách tổng hợp đỉnh cao: <strong>Tình huống chiếc laptop của Sarah</strong>.<br><br>
@@ -2757,14 +2845,14 @@
           Đáp án chính xác là <strong>B: Her / hers</strong>!"
         </div>
       `
-    },
+      },
 
-    /* Slide 26: Conclusion & Discussion */
-    {
-      category: "Conclusion & Discussion",
-      title: "Small Words, Massive Impact",
-      subtitle: "Key takeaways and opening the floor for discussion",
-      render: () => `
+      /* Slide 26: Conclusion & Discussion */
+      {
+        category: "Conclusion & Discussion",
+        title: "Small Words, Massive Impact",
+        subtitle: "Key takeaways and opening the floor for discussion",
+        render: () => `
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
           <div style="background:rgba(99,102,241,0.15); border:1px solid rgba(99,102,241,0.4); border-radius:20px; padding:2rem 2.5rem; max-width:850px; margin-bottom:1.5rem;">
             <h2 style="font-family:'Outfit'; font-size:2.1rem; color:#fff; line-height:1.5; margin-bottom:1rem;">
@@ -2785,7 +2873,7 @@
           </div>
         </div>
       `,
-      speakerNotes: `
+        speakerNotes: `
         <h4>🎤 LỜI KẾT THUYẾT TRÌNH & MỜI THẢO LUẬN (Q&A):</h4>
         <div class="prompt-bubble">
           "Kính thưa quý vị và các bạn!<br>
@@ -2794,7 +2882,7 @@
           Bài thuyết trình của nhóm chúng tôi xin được khép lại tại đây. Trân trọng cảm ơn sự chú ý theo dõi và tham gia nhiệt tình của quý vị. Ngay bây giờ, chúng tôi rất mong được đón nhận các câu hỏi hoặc đóng góp thảo luận từ phía khán phòng!"
         </div>
       `
-    }
+      }
     ];
 
     // Mini-game reveal logic
@@ -2839,7 +2927,7 @@
     function renderSlide(index) {
       const slide = slidesData[index];
       const stage = document.getElementById('slideStage');
-      
+
       stage.innerHTML = `
         <div class="slide-header">
           <div>
@@ -2911,7 +2999,7 @@
     function renderSlide(index) {
       const slide = slidesData[index];
       const stage = document.getElementById('slideStage');
-      
+
       stage.innerHTML = `
         <div class="slide-header">
           <div>
@@ -2997,10 +3085,10 @@
           const mins = String(Math.floor(presenterSeconds / 60)).padStart(2, '0');
           const secs = String(presenterSeconds % 60).padStart(2, '0');
           const timerStr = `${mins}:${secs}`;
-          
+
           const pvTimer = document.getElementById('pvTimerVal');
           if (pvTimer) pvTimer.textContent = timerStr;
-          
+
           const normalTimer = document.getElementById('presentationTimer');
           if (normalTimer) normalTimer.textContent = timerStr;
         }, 1000);
@@ -3066,7 +3154,7 @@
     function setupRemoteQuizPad(slide) {
       const quizPad = document.getElementById('pvQuizPad');
       const optionsGrid = document.getElementById('pvQuizOptionsGrid');
-      
+
       // Check if rendered content has quiz buttons
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = slide.render();
@@ -3075,12 +3163,12 @@
       if (optionButtons.length > 0) {
         quizPad.style.display = 'flex';
         optionsGrid.innerHTML = '';
-        
+
         optionButtons.forEach(btn => {
           const letterEl = btn.querySelector('.letter');
           const letter = letterEl ? letterEl.textContent.trim() : 'A';
           const text = btn.textContent.replace(letter, '').trim();
-          
+
           // Check onclick attribute to see if correct
           const onclickAttr = btn.getAttribute('onclick') || '';
           const isCorrect = onclickAttr.includes('true');
@@ -3120,7 +3208,7 @@
     async function startPptPresentation() {
       // Step 1: Open secondary audience window
       let windowFeatures = 'menubar=no,toolbar=no,location=no,status=no';
-      
+
       // Attempt Multi-Screen Window Placement API
       let openedOnSecondary = false;
       if ('getScreenDetails' in window) {
@@ -3262,10 +3350,10 @@
     });
 
     // Interactive Quiz Checker with Celebration & Sound
-    window.checkAnswer = function(qId, selectedOption, isCorrect) {
+    window.checkAnswer = function (qId, selectedOption, isCorrect) {
       const container = document.getElementById(`${qId}-options`);
       if (!container) return;
-      
+
       const buttons = container.querySelectorAll('.option-btn');
       buttons.forEach(btn => {
         const optionLetter = btn.querySelector('.letter').textContent.trim();
@@ -3340,9 +3428,9 @@
         toggleSpeakerBtn.classList.toggle('btn-active');
       } else if (e.key.toLowerCase() === 'f') {
         if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(() => {});
+          document.documentElement.requestFullscreen().catch(() => { });
         } else {
-          document.exitFullscreen().catch(() => {});
+          document.exitFullscreen().catch(() => { });
         }
       }
     });
@@ -3351,4 +3439,5 @@
     renderSlide(0);
   </script>
 </body>
+
 </html>
